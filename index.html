@@ -154,42 +154,58 @@
 
   <!-- Configuração: cole aqui seu webhook do n8n -->
   <script>
-    // ======= CONFIGURAÇÕES =======
-    const WEBHOOK_URL = "https://webhook.gjrservicos.com.br/webhook/lead-marmitasfitness"; // 
-    const DOWNLOAD_URL = "https://drive.google.com/uc?export=download&id=1iVLuu0PatOO8jpNTmc3LJzPMbg9fjIZc"; //
-    
+  // ======= CONFIGURAÇÕES =======
+  const WEBHOOK_URL = "https://webhook.gjrservicos.com.br/webhook/lead-marmitasfitness";
+  const DOWNLOAD_URL = "https://drive.google.com/uc?export=download&id=1iVLuu0PatOO8jpNTmc3LJzPMbg9fjIZc";
 
-    // ======= HELPERS =======
-    const getUTMs = () => {
-      const params = new URLSearchParams(window.location.search);
-      return {
-        utm_source: params.get('utm_source') || '',
-        utm_medium: params.get('utm_medium') || '',
-        utm_campaign: params.get('utm_campaign') || '',
-        utm_content: params.get('utm_content') || '',
-        utm_term: params.get('utm_term') || ''
-      };
+  // ======= HELPERS =======
+  const getUTMs = () => {
+    const params = new URLSearchParams(window.location.search);
+    return {
+      utm_source: params.get('utm_source') || '',
+      utm_medium: params.get('utm_medium') || '',
+      utm_campaign: params.get('utm_campaign') || '',
+      utm_content: params.get('utm_content') || '',
+      utm_term: params.get('utm_term') || ''
     };
+  };
 
-    const statusEl = () => document.getElementById('status');
-    const btnEl = () => document.getElementById('submitBtn');
+  const statusEl = () => document.getElementById('status');
+  const btnEl = () => document.getElementById('submitBtn');
+  const setStatus = (msg, ok = true) => {
+    const el = statusEl();
+    el.textContent = msg;
+    el.classList.remove('hidden');
+    el.classList.toggle('text-emerald-700', ok);
+    el.classList.toggle('text-rose-600', !ok);
+  };
 
-    const setStatus = (msg, ok = true) => {
-      const el = statusEl();
-      el.textContent = msg;
-      el.classList.remove('hidden');
-      el.classList.toggle('text-emerald-700', ok);
-      el.classList.toggle('text-rose-600', !ok);
-    };
+  // Garante que o listener só é registrado depois do DOM pronto
+  document.addEventListener('DOMContentLoaded', () => {
+    console.log('[LP] DOM pronto');
+    const yearEl = document.getElementById('year');
+    if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-    document.getElementById('year').textContent = new Date().getFullYear();
+    const form = document.getElementById('leadForm');
+    if (!form) {
+      console.error('[LP] Form #leadForm não encontrado!');
+      return;
+    }
+    // Evita que a validação nativa bloqueie o disparo sem mostrar nada
+    form.setAttribute('novalidate', 'novalidate');
 
-    // ======= SUBMIT =======
-    document.getElementById('leadForm').addEventListener('submit', async (e) => {
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
-      const form = e.target;
+      console.log('[LP] Submit disparado');
+
       const data = Object.fromEntries(new FormData(form).entries());
-      if (!data.consent) { setStatus('É necessário aceitar o consentimento (LGPD).', false); return; }
+      // Checkbox marcado vem como 'on'
+      const hasConsent = !!data.consent;
+      if (!hasConsent) {
+        setStatus('É necessário aceitar o consentimento (LGPD).', false);
+        console.warn('[LP] Consentimento ausente – bloqueando envio');
+        return;
+      }
 
       btnEl().disabled = true; btnEl().textContent = 'Enviando...';
 
@@ -197,36 +213,42 @@
         name: data.name || '',
         email: data.email || '',
         whatsapp: data.whatsapp || '',
-        consent: !!data.consent,
+        consent: true,
         ...getUTMs(),
         page: window.location.href,
         ts: new Date().toISOString()
       };
 
+      console.log('[LP] Enviando para webhook:', WEBHOOK_URL, payload);
+
       try {
+        // Preflight/POST devem aparecer na aba Network
         const res = await fetch(WEBHOOK_URL, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
+          body: JSON.stringify(payload),
+          // mode: 'cors' // (padrão) – explicitar se quiser
         });
 
-        if (!res.ok) throw new Error('Falha no envio');
+        const bodyTxt = await res.text();
+        console.log('[LP] Resposta do webhook:', res.status, bodyTxt);
+
+        if (!res.ok) throw new Error('Falha no envio: ' + res.status);
 
         setStatus('Prontinho! Enviamos o mini e-book para seu e-mail/WhatsApp.');
-
-        // Redireciona para download, se houver link configurado
         if (DOWNLOAD_URL && DOWNLOAD_URL !== '#') {
           setTimeout(() => { window.location.href = DOWNLOAD_URL; }, 600);
         }
       } catch (err) {
-        console.error(err);
+        console.error('[LP] Erro no envio', err);
         setStatus('Ocorreu um erro ao enviar. Tente novamente em instantes.', false);
       } finally {
         btnEl().disabled = false; btnEl().textContent = 'Quero baixar grátis';
         form.reset();
       }
     });
-  </script>
+  });
+</script>
 
   <!-- PIXELS (opcionais) -->
   <!-- Meta Pixel
