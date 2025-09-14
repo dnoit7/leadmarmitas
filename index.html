@@ -54,41 +54,29 @@
   <div id="toast" class="fixed inset-x-0 top-4 z-50 mx-auto hidden w-[92%] max-w-md rounded-xl px-4 py-3 text-center text-sm font-semibold shadow-soft"></div>
 
   <!-- HERO -->
-  <section class="mx-auto max-w-6xl px-4 pt-8 pb-10 md:pt-12">
-    <div class="grid items-center gap-10 md:grid-cols-2">
-      <div>
-        <span class="inline-flex items-center rounded-full bg-emerald-50 px-3 py-1 text-emerald-700 text-sm">Mini E-book gratuito</span>
-        <h1 class="mt-4 text-4xl font-extrabold leading-tight md:text-5xl">
-          Marmitas Fitness Econômicas<br class="hidden md:block"/>
-          para <span class="text-emerald-700">emagrecer gastando pouco</span>
-        </h1>
-        <p class="mt-4 text-lg text-slate-700">
-          Baixe agora um guia prático com <strong>5 receitas</strong> + <strong>checklist de compras</strong> para organizar sua semana de forma saudável e econômica.
-        </p>
-        <ul class="mt-6 space-y-2 text-slate-700">
-          <li class="flex gap-3"><span>✅</span><span>Receitas simples e rápidas (até 20 min)</span></li>
-          <li class="flex gap-3"><span>✅</span><span>Ingredientes baratos e fáceis de achar</span></li>
-          <li class="flex gap-3"><span>✅</span><span>Checklist de mercado para 5 dias</span></li>
-        </ul>
-        <div class="mt-6 flex flex-wrap items-center gap-3 text-sm text-slate-500">
-          <span>🔒 Sem spam</span>
-          <span>•</span>
-          <span>📩 Envio imediato por e-mail/WhatsApp</span>
-        </div>
-      </div>
-      <div class="relative">
-        <div class="glass shadow-soft rounded-3xl p-6 md:p-8">
-          <img alt="Capa do mini e-book" class="mb-4 h-52 w-full rounded-2xl object-cover" src="https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=1200&auto=format&fit=crop"/>
-          <ul class="grid grid-cols-2 gap-3 text-sm">
-            <li class="rounded-xl border border-slate-200 p-3">+5 receitas fit</li>
-            <li class="rounded-xl border border-slate-200 p-3">Checklist pronto</li>
-            <li class="rounded-xl border border-slate-200 p-3">Passo a passo</li>
-            <li class="rounded-xl border border-slate-200 p-3">Armazenamento</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
+<section id="hero" class="relative bg-gray-900 text-white">
+  <!-- Imagem de fundo -->
+  <div class="absolute inset-0">
+    <img src="assets/img/vista-superior-de-tigelas-de-salada-vegetariana-com-cuscuz-e-copia-espaco.jpg" 
+         alt="Capa do Mini E-book Marmitas Fitness" 
+         class="w-full h-full object-cover opacity-70">
+    <div class="absolute inset-0 bg-black/40"></div>
+  </div>
+
+  <!-- Conteúdo -->
+  <div class="relative z-10 flex flex-col items-center justify-center text-center px-6 py-32 md:py-48">
+    <h1 class="text-4xl md:text-6xl font-extrabold mb-6">
+      Marmitas Fitness Econômicas
+    </h1>
+    <p class="max-w-2xl text-lg md:text-xl mb-8">
+      Receba grátis o mini e-book com receitas práticas, saudáveis e baratas para transformar sua rotina alimentar!
+    </p>
+    <a href="#form" 
+       class="bg-green-500 hover:bg-green-600 text-white font-semibold px-8 py-4 rounded-full shadow-lg transition duration-300">
+      Quero meu e-book
+    </a>
+  </div>
+</section>
 
   <!-- BENEFÍCIOS -->
   <section id="beneficios" class="bg-white py-16">
