@@ -25,27 +25,45 @@
     .tag { @apply inline-flex items-center rounded-full bg-emerald-50 px-3 py-1 text-emerald-700 text-sm; }
   </style>
 </head>
-<body class="bg-gradient-to-b from-emerald-50 to-white text-slate-800">
-  <!-- Header -->
-  <header class="mx-auto max-w-6xl px-4 py-6 flex items-center justify-between">
-    <div class="flex items-center gap-3">
-      <div class="h-10 w-10 rounded-2xl bg-emerald-600"></div>
-      <span class="font-semibold">Marmitas Fitness</span>
+<body id="top" class="bg-gradient-to-b from-emerald-50 to-white text-slate-800">
+
+  <!-- ===== HEADER NOVO ===== -->
+  <header class="bg-gradient-to-r from-emerald-600 to-cyan-600 shadow-lg">
+    <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
+      <!-- Logo -->
+      <a href="#top" class="flex items-center space-x-2 text-white font-bold text-xl tracking-wide">
+        <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-white/20 font-extrabold text-lg">
+          Mf
+        </div>
+        <span>Marmitas Fitness</span>
+      </a>
+
+      <!-- Navegação -->
+      <nav class="hidden space-x-8 md:flex">
+        <a href="#beneficios" class="text-white/90 hover:text-white transition">Benefícios</a>
+        <a href="#recebe" class="text-white/90 hover:text-white transition">O que você recebe</a>
+        <a href="#baixar" class="text-white/90 hover:text-white transition">Baixar grátis</a>
+      </nav>
+
+      <!-- CTA desktop -->
+      <a href="#form" class="hidden md:inline-block rounded-xl bg-white px-4 py-2 font-semibold text-emerald-700 shadow hover:bg-emerald-100 transition">
+        Quero meu e-book
+      </a>
     </div>
-    <nav class="hidden md:flex items-center gap-6 text-sm">
-      <a href="#beneficios" class="hover:text-emerald-700">Benefícios</a>
-      <a href="#conteudo" class="hover:text-emerald-700">O que você recebe</a>
-      <a href="#form" class="hover:text-emerald-700">Baixar grátis</a>
-    </nav>
   </header>
 
   <!-- Hero -->
-  <section class="mx-auto max-w-6xl px-4 pt-6 pb-10 md:pt-10">
+  <section class="mx-auto max-w-6xl px-4 pt-8 pb-10 md:pt-12">
     <div class="grid items-center gap-10 md:grid-cols-2">
       <div>
         <span class="tag">Mini E-book gratuito</span>
-        <h1 class="mt-4 text-4xl font-extrabold leading-tight md:text-5xl">Marmitas Fitness Econômicas<br class="hidden md:block"/> para <span class="text-emerald-700">emagrecer gastando pouco</span></h1>
-        <p class="mt-4 text-lg text-slate-700">Baixe agora um guia prático com <strong>5 receitas</strong> + <strong>checklist de compras</strong> para organizar sua semana de forma saudável e econômica.</p>
+        <h1 class="mt-4 text-4xl font-extrabold leading-tight md:text-5xl">
+          Marmitas Fitness Econômicas<br class="hidden md:block"/>
+          para <span class="text-emerald-700">emagrecer gastando pouco</span>
+        </h1>
+        <p class="mt-4 text-lg text-slate-700">
+          Baixe agora um guia prático com <strong>5 receitas</strong> + <strong>checklist de compras</strong> para organizar sua semana de forma saudável e econômica.
+        </p>
         <ul class="mt-6 space-y-2 text-slate-700">
           <li class="flex gap-3"><span>✅</span><span>Receitas simples e rápidas (até 20 min)</span></li>
           <li class="flex gap-3"><span>✅</span><span>Ingredientes baratos e fáceis de achar</span></li>
@@ -72,8 +90,13 @@
   </section>
 
   <!-- Benefícios -->
-  <section id="beneficios" class="mx-auto max-w-6xl px-4 py-10">
-    <div class="grid gap-6 md:grid-cols-3">
+  <section id="beneficios" class="bg-white py-16">
+    <div class="mx-auto max-w-4xl px-6 text-center">
+      <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-800">🚀 Benefícios exclusivos</h2>
+      <p class="mt-4 text-lg text-slate-600">Descubra por que nossas marmitas vão transformar sua rotina</p>
+    </div>
+
+    <div class="mx-auto mt-10 grid max-w-6xl gap-6 px-4 md:grid-cols-3">
       <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-soft">
         <h3 class="text-lg font-semibold">Economia real</h3>
         <p class="mt-2 text-slate-600">Pague menos no mercado e fuja do delivery. Rotas de compras inteligentes e sazonais.</p>
@@ -89,11 +112,11 @@
     </div>
   </section>
 
-  <!-- Conteúdo -->
-  <section id="conteudo" class="mx-auto max-w-6xl px-4 pb-4">
+  <!-- O que você recebe -->
+  <section id="recebe" class="mx-auto max-w-6xl px-4 pb-4">
     <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-soft">
-      <h2 class="text-2xl font-bold">O que você vai receber</h2>
-      <div class="mt-4 grid gap-6 md:grid-cols-2">
+      <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-800">🎁 O que você recebe</h2>
+      <div class="mt-6 grid gap-6 md:grid-cols-2">
         <ul class="space-y-2">
           <li>• 5 receitas completas (ingredientes + preparo)</li>
           <li>• Checklist de compras para 5 dias</li>
@@ -109,24 +132,31 @@
   </section>
 
   <!-- Formulário -->
-  <section id="form" class="mx-auto max-w-3xl px-4 py-10">
+  <section id="baixar" class="mx-auto max-w-3xl px-4 py-12">
     <div class="rounded-3xl border border-slate-200 bg-white p-6 md:p-10 shadow-soft">
-      <h2 class="text-2xl font-bold">Baixe grátis o mini e-book</h2>
+      <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-800">📥 Baixar grátis agora</h2>
       <p class="mt-2 text-slate-600">Preencha seus dados para receber o PDF imediatamente.</p>
 
       <form id="leadForm" class="mt-6 space-y-4">
         <div>
           <label class="block text-sm font-medium">Nome</label>
-          <input required name="name" type="text" class="input" placeholder="Seu nome" />
+          <input required name="name" type="text" class="input" placeholder="Seu nome" autocomplete="name" />
         </div>
         <div>
           <label class="block text-sm font-medium">E-mail</label>
-          <input required name="email" type="email" class="input" placeholder="voce@email.com" />
+          <input required name="email" type="email" class="input" placeholder="voce@email.com" autocomplete="email" />
         </div>
         <div>
           <label class="block text-sm font-medium">WhatsApp (opcional)</label>
-          <input name="whatsapp" type="tel" class="input" placeholder="(31) 9 9999-9999" />
+          <input name="whatsapp" type="tel" class="input" placeholder="(31) 9 9999-9999" autocomplete="tel" />
         </div>
+
+        <!-- Honeypot anti-spam (opcional) -->
+        <div class="hidden">
+          <label>Deixe em branco</label>
+          <input type="text" name="website" tabindex="-1" autocomplete="off" />
+        </div>
+
         <div class="flex items-start gap-3">
           <input required id="consent" name="consent" type="checkbox" class="mt-1" />
           <label for="consent" class="text-sm text-slate-600">Concordo em receber o mini e-book e comunicações relacionadas (LGPD). Você pode sair quando quiser.</label>
@@ -144,7 +174,7 @@
     <div class="rounded-2xl border border-slate-200 bg-emerald-50 p-6 text-center">
       <h3 class="text-xl font-semibold">Pronto para organizar sua semana?</h3>
       <p class="mt-2">Baixe agora o mini e-book gratuito e dê o primeiro passo rumo a hábitos mais saudáveis.</p>
-      <a href="#form" class="btn btn-primary mt-4">Baixar agora</a>
+      <a href="#baixar" class="btn btn-primary mt-4">Baixar agora</a>
     </div>
   </section>
 
@@ -152,124 +182,105 @@
     © <span id="year"></span> Marmitas Fitness. Todos os direitos reservados. | Feito com ❤ por você
   </footer>
 
-  <!-- Configuração: cole aqui seu webhook do n8n -->
+  <!-- ====== SCRIPT (mantido e reforçado) ====== -->
   <script>
-  // ======= CONFIGURAÇÕES =======
-  const WEBHOOK_URL = "https://n8n.gjrservicos.com.br/webhook-test/lead-marmitasfitness";
-  const DOWNLOAD_URL = "https://drive.google.com/uc?export=download&id=1iVLuu0PatOO8jpNTmc3LJzPMbg9fjIZc";
+    // ======= CONFIGURAÇÕES =======
+    const WEBHOOK_URL = "https://webhook.gjrservicos.com.br/webhook/lead-marmitasfitness";
+    const DOWNLOAD_URL = "https://drive.google.com/uc?export=download&id=1iVLuu0PatOO8jpNTmc3LJzPMbg9fjIZc";
 
-  // ======= HELPERS =======
-  const getUTMs = () => {
-    const params = new URLSearchParams(window.location.search);
-    return {
-      utm_source: params.get('utm_source') || '',
-      utm_medium: params.get('utm_medium') || '',
-      utm_campaign: params.get('utm_campaign') || '',
-      utm_content: params.get('utm_content') || '',
-      utm_term: params.get('utm_term') || ''
-    };
-  };
-
-  const statusEl = () => document.getElementById('status');
-  const btnEl = () => document.getElementById('submitBtn');
-  const setStatus = (msg, ok = true) => {
-    const el = statusEl();
-    el.textContent = msg;
-    el.classList.remove('hidden');
-    el.classList.toggle('text-emerald-700', ok);
-    el.classList.toggle('text-rose-600', !ok);
-  };
-
-  // Garante que o listener só é registrado depois do DOM pronto
-  document.addEventListener('DOMContentLoaded', () => {
-    console.log('[LP] DOM pronto');
-    const yearEl = document.getElementById('year');
-    if (yearEl) yearEl.textContent = new Date().getFullYear();
-
-    const form = document.getElementById('leadForm');
-    if (!form) {
-      console.error('[LP] Form #leadForm não encontrado!');
-      return;
-    }
-    // Evita que a validação nativa bloqueie o disparo sem mostrar nada
-    form.setAttribute('novalidate', 'novalidate');
-
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      console.log('[LP] Submit disparado');
-
-      const data = Object.fromEntries(new FormData(form).entries());
-      // Checkbox marcado vem como 'on'
-      const hasConsent = !!data.consent;
-      if (!hasConsent) {
-        setStatus('É necessário aceitar o consentimento (LGPD).', false);
-        console.warn('[LP] Consentimento ausente – bloqueando envio');
-        return;
-      }
-
-      btnEl().disabled = true; btnEl().textContent = 'Enviando...';
-
-      const payload = {
-        name: data.name || '',
-        email: data.email || '',
-        whatsapp: data.whatsapp || '',
-        consent: true,
-        ...getUTMs(),
-        page: window.location.href,
-        ts: new Date().toISOString()
+    // ======= HELPERS =======
+    const getUTMs = () => {
+      const params = new URLSearchParams(window.location.search);
+      return {
+        utm_source: params.get('utm_source') || '',
+        utm_medium: params.get('utm_medium') || '',
+        utm_campaign: params.get('utm_campaign') || '',
+        utm_content: params.get('utm_content') || '',
+        utm_term: params.get('utm_term') || ''
       };
+    };
 
-      console.log('[LP] Enviando para webhook:', WEBHOOK_URL, payload);
+    const statusEl = () => document.getElementById('status');
+    const btnEl = () => document.getElementById('submitBtn');
+    const setStatus = (msg, ok = true) => {
+      const el = statusEl();
+      el.textContent = msg;
+      el.classList.remove('hidden');
+      el.classList.toggle('text-emerald-700', ok);
+      el.classList.toggle('text-rose-600', !ok);
+    };
 
-      try {
-        // Preflight/POST devem aparecer na aba Network
-        const res = await fetch(WEBHOOK_URL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload),
-          // mode: 'cors' // (padrão) – explicitar se quiser
+    document.addEventListener('DOMContentLoaded', () => {
+      const yearEl = document.getElementById('year');
+      if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+      // máscara simples de WhatsApp
+      const wEl = document.querySelector('input[name="whatsapp"]');
+      if (wEl) {
+        wEl.addEventListener('input', () => {
+          let v = wEl.value.replace(/\D/g,'').slice(0,11);
+          if (v.length > 6) wEl.value = `(${v.slice(0,2)}) ${v.slice(2,7)}-${v.slice(7)}`;
+          else if (v.length > 2) wEl.value = `(${v.slice(0,2)}) ${v.slice(2)}`;
+          else wEl.value = v;
         });
-
-        const bodyTxt = await res.text();
-        console.log('[LP] Resposta do webhook:', res.status, bodyTxt);
-
-        if (!res.ok) throw new Error('Falha no envio: ' + res.status);
-
-        setStatus('Prontinho! Enviamos o mini e-book para seu e-mail/WhatsApp.');
-        if (DOWNLOAD_URL && DOWNLOAD_URL !== '#') {
-          setTimeout(() => { window.location.href = DOWNLOAD_URL; }, 600);
-        }
-      } catch (err) {
-        console.error('[LP] Erro no envio', err);
-        setStatus('Ocorreu um erro ao enviar. Tente novamente em instantes.', false);
-      } finally {
-        btnEl().disabled = false; btnEl().textContent = 'Quero baixar grátis';
-        form.reset();
       }
+
+      const form = document.getElementById('leadForm');
+      if (!form) return;
+      form.setAttribute('novalidate', 'novalidate');
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const data = Object.fromEntries(new FormData(form).entries());
+
+        // honeypot
+        if ((data.website || '').trim()) {
+          setStatus('Erro no envio. Tente novamente.', false);
+          return;
+        }
+
+        if (!data.consent) {
+          setStatus('É necessário aceitar o consentimento (LGPD).', false);
+          return;
+        }
+
+        btnEl().disabled = true; btnEl().textContent = 'Enviando...';
+
+        const payload = {
+          name: data.name || '',
+          email: data.email || '',
+          whatsapp: data.whatsapp || '',
+          consent: true,
+          ...getUTMs(),
+          page: window.location.href,
+          ts: new Date().toISOString()
+        };
+
+        try {
+          const res = await fetch(WEBHOOK_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+
+          const bodyTxt = await res.text();
+
+          if (!res.ok) throw new Error('Falha no envio: ' + res.status + ' - ' + bodyTxt);
+
+          setStatus('Prontinho! Enviamos o mini e-book para seu e-mail/WhatsApp.');
+          if (DOWNLOAD_URL && DOWNLOAD_URL !== '#') {
+            setTimeout(() => { window.location.href = DOWNLOAD_URL; }, 600);
+          }
+        } catch (err) {
+          console.error(err);
+          setStatus('Ocorreu um erro ao enviar. Tente novamente em instantes.', false);
+        } finally {
+          btnEl().disabled = false; btnEl().textContent = 'Quero baixar grátis';
+          form.reset();
+        }
+      });
     });
-  });
-</script>
-
-  <!-- PIXELS (opcionais) -->
-  <!-- Meta Pixel
-  <script>
-    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-    n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
-    n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
-    t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window, document,'script',
-    'https://connect.facebook.net/en_US/fbevents.js');
-    fbq('init', 'SEU_ID_PIXEL');
-    fbq('track', 'PageView');
   </script>
-  <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=SEU_ID_PIXEL&ev=PageView&noscript=1"/></noscript>
-  -->
-
-  <!-- Google Tag (opcional)
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-XXXXXXXXXX');
-  </script>
-  -->
 </body>
 </html>
