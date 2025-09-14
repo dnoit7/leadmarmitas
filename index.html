@@ -17,6 +17,7 @@
   <script src="https://cdn.tailwindcss.com"></script>
 
   <style>
+    html { scroll-behavior: smooth; }
     .glass { backdrop-filter: blur(8px); background: rgba(255,255,255,0.75); }
     .shadow-soft { box-shadow: 0 10px 30px rgba(2, 6, 23, 0.08); }
     .input { @apply w-full rounded-xl border border-slate-200 px-4 py-3 outline-none focus:ring-2 focus:ring-emerald-400 focus:border-emerald-400; }
@@ -27,8 +28,8 @@
 </head>
 <body id="top" class="bg-gradient-to-b from-emerald-50 to-white text-slate-800">
 
-  <!-- ===== HEADER NOVO ===== -->
-  <header class="bg-gradient-to-r from-emerald-600 to-cyan-600 shadow-lg">
+  <!-- ===== HEADER NOVO (sticky + mobile) ===== -->
+  <header class="sticky top-0 z-40 bg-gradient-to-r from-emerald-600 to-cyan-600 shadow-lg">
     <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
       <!-- Logo -->
       <a href="#top" class="flex items-center space-x-2 text-white font-bold text-xl tracking-wide">
@@ -38,18 +39,39 @@
         <span>Marmitas Fitness</span>
       </a>
 
-      <!-- Navegação -->
-      <nav class="hidden space-x-8 md:flex">
-        <a href="#beneficios" class="text-white/90 hover:text-white transition">Benefícios</a>
-        <a href="#recebe" class="text-white/90 hover:text-white transition">O que você recebe</a>
-        <a href="#baixar" class="text-white/90 hover:text-white transition">Baixar grátis</a>
+      <!-- Navegação desktop -->
+      <nav class="hidden items-center space-x-8 md:flex">
+        <a href="#beneficios" class="text-white/90 hover:text-white transition nav-link">Benefícios</a>
+        <a href="#recebe" class="text-white/90 hover:text-white transition nav-link">O que você recebe</a>
+        <a href="#form" class="text-white/90 hover:text-white transition nav-link">Baixar grátis</a>
       </nav>
 
       <!-- CTA desktop -->
-      <a href="#form" class="hidden md:inline-block rounded-xl bg-white px-4 py-2 font-semibold text-emerald-700 shadow hover:bg-emerald-100 transition">
+      <a href="#form" class="hidden md:inline-block rounded-xl bg-white px-4 py-2 font-semibold text-emerald-700 shadow hover:bg-emerald-100 transition nav-link">
         Quero meu e-book
       </a>
+
+      <!-- Botão hambúrguer -->
+      <button id="hamburger" aria-label="Abrir menu" aria-expanded="false"
+              class="md:hidden inline-flex h-10 w-10 items-center justify-center rounded-md text-white hover:bg-white/10 focus:outline-none">
+        <svg id="iconOpen" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 block" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+        <svg id="iconClose" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
     </div>
+
+    <!-- Menu mobile -->
+    <nav id="mobileMenu" class="md:hidden hidden border-t border-white/10 bg-white/10 backdrop-blur">
+      <div class="mx-auto max-w-7xl px-6 py-3 space-y-1">
+        <a href="#beneficios" class="block rounded-lg px-3 py-2 text-white/90 hover:bg-white/10 nav-link">Benefícios</a>
+        <a href="#recebe" class="block rounded-lg px-3 py-2 text-white/90 hover:bg-white/10 nav-link">O que você recebe</a>
+        <a href="#form" class="block rounded-lg px-3 py-2 text-white/90 hover:bg-white/10 nav-link">Baixar grátis</a>
+        <a href="#form" class="block rounded-lg bg-white px-3 py-2 font-semibold text-emerald-700 shadow hover:bg-emerald-100 nav-link">Quero meu e-book</a>
+      </div>
+    </nav>
   </header>
 
   <!-- Hero -->
@@ -132,7 +154,7 @@
   </section>
 
   <!-- Formulário -->
-  <section id="baixar" class="mx-auto max-w-3xl px-4 py-12">
+  <section id="form" class="mx-auto max-w-3xl px-4 py-12">
     <div class="rounded-3xl border border-slate-200 bg-white p-6 md:p-10 shadow-soft">
       <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-800">📥 Baixar grátis agora</h2>
       <p class="mt-2 text-slate-600">Preencha seus dados para receber o PDF imediatamente.</p>
@@ -174,7 +196,7 @@
     <div class="rounded-2xl border border-slate-200 bg-emerald-50 p-6 text-center">
       <h3 class="text-xl font-semibold">Pronto para organizar sua semana?</h3>
       <p class="mt-2">Baixe agora o mini e-book gratuito e dê o primeiro passo rumo a hábitos mais saudáveis.</p>
-      <a href="#baixar" class="btn btn-primary mt-4">Baixar agora</a>
+      <a href="#form" class="btn btn-primary mt-4 nav-link">Baixar agora</a>
     </div>
   </section>
 
@@ -182,7 +204,7 @@
     © <span id="year"></span> Marmitas Fitness. Todos os direitos reservados. | Feito com ❤ por você
   </footer>
 
-  <!-- ====== SCRIPT (mantido e reforçado) ====== -->
+  <!-- ====== SCRIPT ====== -->
   <script>
     // ======= CONFIGURAÇÕES =======
     const WEBHOOK_URL = "https://webhook.gjrservicos.com.br/webhook/lead-marmitasfitness";
@@ -210,9 +232,50 @@
       el.classList.toggle('text-rose-600', !ok);
     };
 
+    // ======= UI: menu mobile + rolagem suave com compensação do header =======
+    const headerOffset = () => {
+      const h = document.querySelector('header');
+      return h ? h.getBoundingClientRect().height : 0;
+    };
+    const smoothScroll = (hash) => {
+      const t = document.querySelector(hash);
+      if (!t) return;
+      const top = t.getBoundingClientRect().top + window.pageYOffset - (headerOffset() + 8);
+      window.scrollTo({ top, behavior: 'smooth' });
+    };
+
     document.addEventListener('DOMContentLoaded', () => {
       const yearEl = document.getElementById('year');
       if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+      // hambúrguer
+      const btn = document.getElementById('hamburger');
+      const menu = document.getElementById('mobileMenu');
+      const iconOpen = document.getElementById('iconOpen');
+      const iconClose = document.getElementById('iconClose');
+
+      const toggleMenu = () => {
+        const open = menu.classList.contains('hidden');
+        menu.classList.toggle('hidden');
+        btn.setAttribute('aria-expanded', String(open));
+        iconOpen.classList.toggle('hidden');
+        iconClose.classList.toggle('hidden');
+      };
+
+      if (btn && menu) {
+        btn.addEventListener('click', toggleMenu);
+      }
+
+      // rolagem suave para todos os links com .nav-link
+      document.querySelectorAll('a.nav-link[href^="#"]').forEach(a => {
+        a.addEventListener('click', (e) => {
+          e.preventDefault();
+          const hash = a.getAttribute('href');
+          // fecha menu mobile ao clicar
+          if (menu && !menu.classList.contains('hidden')) toggleMenu();
+          smoothScroll(hash);
+        });
+      });
 
       // máscara simples de WhatsApp
       const wEl = document.querySelector('input[name="whatsapp"]');
@@ -225,6 +288,7 @@
         });
       }
 
+      // ======= SUBMIT =======
       const form = document.getElementById('leadForm');
       if (!form) return;
       form.setAttribute('novalidate', 'novalidate');
@@ -265,7 +329,6 @@
           });
 
           const bodyTxt = await res.text();
-
           if (!res.ok) throw new Error('Falha no envio: ' + res.status + ' - ' + bodyTxt);
 
           setStatus('Prontinho! Enviamos o mini e-book para seu e-mail/WhatsApp.');
