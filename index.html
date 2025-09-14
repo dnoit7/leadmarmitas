@@ -1,93 +1,435 @@
-<!-- Formulário (MODERNO) -->
-<section id="form" class="mx-auto max-w-3xl px-4 py-12">
-  <div class="rounded-3xl border border-slate-200 bg-white p-6 md:p-10 shadow-soft">
-    <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-800">📥 Baixar grátis agora</h2>
-    <p class="mt-2 text-slate-600">Preencha seus dados para receber o PDF imediatamente.</p>
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Marmitas Fitness Econômicas – Baixe o Mini E-book Gratuito</title>
+  <meta name="description" content="Baixe gratuitamente o mini e-book com 5 receitas de marmitas fitness econômicas. Emagreça gastando pouco e organize sua semana!" />
 
-    <form id="leadForm" class="mt-8 space-y-5">
-      <!-- Nome -->
-      <div class="relative">
-        <svg class="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A9 9 0 1118.88 6.196M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+  <!-- Open Graph -->
+  <meta property="og:title" content="Marmitas Fitness Econômicas – Mini E-book Gratuito" />
+  <meta property="og:description" content="5 receitas prontas + checklist de compras. Baixe grátis!" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?q=80&w=1200&auto=format&fit=crop" />
+  <meta property="og:locale" content="pt_BR" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Estilos mínimos sem @apply -->
+  <style>
+    html { scroll-behavior: smooth; }
+    .glass { backdrop-filter: blur(8px); background: rgba(255,255,255,0.75); }
+    .shadow-soft { box-shadow: 0 10px 30px rgba(2, 6, 23, 0.08); }
+    /* Ícones com tamanho fixo */
+    .icon-20 { width: 20px; height: 20px; }
+    .icon-24 { width: 24px; height: 24px; }
+  </style>
+</head>
+<body id="top" class="bg-gradient-to-b from-emerald-50 to-white text-slate-800">
+
+  <!-- ===== HEADER (sticky + mobile) ===== -->
+  <header class="sticky top-0 z-40 bg-gradient-to-r from-emerald-600 to-cyan-600 shadow-lg">
+    <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
+      <!-- Logo -->
+      <a href="#top" class="flex items-center space-x-2 text-white font-bold text-xl tracking-wide">
+        <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-white/20 font-extrabold text-lg">
+          Mf
+        </div>
+        <span>Marmitas Fitness</span>
+      </a>
+
+      <!-- Navegação desktop -->
+      <nav class="hidden items-center space-x-8 md:flex">
+        <a href="#beneficios" class="text-white/90 hover:text-white transition nav-link">Benefícios</a>
+        <a href="#recebe" class="text-white/90 hover:text-white transition nav-link">O que você recebe</a>
+        <a href="#form" class="text-white/90 hover:text-white transition nav-link">Baixar grátis</a>
+      </nav>
+
+      <!-- CTA desktop -->
+      <a href="#form" class="hidden md:inline-block rounded-xl bg-white px-4 py-2 font-semibold text-emerald-700 shadow hover:bg-emerald-100 transition nav-link">
+        Quero meu e-book
+      </a>
+
+      <!-- Botão hambúrguer -->
+      <button id="hamburger" aria-label="Abrir menu" aria-expanded="false"
+              class="md:hidden inline-flex h-10 w-10 items-center justify-center rounded-md text-white hover:bg-white/10 focus:outline-none">
+        <svg id="iconOpen" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 block" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
         </svg>
-        <input
-          required
-          name="name"
-          type="text"
-          placeholder=" "
-          autocomplete="name"
-          class="peer block w-full rounded-2xl border-2 border-slate-300 bg-white px-12 py-4 text-base text-slate-900 outline-none transition focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100"
-        />
-        <label class="pointer-events-none absolute left-12 top-1/2 -translate-y-1/2 bg-white px-1 text-slate-500 transition-all
-                      peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base
-                      peer-focus:-top-2 peer-focus:text-xs peer-focus:text-emerald-700">
-          Nome
-        </label>
-      </div>
-
-      <!-- E-mail -->
-      <div class="relative">
-        <svg class="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l9 6 9-6M4 6h16v12H4z"/>
+        <svg id="iconClose" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
         </svg>
-        <input
-          required
-          name="email"
-          type="email"
-          placeholder=" "
-          autocomplete="email"
-          class="peer block w-full rounded-2xl border-2 border-slate-300 bg-white px-12 py-4 text-base text-slate-900 outline-none transition focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100"
-        />
-        <label class="pointer-events-none absolute left-12 top-1/2 -translate-y-1/2 bg-white px-1 text-slate-500 transition-all
-                      peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base
-                      peer-focus:-top-2 peer-focus:text-xs peer-focus:text-emerald-700">
-          E-mail
-        </label>
-      </div>
+      </button>
+    </div>
 
-      <!-- WhatsApp -->
+    <!-- Menu mobile -->
+    <nav id="mobileMenu" class="md:hidden hidden border-t border-white/10 bg-white/10 backdrop-blur">
+      <div class="mx-auto max-w-7xl px-6 py-3 space-y-1">
+        <a href="#beneficios" class="block rounded-lg px-3 py-2 text-white/90 hover:bg-white/10 nav-link">Benefícios</a>
+        <a href="#recebe" class="block rounded-lg px-3 py-2 text-white/90 hover:bg-white/10 nav-link">O que você recebe</a>
+        <a href="#form" class="block rounded-lg px-3 py-2 text-white/90 hover:bg-white/10 nav-link">Baixar grátis</a>
+        <a href="#form" class="block rounded-lg bg-white px-3 py-2 font-semibold text-emerald-700 shadow hover:bg-emerald-100 nav-link">Quero meu e-book</a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- TOAST -->
+  <div id="toast" class="fixed inset-x-0 top-4 z-50 mx-auto hidden w-[92%] max-w-md rounded-xl px-4 py-3 text-center text-sm font-semibold shadow-soft"></div>
+
+  <!-- Hero -->
+  <section class="mx-auto max-w-6xl px-4 pt-8 pb-10 md:pt-12">
+    <div class="grid items-center gap-10 md:grid-cols-2">
+      <div>
+        <span class="inline-flex items-center rounded-full bg-emerald-50 px-3 py-1 text-emerald-700 text-sm">Mini E-book gratuito</span>
+        <h1 class="mt-4 text-4xl font-extrabold leading-tight md:text-5xl">
+          Marmitas Fitness Econômicas<br class="hidden md:block"/>
+          para <span class="text-emerald-700">emagrecer gastando pouco</span>
+        </h1>
+        <p class="mt-4 text-lg text-slate-700">
+          Baixe agora um guia prático com <strong>5 receitas</strong> + <strong>checklist de compras</strong> para organizar sua semana de forma saudável e econômica.
+        </p>
+        <ul class="mt-6 space-y-2 text-slate-700">
+          <li class="flex gap-3"><span>✅</span><span>Receitas simples e rápidas (até 20 min)</span></li>
+          <li class="flex gap-3"><span>✅</span><span>Ingredientes baratos e fáceis de achar</span></li>
+          <li class="flex gap-3"><span>✅</span><span>Checklist de mercado para 5 dias</span></li>
+        </ul>
+        <div class="mt-6 flex flex-wrap items-center gap-3 text-sm text-slate-500">
+          <span>🔒 Sem spam</span>
+          <span>•</span>
+          <span>📩 Envio imediato por e-mail/WhatsApp</span>
+        </div>
+      </div>
       <div class="relative">
-        <svg class="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M22 16.92V21a1 1 0 01-1.37.93l-3.56-1.37a10 10 0 111.87-1.5L21 20.5"/>
-        </svg>
-        <input
-          name="whatsapp"
-          type="tel"
-          placeholder=" "
-          autocomplete="tel"
-          class="peer block w-full rounded-2xl border-2 border-slate-300 bg-white px-12 py-4 text-base text-slate-900 outline-none transition focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100"
-        />
-        <label class="pointer-events-none absolute left-12 top-1/2 -translate-y-1/2 bg-white px-1 text-slate-500 transition-all
-                      peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base
-                      peer-focus:-top-2 peer-focus:text-xs peer-focus:text-emerald-700">
-          WhatsApp (opcional)
-        </label>
+        <div class="glass shadow-soft rounded-3xl p-6 md:p-8">
+          <img alt="Capa do mini e-book" class="mb-4 h-52 w-full rounded-2xl object-cover" src="https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=1200&auto=format&fit=crop"/>
+          <ul class="grid grid-cols-2 gap-3 text-sm">
+            <li class="rounded-xl border border-slate-200 p-3">+5 receitas fit</li>
+            <li class="rounded-xl border border-slate-200 p-3">Checklist pronto</li>
+            <li class="rounded-xl border border-slate-200 p-3">Passo a passo</li>
+            <li class="rounded-xl border border-slate-200 p-3">Armazenamento</li>
+          </ul>
+        </div>
       </div>
+    </div>
+  </section>
 
-      <!-- Honeypot anti-spam -->
-      <div class="hidden">
-        <label>Deixe em branco</label>
-        <input type="text" name="website" tabindex="-1" autocomplete="off" />
+  <!-- Benefícios -->
+  <section id="beneficios" class="bg-white py-16">
+    <div class="mx-auto max-w-4xl px-6 text-center">
+      <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-800">🚀 Benefícios exclusivos</h2>
+      <p class="mt-4 text-lg text-slate-600">Descubra por que nossas marmitas vão transformar sua rotina</p>
+    </div>
+
+    <div class="mx-auto mt-10 grid max-w-6xl gap-6 px-4 md:grid-cols-3">
+      <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-soft">
+        <h3 class="text-lg font-semibold">Economia real</h3>
+        <p class="mt-2 text-slate-600">Pague menos no mercado e fuja do delivery. Rotas de compras inteligentes e sazonais.</p>
       </div>
-
-      <!-- Consentimento -->
-      <div class="flex items-start gap-3 rounded-2xl border-2 border-slate-200 p-4">
-        <input required id="consent" name="consent" type="checkbox" class="mt-1 h-5 w-5 rounded border-slate-300 text-emerald-600 focus:ring-emerald-500" />
-        <label for="consent" class="text-sm text-slate-700">
-          Concordo em receber o mini e-book e comunicações relacionadas (LGPD). Você pode sair quando quiser.
-        </label>
+      <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-soft">
+        <h3 class="text-lg font-semibold">Praticidade</h3>
+        <p class="mt-2 text-slate-600">Cozinhe em 2h para a semana toda. Receitas rápidas e padronizadas.</p>
       </div>
-
-      <!-- Status + Botão -->
-      <div class="space-y-3">
-        <button id="submitBtn" type="submit"
-                class="btn-primary w-full rounded-2xl px-6 py-4 text-base font-semibold shadow-soft transition active:scale-[.99]">
-          Quero baixar grátis
-        </button>
-        <p id="status" class="hidden text-center text-sm"></p>
+      <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-soft">
+        <h3 class="text-lg font-semibold">Resultados</h3>
+        <p class="mt-2 text-slate-600">Controle de porções e refeições balanceadas que ajudam no emagrecimento.</p>
       </div>
-    </form>
+    </div>
+  </section>
 
-    <p class="mt-5 text-center text-xs text-slate-500">Ao enviar, você concorda com nossa política de privacidade.</p>
-  </div>
-</section>
+  <!-- O que você recebe -->
+  <section id="recebe" class="mx-auto max-w-6xl px-4 pb-4">
+    <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-soft">
+      <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-800">🎁 O que você recebe</h2>
+      <div class="mt-6 grid gap-6 md:grid-cols-2">
+        <ul class="space-y-2">
+          <li>• 5 receitas completas (ingredientes + preparo)</li>
+          <li>• Checklist de compras para 5 dias</li>
+          <li>• Dicas de armazenamento e congelamento</li>
+        </ul>
+        <ul class="space-y-2">
+          <li>• Acesso imediato por e-mail/WhatsApp</li>
+          <li>• Sem custo, sem pegadinhas</li>
+          <li>• Convite para o e-book completo (opcional)</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Formulário (MODERNO + validação + ícones fixos) -->
+  <section id="form" class="mx-auto max-w-3xl px-4 py-12">
+    <div class="rounded-3xl border border-slate-200 bg-white p-6 md:p-10 shadow-soft">
+      <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-800">📥 Baixar grátis agora</h2>
+      <p class="mt-2 text-slate-600">Preencha seus dados para receber o PDF imediatamente.</p>
+
+      <form id="leadForm" class="mt-8 space-y-5">
+        <!-- Nome -->
+        <div class="relative">
+          <svg class="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 icon-20 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" width="20" height="20">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A9 9 0 1118.88 6.196M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+          </svg>
+          <input
+            required name="name" type="text" placeholder=" "
+            autocomplete="name"
+            class="peer block w-full rounded-2xl border-2 border-slate-300 bg-white px-12 py-4 text-base text-slate-900 outline-none transition focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100"
+          />
+          <label class="pointer-events-none absolute left-12 top-1/2 -translate-y-1/2 bg-white px-1 text-slate-500 transition-all
+                        peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base
+                        peer-focus:-top-2 peer-focus:text-xs peer-focus:text-emerald-700">
+            Nome
+          </label>
+        </div>
+
+        <!-- E-mail -->
+        <div class="relative">
+          <svg class="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 icon-20 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" width="20" height="20">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l9 6 9-6M4 6h16v12H4z"/>
+          </svg>
+          <input
+            required name="email" type="email" placeholder=" "
+            autocomplete="email"
+            class="peer block w-full rounded-2xl border-2 border-slate-300 bg-white px-12 py-4 text-base text-slate-900 outline-none transition focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100"
+          />
+          <label class="pointer-events-none absolute left-12 top-1/2 -translate-y-1/2 bg-white px-1 text-slate-500 transition-all
+                        peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base
+                        peer-focus:-top-2 peer-focus:text-xs peer-focus:text-emerald-700">
+            E-mail
+          </label>
+        </div>
+
+        <!-- WhatsApp -->
+        <div class="relative">
+          <svg class="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 icon-20 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" width="20" height="20">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M22 16.92V21a1 1 0 01-1.37.93l-3.56-1.37a10 10 0 111.87-1.5L21 20.5"/>
+          </svg>
+          <input
+            name="whatsapp" type="tel" placeholder=" "
+            autocomplete="tel"
+            class="peer block w-full rounded-2xl border-2 border-slate-300 bg-white px-12 py-4 text-base text-slate-900 outline-none transition focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100"
+          />
+          <label class="pointer-events-none absolute left-12 top-1/2 -translate-y-1/2 bg-white px-1 text-slate-500 transition-all
+                        peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base
+                        peer-focus:-top-2 peer-focus:text-xs peer-focus:text-emerald-700">
+            WhatsApp (opcional)
+          </label>
+        </div>
+
+        <!-- Honeypot anti-spam -->
+        <div class="hidden">
+          <label>Deixe em branco</label>
+          <input type="text" name="website" tabindex="-1" autocomplete="off" />
+        </div>
+
+        <!-- Consentimento -->
+        <div class="flex items-start gap-3 rounded-2xl border-2 border-slate-200 p-4">
+          <input required id="consent" name="consent" type="checkbox" class="mt-1 h-5 w-5 rounded border-slate-300 text-emerald-600 focus:ring-emerald-500" />
+          <label for="consent" class="text-sm text-slate-700">
+            Concordo em receber o mini e-book e comunicações relacionadas (LGPD). Você pode sair quando quiser.
+          </label>
+        </div>
+
+        <!-- Status + Botão -->
+        <div class="space-y-3">
+          <button id="submitBtn" type="submit"
+                  class="w-full rounded-2xl bg-emerald-600 px-6 py-4 text-base font-semibold text-white shadow-soft transition hover:bg-emerald-700 active:scale-[.99]">
+            Quero baixar grátis
+          </button>
+          <p id="status" class="hidden text-center text-sm"></p>
+        </div>
+      </form>
+
+      <p class="mt-5 text-center text-xs text-slate-500">Ao enviar, você concorda com nossa política de privacidade.</p>
+    </div>
+  </section>
+
+  <!-- CTA final -->
+  <section class="mx-auto max-w-6xl px-4 pb-16">
+    <div class="rounded-2xl border border-slate-200 bg-emerald-50 p-6 text-center">
+      <h3 class="text-xl font-semibold">Pronto para organizar sua semana?</h3>
+      <p class="mt-2">Baixe agora o mini e-book gratuito e dê o primeiro passo rumo a hábitos mais saudáveis.</p>
+      <a href="#form" class="inline-flex items-center justify-center rounded-xl bg-emerald-600 px-5 py-3 font-medium text-white shadow-soft transition hover:bg-emerald-700 nav-link">Baixar agora</a>
+    </div>
+  </section>
+
+  <footer class="border-t border-slate-200 py-6 text-center text-sm text-slate-500">
+    © <span id="year"></span> Marmitas Fitness. Todos os direitos reservados. | Feito com ❤ por você
+  </footer>
+
+  <!-- ====== SCRIPT ====== -->
+  <script>
+    // ======= CONFIGURAÇÕES =======
+    const WEBHOOK_URL = "https://webhook.gjrservicos.com.br/webhook/lead-marmitasfitness";
+    const DOWNLOAD_URL = "https://drive.google.com/uc?export=download&id=1iVLuu0PatOO8jpNTmc3LJzPMbg9fjIZc";
+
+    // ======= HELPERS =======
+    const getUTMs = () => {
+      const params = new URLSearchParams(window.location.search);
+      return {
+        utm_source: params.get('utm_source') || '',
+        utm_medium: params.get('utm_medium') || '',
+        utm_campaign: params.get('utm_campaign') || '',
+        utm_content: params.get('utm_content') || '',
+        utm_term: params.get('utm_term') || ''
+      };
+    };
+
+    const toastEl = () => document.getElementById('toast');
+    function showToast(msg, ok = true) {
+      const el = toastEl();
+      if (!el) return;
+      el.textContent = msg;
+      el.className = `fixed inset-x-0 top-4 z-50 mx-auto w-[92%] max-w-md rounded-xl px-4 py-3 text-center text-sm font-semibold shadow-soft ${ok ? 'bg-emerald-600 text-white' : 'bg-rose-600 text-white'}`;
+      el.classList.remove('hidden');
+      clearTimeout(el._t);
+      el._t = setTimeout(() => el.classList.add('hidden'), 4000);
+    }
+
+    function setFieldError(input, hasError) {
+      input.classList.toggle('border-rose-500', hasError);
+      input.classList.toggle('focus:border-rose-500', hasError);
+      input.classList.toggle('focus:ring-rose-100', hasError);
+    }
+
+    const isEmail = (v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(v || '').trim());
+
+    // ======= UI: menu mobile + rolagem suave compensando header =======
+    const headerOffset = () => {
+      const h = document.querySelector('header');
+      return h ? h.getBoundingClientRect().height : 0;
+    };
+    const smoothScroll = (hash) => {
+      const t = document.querySelector(hash);
+      if (!t) return;
+      const top = t.getBoundingClientRect().top + window.pageYOffset - (headerOffset() + 8);
+      window.scrollTo({ top, behavior: 'smooth' });
+    };
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const yearEl = document.getElementById('year');
+      if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+      // hambúrguer
+      const btn = document.getElementById('hamburger');
+      const menu = document.getElementById('mobileMenu');
+      const iconOpen = document.getElementById('iconOpen');
+      const iconClose = document.getElementById('iconClose');
+
+      const toggleMenu = () => {
+        const open = menu.classList.contains('hidden');
+        menu.classList.toggle('hidden');
+        btn.setAttribute('aria-expanded', String(open));
+        iconOpen.classList.toggle('hidden');
+        iconClose.classList.toggle('hidden');
+      };
+      if (btn && menu) btn.addEventListener('click', toggleMenu);
+
+      // rolagem suave para links
+      document.querySelectorAll('a.nav-link[href^="#"]').forEach(a => {
+        a.addEventListener('click', (e) => {
+          e.preventDefault();
+          const hash = a.getAttribute('href');
+          if (menu && !menu.classList.contains('hidden')) toggleMenu();
+          smoothScroll(hash);
+        });
+      });
+
+      // máscara WhatsApp
+      const wEl = document.querySelector('input[name="whatsapp"]');
+      if (wEl) {
+        wEl.addEventListener('input', () => {
+          let v = wEl.value.replace(/\D/g,'').slice(0,11);
+          if (v.length > 6) wEl.value = `(${v.slice(0,2)}) ${v.slice(2,7)}-${v.slice(7)}`;
+          else if (v.length > 2) wEl.value = `(${v.slice(0,2)}) ${v.slice(2)}`;
+          else wEl.value = v;
+        });
+      }
+
+      // ======= SUBMIT =======
+      const form = document.getElementById('leadForm');
+      const btnSubmit = document.getElementById('submitBtn');
+      const statusP = document.getElementById('status');
+      if (!form) return;
+      form.setAttribute('novalidate', 'novalidate');
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const data = Object.fromEntries(new FormData(form).entries());
+
+        // referencia inputs
+        const nameI = form.querySelector('input[name="name"]');
+        const emailI = form.querySelector('input[name="email"]');
+
+        // limpa erros
+        setFieldError(nameI, false);
+        setFieldError(emailI, false);
+
+        // honeypot
+        if ((data.website || '').trim()) {
+          showToast('Erro no envio. Tente novamente.', false);
+          return;
+        }
+
+        // validações
+        let invalid = false;
+        if (!data.name || String(data.name).trim().length < 2) {
+          setFieldError(nameI, true);
+          invalid = true;
+        }
+        if (!isEmail(data.email)) {
+          setFieldError(emailI, true);
+          invalid = true;
+        }
+        if (!data.consent) {
+          showToast('É necessário aceitar o consentimento (LGPD).', false);
+          invalid = true;
+        }
+        if (invalid) {
+          if (statusP) statusP.classList.add('hidden');
+          return;
+        }
+
+        // feedback UI
+        if (btnSubmit) {
+          btnSubmit.disabled = true;
+          btnSubmit.textContent = 'Enviando...';
+        }
+        if (statusP) statusP.classList.add('hidden');
+
+        const payload = {
+          name: data.name || '',
+          email: data.email || '',
+          whatsapp: data.whatsapp || '',
+          consent: true,
+          ...getUTMs(),
+          page: window.location.href,
+          ts: new Date().toISOString()
+        };
+
+        try {
+          const res = await fetch(WEBHOOK_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+          const bodyTxt = await res.text();
+          if (!res.ok) throw new Error('Falha no envio: ' + res.status + ' - ' + bodyTxt);
+
+          showToast('Prontinho! Enviamos o mini e-book para seu e-mail/WhatsApp.', true);
+          if (DOWNLOAD_URL && DOWNLOAD_URL !== '#') {
+            setTimeout(() => { window.location.href = DOWNLOAD_URL; }, 600);
+          }
+        } catch (err) {
+          console.error(err);
+          showToast('Ocorreu um erro ao enviar. Tente novamente em instantes.', false);
+        } finally {
+          if (btnSubmit) {
+            btnSubmit.disabled = false;
+            btnSubmit.textContent = 'Quero baixar grátis';
+          }
+          form.reset();
+        }
+      });
+    });
+  </script>
+</body>
+</html>
