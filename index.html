@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Smart Marmita – Baixe o Mini E-book Gratuito</title>
+  <title>SmartMarmita – Baixe o Mini E-book Gratuito</title>
   <meta name="description" content="Baixe gratuitamente o mini e-book com 5 receitas de marmitas fitness econômicas. Emagreça gastando pouco e organize sua semana!" />
-  <meta property="og:title" content="Smart Marmita – Mini E-book Gratuito" />
+  <meta property="og:title" content="SmartMarmita – Mini E-book Gratuito" />
   <meta property="og:description" content="5 receitas prontas + checklist de compras. Baixe grátis!" />
   <meta property="og:type" content="website" />
   <meta property="og:locale" content="pt_BR" />
@@ -13,112 +13,65 @@
   <style>
     html { scroll-behavior: smooth; }
 
-    /* ====== Core brand ====== */
     :root{
       --brand-dark:#006241; /* verde principal */
       --brand:#00844D;      /* verde vivo */
       --accent:#FFD43B;     /* amarelo */
-      --ink:#0b1324;        /* azul bem escuro para contraste */
+      --ink:#0b1324;        /* texto principal */
+      --muted:#475569;      /* texto secundário */
+      --surface:#ffffff;    /* cards */
+      --bg:#F7FAF9;         /* fundo claro */
+      --stroke:#E6ECEA;     /* borda suave */
     }
 
-    /* ====== Candy/Neon vibe helpers ====== */
-    .bg-grid {
-      background-image: radial-gradient(rgba(255,255,255,0.06) 1px, transparent 1px);
-      background-size: 18px 18px;
-      background-position: 0 0;
-    }
+    body { background: var(--bg); color: var(--ink); }
+
     .glass {
-      background: linear-gradient(135deg, rgba(255,255,255,.12), rgba(255,255,255,.04));
+      background: rgba(255,255,255,.7);
       backdrop-filter: blur(10px);
-      border: 1px solid rgba(255,255,255,.18);
+      border: 1px solid var(--stroke);
     }
-    .glow {
-      box-shadow:
-        0 0 0 2px rgba(255, 212, 59, .2),
-        0 10px 30px rgba(255, 212, 59, .25),
-        inset 0 0 0 1px rgba(0,0,0,.04);
-    }
-    .glow-green {
-      box-shadow:
-        0 0 0 2px rgba(0,132,77,.15),
-        0 10px 30px rgba(0,132,77,.28),
-        inset 0 0 0 1px rgba(0,0,0,.04);
-    }
-    .shadow-soft { box-shadow: 0 10px 30px rgba(2,6,23,.12); }
+    .shadow-soft { box-shadow: 0 10px 30px rgba(2,6,23,.06); }
+    .lift { transition: transform .25s ease, box-shadow .25s ease; }
+    .lift:hover { transform: translateY(-3px); box-shadow: 0 14px 40px rgba(2,6,23,.10); }
 
-    /* ====== Animated gradient text ====== */
-    .gradient-title {
-      background: linear-gradient(90deg, var(--accent), #fff29a, var(--accent));
-      background-size: 200% 100%;
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      animation: sheen 6s linear infinite;
-      filter: drop-shadow(0 6px 24px rgba(255,212,59,.25));
-    }
-    @keyframes sheen {
-      0% { background-position: 0% 50%; }
-      50%{ background-position: 100% 50%; }
-      100%{ background-position: 0% 50%; }
-    }
-
-    /* ====== Focus ring “neon” ====== */
     .focus-neon:focus{
       outline: none;
-      box-shadow: 0 0 0 4px rgba(0,132,77,.22);
+      box-shadow: 0 0 0 4px rgba(0,132,77,.18);
       border-color: var(--brand) !important;
     }
-
-    /* ====== Card hover lift ====== */
-    .lift { transition: transform .25s ease, box-shadow .25s ease; }
-    .lift:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(2,6,23,.18); }
-
-    /* ====== Blob decor ====== */
-    .blob {
-      position: absolute; filter: blur(50px); opacity: .35; pointer-events: none;
-      mix-blend-mode: screen;
-    }
+    .badge { display:inline-block; border:1px solid var(--stroke); background:#fff; padding:6px 10px; border-radius:999px; font-size:12px; color:var(--muted);}
   </style>
 </head>
-<body id="top" class="min-h-screen bg-[var(--ink)] text-white relative overflow-x-hidden">
-
-  <!-- Decorative blobs -->
-  <div class="blob w-[520px] h-[520px] rounded-full bg-[var(--brand)] -top-24 -left-24"></div>
-  <div class="blob w-[420px] h-[420px] rounded-full bg-[var(--accent)] top-24 -right-20"></div>
-
-  <!-- SUBTLE GRID OVERLAY -->
-  <div class="fixed inset-0 bg-grid pointer-events-none opacity-40"></div>
+<body id="top" class="min-h-screen overflow-x-hidden">
 
   <!-- HEADER -->
-  <header class="sticky top-0 z-40">
-    <div class="mx-auto max-w-7xl px-6 py-4">
-      <div class="glass rounded-2xl shadow-soft flex items-center justify-between px-4 py-3">
-        <a href="#top" class="flex items-center gap-3 font-bold text-lg">
-          <img src="assets/img/smartmarmitafavicon.svg" alt="SmartMarmita" class="h-9 w-9"/>
-          <span class="tracking-wide">SmartMarmita</span>
+  <header class="sticky top-0 z-40 bg-white/85 backdrop-blur border-b border-[var(--stroke)]">
+    <div class="mx-auto max-w-7xl px-6 py-3">
+      <div class="flex items-center justify-between">
+        <a href="#top" class="font-extrabold text-xl tracking-wide text-[var(--brand-dark)]">
+          SmartMarmita
         </a>
         <nav class="hidden md:flex items-center gap-8 text-sm">
-          <a href="#beneficios" class="text-white/80 hover:text-white transition">Benefícios</a>
-          <a href="#recebe" class="text-white/80 hover:text-white transition">O que você recebe</a>
-          <a href="#form" class="text-white/80 hover:text-white transition">Baixar grátis</a>
+          <a href="#beneficios" class="text-[var(--muted)] hover:text-[var(--ink)] transition">Benefícios</a>
+          <a href="#recebe" class="text-[var(--muted)] hover:text-[var(--ink)] transition">O que você recebe</a>
+          <a href="#form" class="text-[var(--muted)] hover:text-[var(--ink)] transition">Baixar grátis</a>
         </nav>
         <div class="flex items-center gap-3">
-          <a href="#form" class="hidden md:inline-block rounded-xl bg-[var(--accent)] px-4 py-2 font-semibold text-[var(--ink)] hover:scale-[1.02] transition glow">Quero meu e-book</a>
-          <button id="hamburger" aria-label="Abrir menu" aria-expanded="false" class="md:hidden inline-flex h-10 w-10 items-center justify-center rounded-md hover:bg-white/10">
+          <a href="#form" class="hidden md:inline-block rounded-xl bg-[var(--brand)] px-4 py-2 font-semibold text-white hover:brightness-105 transition shadow-soft">Quero meu e-book</a>
+          <button id="hamburger" aria-label="Abrir menu" aria-expanded="false" class="md:hidden inline-flex h-10 w-10 items-center justify-center rounded-md hover:bg-black/5">
             <svg id="iconOpen" class="h-6 w-6 block" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
             <svg id="iconClose" class="h-6 w-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
           </button>
         </div>
       </div>
     </div>
-    <nav id="mobileMenu" class="md:hidden hidden">
-      <div class="mx-auto max-w-7xl px-6">
-        <div class="glass rounded-2xl shadow-soft mt-2 p-3">
-          <a href="#beneficios" class="block rounded-lg px-3 py-2 hover:bg-white/10">Benefícios</a>
-          <a href="#recebe" class="block rounded-lg px-3 py-2 hover:bg-white/10">O que você recebe</a>
-          <a href="#form" class="block rounded-lg px-3 py-2 hover:bg-white/10">Baixar grátis</a>
-          <a href="#form" class="block rounded-lg bg-[var(--accent)] mt-1 px-3 py-2 font-semibold text-[var(--ink)] text-center glow">Quero meu e-book</a>
-        </div>
+    <nav id="mobileMenu" class="md:hidden hidden border-t border-[var(--stroke)] bg-white">
+      <div class="mx-auto max-w-7xl px-6 py-3 space-y-1">
+        <a href="#beneficios" class="block rounded-lg px-3 py-2 hover:bg-black/5">Benefícios</a>
+        <a href="#recebe" class="block rounded-lg px-3 py-2 hover:bg-black/5">O que você recebe</a>
+        <a href="#form" class="block rounded-lg px-3 py-2 hover:bg-black/5">Baixar grátis</a>
+        <a href="#form" class="block rounded-lg bg-[var(--brand)] px-3 py-2 font-semibold text-white text-center shadow-soft">Quero meu e-book</a>
       </div>
     </nav>
   </header>
@@ -126,53 +79,57 @@
   <!-- TOAST -->
   <div id="toast" class="fixed inset-x-0 top-4 z-50 mx-auto hidden w-[92%] max-w-md rounded-xl px-4 py-3 text-center text-sm font-semibold shadow-soft"></div>
 
-  <!-- HERO -->
+  <!-- HERO (claro) -->
   <section id="hero" class="relative">
     <div class="absolute inset-0">
-      <!-- Sua imagem hero por cima do fundo dark + overlay -->
       <img src="assets/img/vista-superior-de-tigelas-de-salada-vegetariana-com-cuscuz-e-copia-espaco.jpg"
-           alt="Capa do Mini E-book Smart Marmita" class="w-full h-full object-cover opacity-25">
-      <div class="absolute inset-0 bg-gradient-to-b from-transparent via-[rgba(0,0,0,.35)] to-[rgba(0,0,0,.65)]"></div>
+           alt="Capa do Mini E-book Smart Marmita" class="w-full h-full object-cover opacity-15">
+      <div class="absolute inset-0 bg-gradient-to-b from-transparent to-white"></div>
     </div>
-    <div class="relative z-10 mx-auto max-w-5xl px-6 py-28 md:py-40 text-center">
-      <h1 class="text-4xl md:text-6xl font-extrabold mb-6 gradient-title">Organize sua semana com o SmartMarmita</h1>
-      <p class="mx-auto max-w-2xl text-white/85 text-lg md:text-xl">
+    <div class="relative z-10 mx-auto max-w-6xl px-6 py-20 md:py-28 text-center">
+      <div class="flex items-center justify-center gap-2 mb-3">
+        <span class="badge">Receitas econômicas</span>
+        <span class="badge">Checklist e cardápio</span>
+        <span class="badge">Download imediato</span>
+      </div>
+      <h1 class="text-4xl md:text-6xl font-extrabold mb-4 text-[var(--ink)]">Organize sua semana com o SmartMarmita</h1>
+      <p class="mx-auto max-w-2xl text-[var(--muted)] text-lg md:text-xl">
         Receba grátis o mini e-book com receitas práticas, saudáveis e econômicas para transformar sua rotina alimentar.
       </p>
       <div class="mt-8 flex items-center justify-center gap-3">
-        <a href="#form" class="rounded-full bg-[var(--accent)] px-8 py-4 font-semibold text-[var(--ink)] hover:scale-[1.02] transition glow">Quero meu e-book</a>
-        <a href="#beneficios" class="rounded-full border border-white/20 px-6 py-4 font-semibold text-white/90 hover:bg-white/10 transition">Ver benefícios</a>
+        <a href="#form" class="rounded-full bg-[var(--brand)] px-8 py-4 font-semibold text-white hover:brightness-105 transition shadow-soft">Quero meu e-book</a>
+        <a href="#beneficios" class="rounded-full border border-[var(--stroke)] px-6 py-4 font-semibold text-[var(--ink)] hover:bg-black/5 transition">Ver benefícios</a>
       </div>
     </div>
   </section>
 
   <!-- BENEFÍCIOS -->
-  <section id="beneficios" class="py-16">
+  <section id="beneficios" class="py-14">
     <div class="mx-auto max-w-4xl px-6 text-center">
       <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight">🚀 Benefícios exclusivos</h2>
-      <p class="mt-4 text-white/80">Descubra por que nossas marmitas vão transformar sua rotina</p>
+      <p class="mt-3 text-[var(--muted)]">Descubra por que nossas marmitas vão transformar sua rotina</p>
     </div>
-    <div class="mx-auto mt-10 grid max-w-6xl gap-6 px-4 md:grid-cols-3">
-      <div class="glass rounded-2xl p-6 shadow-soft lift">
-        <h3 class="text-lg font-semibold text-[var(--accent)]">Economia real</h3>
-        <p class="mt-2 text-white/80">Pague menos no mercado e fuja do delivery. Rotas de compras inteligentes e sazonais.</p>
+    <div class="mx-auto mt-8 grid max-w-6xl gap-6 px-4 md:grid-cols-3">
+      <div class="rounded-2xl border border-[var(--stroke)] bg-[var(--surface)] p-6 shadow-soft lift">
+        <h3 class="text-lg font-semibold text-[var(--brand-dark)]">Economia real</h3>
+        <p class="mt-2 text-[var(--muted)]">Pague menos no mercado e fuja do delivery. Rotas de compras inteligentes e sazonais.</p>
       </div>
-      <div class="glass rounded-2xl p-6 shadow-soft lift">
-        <h3 class="text-lg font-semibold text-[var(--accent)]">Praticidade</h3>
-        <p class="mt-2 text-white/80">Cozinhe em 2h para a semana toda. Receitas rápidas e padronizadas.</p>
+      <div class="rounded-2xl border border-[var(--stroke)] bg-[var(--surface)] p-6 shadow-soft lift">
+        <h3 class="text-lg font-semibold text-[var(--brand-dark)]">Praticidade</h3>
+        <p class="mt-2 text-[var(--muted)]">Cozinhe em 2h para a semana toda. Receitas rápidas e padronizadas.</p>
       </div>
-      <div class="glass rounded-2xl p-6 shadow-soft lift">
-        <h3 class="text-lg font-semibold text-[var(--accent)]">Resultados</h3>
-        <p class="mt-2 text-white/80">Controle de porções e refeições balanceadas que ajudam no emagrecimento.</p>
+      <div class="rounded-2xl border border-[var(--stroke)] bg-[var(--surface)] p-6 shadow-soft lift">
+        <h3 class="text-lg font-semibold text-[var(--brand-dark)]">Resultados</h3>
+        <p class="mt-2 text-[var(--muted)]">Controle de porções e refeições balanceadas que ajudam no emagrecimento.</p>
       </div>
     </div>
   </section>
 
   <!-- O QUE VOCÊ RECEBE -->
   <section id="recebe" class="px-4 pb-6">
-    <div class="mx-auto max-w-6xl glass rounded-2xl p-6 md:p-8 shadow-soft">
+    <div class="mx-auto max-w-6xl rounded-2xl border border-[var(--stroke)] bg-[var(--surface)] p-6 md:p-8 shadow-soft">
       <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight mb-4">🎁 O que você recebe</h2>
-      <div class="mt-3 grid gap-6 md:grid-cols-2 text-white/90">
+      <div class="mt-3 grid gap-6 md:grid-cols-2 text-[var(--ink)]">
         <ul class="space-y-2">
           <li>• 5 receitas completas (ingredientes + preparo)</li>
           <li>• Checklist de compras para 5 dias</li>
@@ -187,33 +144,67 @@
     </div>
   </section>
 
+  <!-- PROVA SOCIAL -->
+  <section id="social-proof" class="py-14">
+    <div class="mx-auto max-w-6xl px-4">
+      <div class="text-center mb-8">
+        <h2 class="text-3xl font-extrabold">O que estão dizendo</h2>
+        <p class="text-[var(--muted)]">Depoimentos reais de quem já organizou a semana com o SmartMarmita</p>
+      </div>
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="rounded-2xl border border-[var(--stroke)] bg-[var(--surface)] p-6 shadow-soft">
+          <div class="text-amber-400 mb-2">★★★★★</div>
+          <p class="text-[var(--ink)]">"Economizei no mercado e parei de pedir delivery. As receitas são simples e muito gostosas!"</p>
+          <div class="mt-4 text-sm text-[var(--muted)]">— Amanda, BH</div>
+        </div>
+        <div class="rounded-2xl border border-[var(--stroke)] bg-[var(--surface)] p-6 shadow-soft">
+          <div class="text-amber-400 mb-2">★★★★★</div>
+          <p class="text-[var(--ink)]">"O planner semanal salvou minha semana corrida. Tudo prático e fácil de seguir."</p>
+          <div class="mt-4 text-sm text-[var(--muted)]">— Carlos, SP</div>
+        </div>
+        <div class="rounded-2xl border border-[var(--stroke)] bg-[var(--surface)] p-6 shadow-soft">
+          <div class="text-amber-400 mb-2">★★★★★</div>
+          <p class="text-[var(--ink)]">"Baixei o guia grátis e comprei a versão completa. Valeu cada centavo!"</p>
+          <div class="mt-4 text-sm text-[var(--muted)]">— Juliana, RJ</div>
+        </div>
+      </div>
+
+      <!-- Trust badges -->
+      <div class="mt-8 grid sm:grid-cols-3 gap-3 text-sm">
+        <div class="rounded-xl border border-[var(--stroke)] bg-[var(--surface)] p-3 text-center">🔒 Pagamento seguro</div>
+        <div class="rounded-xl border border-[var(--stroke)] bg-[var(--surface)] p-3 text-center">⚡ Download imediato</div>
+        <div class="rounded-xl border border-[var(--stroke)] bg-[var(--surface)] p-3 text-center">💬 Suporte por e-mail</div>
+      </div>
+    </div>
+  </section>
+
   <!-- FORMULÁRIO -->
   <section id="form" class="mx-auto max-w-3xl px-4 py-12">
-    <div class="glass rounded-3xl p-6 md:p-10 shadow-soft">
+    <div class="rounded-3xl border border-[var(--stroke)] bg-[var(--surface)] p-6 md:p-10 shadow-soft">
       <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight">📥 Baixar grátis agora</h2>
-      <p class="mt-2 text-white/80">Preencha seus dados para receber o PDF imediatamente.</p>
+      <p class="mt-2 text-[var(--muted)]">Preencha seus dados para receber o PDF imediatamente.</p>
 
       <form id="leadForm" class="mt-8 space-y-5" novalidate>
         <div>
-          <label for="name" class="mb-2 block text-sm font-medium text-white/85">Nome completo</label>
+          <label for="name" class="mb-2 block text-sm font-medium">Nome completo</label>
           <input id="name" name="name" type="text" autocomplete="name" required
-                 class="block w-full rounded-2xl border-2 border-white/20 bg-white/5 px-4 py-4 text-base text-white placeholder-white/50 transition focus-neon"
+                 class="block w-full rounded-2xl border-2 border-[var(--stroke)] bg-white px-4 py-4 text-base placeholder-slate-400 transition focus-neon"
                  placeholder="Ex.: Ana Silva" />
-          <p class="mt-1 hidden text-sm text-rose-400" data-error="name">Informe pelo menos 2 caracteres.</p>
+          <p class="mt-1 hidden text-sm text-rose-600" data-error="name">Informe pelo menos 2 caracteres.</p>
         </div>
 
         <div>
-          <label for="email" class="mb-2 block text-sm font-medium text-white/85">E-mail</label>
+          <label for="email" class="mb-2 block text-sm font-medium">E-mail</label>
           <input id="email" name="email" type="email" autocomplete="email" required
-                 class="block w-full rounded-2xl border-2 border-white/20 bg-white/5 px-4 py-4 text-base text-white placeholder-white/50 transition focus-neon"
+                 class="block w-full rounded-2xl border-2 border-[var(--stroke)] bg-white px-4 py-4 text-base placeholder-slate-400 transition focus-neon"
                  placeholder="voce@email.com" />
-          <p class="mt-1 hidden text-sm text-rose-400" data-error="email">Digite um e-mail válido.</p>
+          <p class="mt-1 hidden text-sm text-rose-600" data-error="email">Digite um e-mail válido.</p>
         </div>
 
         <div>
-          <label for="whatsapp" class="mb-2 block text-sm font-medium text-white/85">WhatsApp (opcional)</label>
+          <label for="whatsapp" class="mb-2 block text-sm font-medium">WhatsApp (opcional)</label>
           <input id="whatsapp" name="whatsapp" type="tel" autocomplete="tel"
-                 class="block w-full rounded-2xl border-2 border-white/20 bg-white/5 px-4 py-4 text-base text-white placeholder-white/50 transition focus-neon"
+                 class="block w-full rounded-2xl border-2 border-[var(--stroke)] bg-white px-4 py-4 text-base placeholder-slate-400 transition focus-neon"
                  placeholder="(11) 91234-5678" />
         </div>
 
@@ -222,56 +213,60 @@
           <input type="text" name="website" tabindex="-1" autocomplete="off" />
         </div>
 
-        <div class="flex items-start gap-3 rounded-2xl border-2 border-white/15 p-4 bg-white/5">
+        <div class="flex items-start gap-3 rounded-2xl border-2 border-[var(--stroke)] p-4 bg-white">
           <input id="consent" name="consent" type="checkbox" required
-                 class="mt-1 h-5 w-5 rounded border-white/30 text-[var(--brand)] focus:ring-[var(--brand)]" />
-          <label for="consent" class="text-sm text-white/85">
+                 class="mt-1 h-5 w-5 rounded border-slate-300 text-[var(--brand)] focus:ring-[var(--brand)]" />
+          <label for="consent" class="text-sm">
             Concordo em receber o mini e-book e comunicações relacionadas (LGPD). Você pode sair quando quiser.
           </label>
         </div>
 
         <div class="space-y-3">
           <button id="submitBtn" type="submit"
-                  class="w-full rounded-2xl bg-[var(--brand)] px-6 py-4 text-base font-semibold text-white transition hover:bg-[var(--brand-dark)] active:scale-[.99] disabled:opacity-70 disabled:cursor-not-allowed glow-green">
+                  class="w-full rounded-2xl bg-[var(--brand)] px-6 py-4 text-base font-semibold text-white transition hover:brightness-105 active:scale-[.99] disabled:opacity-70 disabled:cursor-not-allowed shadow-soft">
             Quero baixar grátis
           </button>
           <p id="status" class="hidden text-center text-sm"></p>
         </div>
       </form>
 
-      <p class="mt-5 text-center text-xs text-white/70">Ao enviar, você concorda com nossa política de privacidade.</p>
+      <p class="mt-5 text-center text-xs text-[var(--muted)]">Ao enviar, você concorda com nossa política de privacidade.</p>
     </div>
   </section>
 
-  <!-- CTA FINAL (grátis) -->
-  <section class="mx-auto max-w-6xl px-4 pb-10">
-    <div class="glass rounded-2xl p-6 text-center">
-      <h3 class="text-xl font-semibold">Pronto para organizar sua semana?</h3>
-      <p class="mt-2 text-white/85">Baixe agora o mini e-book gratuito e dê o primeiro passo rumo a hábitos mais saudáveis.</p>
-      <a href="#form" class="inline-flex items-center justify-center rounded-xl bg-[var(--accent)] px-5 py-3 font-medium text-[var(--ink)] transition hover:scale-[1.02] glow">
-        Baixar agora
-      </a>
+  <!-- GARANTIA -->
+  <section id="garantia" class="py-14">
+    <div class="mx-auto max-w-4xl px-4">
+      <div class="rounded-3xl border border-[var(--stroke)] bg-[#FFFDF5] p-8 shadow-soft text-center">
+        <div class="text-2xl">🛡️ <strong>Garantia incondicional de 7 dias</strong></div>
+        <p class="mt-3 text-[var(--muted)]">
+          Se você não ficar satisfeito com o conteúdo do e-book completo, devolvemos 100% do seu investimento dentro de 7 dias.
+          Sem burocracia.
+        </p>
+      </div>
     </div>
   </section>
 
   <!-- CTA PREMIUM -->
-  <section id="cta-premium-final" class="mx-auto max-w-4xl px-4 pb-20">
-    <div class="glass rounded-3xl p-8 text-center shadow-soft">
+  <section id="cta-premium-final" class="mx-auto max-w-4xl px-4 pb-16">
+    <div class="rounded-3xl border border-[var(--stroke)] bg-[var(--surface)] p-8 text-center shadow-soft">
       <h2 class="text-3xl font-extrabold">🚀 Leve sua organização para o próximo nível</h2>
-      <p class="mt-4 text-lg text-white/85">
+      <p class="mt-4 text-lg text-[var(--muted)]">
         A versão gratuita é só o começo. Com o e-book completo você terá <strong>30+ receitas econômicas</strong>,
         cardápios semanais, listas de compras e estratégias para transformar sua rotina.
       </p>
+      <div class="mt-4 text-sm text-[var(--muted)]">De <span class="line-through">R$ 67,90</span> por</div>
+      <div class="text-4xl font-black text-[var(--brand-dark)]">R$ 39,90</div>
       <a href="https://seudominio.com/checkout" target="_blank"
-         class="mt-6 inline-flex items-center justify-center rounded-2xl bg-[var(--accent)] px-8 py-4 font-semibold text-[var(--ink)] transition hover:scale-[1.02] glow">
+         class="mt-6 inline-flex items-center justify-center rounded-2xl bg-[var(--accent)] px-8 py-4 font-semibold text-[var(--ink)] transition hover:brightness-105 shadow-soft">
         💳 Comprar versão completa
       </a>
-      <p class="mt-3 text-sm text-white/70">Acesso imediato após a compra</p>
+      <p class="mt-3 text-sm text-[var(--muted)]">Acesso imediato após a compra</p>
     </div>
   </section>
 
-  <footer class="py-6 text-center text-sm text-white/60">
-    © <span id="year"></span> Smart Marmita. Todos os direitos reservados.
+  <footer class="py-6 text-center text-sm text-[var(--muted)]">
+    © <span id="year"></span> SmartMarmita. Todos os direitos reservados.
   </footer>
 
   <script>
@@ -283,13 +278,7 @@
     const isEmail = v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(v||'').trim());
     const getUTMs = () => {
       const p = new URLSearchParams(location.search);
-      return {
-        utm_source: p.get('utm_source') || '',
-        utm_medium: p.get('utm_medium') || '',
-        utm_campaign: p.get('utm_campaign') || '',
-        utm_content: p.get('utm_content') || '',
-        utm_term: p.get('utm_term') || ''
-      };
+      return { utm_source:p.get('utm_source')||'', utm_medium:p.get('utm_medium')||'', utm_campaign:p.get('utm_campaign')||'', utm_content:p.get('utm_content')||'', utm_term:p.get('utm_term')||'' };
     };
     const toast = (msg, ok=true) => {
       const el = qs('#toast'); if (!el) return;
@@ -326,7 +315,7 @@
         });
       });
 
-      // Máscara simples de WhatsApp
+      // máscara simples de WhatsApp
       const w = qs('#whatsapp');
       if (w) w.addEventListener('input', () => {
         let v = w.value.replace(/\D/g,'').slice(0,11);
@@ -374,7 +363,7 @@
         const T = setTimeout(() => controller.abort(), 10000);
 
         try {
-          const res = await fetch(WEBHOOK_URL, {
+          const res = await fetch("https://n8n.gjrservicos.com.br/webhook-test/lead-marmitasfitness", {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(payload),
