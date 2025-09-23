@@ -3,241 +3,229 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>SmartMarmita — Marmitas fitness econômicas sem complicação</title>
-  <meta name="description" content="Organize a semana com marmitas saudáveis e baratas. Baixe o mini e-book gratuito do SmartMarmita e comece hoje." />
+  <title>SmartMarmita — Organize suas marmitas e economize</title>
+  <meta name="description" content="Baixe o mini e-book gratuito do SmartMarmita e aprenda a montar marmitas fitness econômicas para a semana inteira." />
   <link rel="icon" href="smartmarmitafavicon.svg" />
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     html{scroll-behavior:smooth}
+    /* paleta leve e moderna */
     :root{
-      --brand:#00844D;      /* verde principal */
-      --brand-2:#05A67E;    /* verde secundário */
-      --accent:#FFD43B;     /* amarelo */
-      --ink:#F8FAFC;        /* texto principal */
-      --muted:#9FB0C3;      /* texto secundário */
-      --bg:#0B1020;         /* fundo */
-      --card:#12182A;       /* cards */
-      --stroke:#1E2742;     /* bordas */
-      --glow1:#00E18E; --glow2:#2BD4FF; --glow3:#FFD43B;
+      --ink:#0F172A;       /* texto principal */
+      --muted:#475569;     /* texto secundário */
+      --bg:#F8FAFC;        /* fundo */
+      --card:#FFFFFF;      /* cards */
+      --stroke:#E2E8F0;    /* bordas */
+      --brand:#0EA57A;     /* verde principal */
+      --brand-2:#0B8E69;   /* verde escuro */
+      --accent:#FFB703;    /* destaque */
     }
     body{background:var(--bg);color:var(--ink)}
-    .container-ct{max-width:1200px}
-    .aurora::before,.aurora::after{
-      content:"";position:absolute;inset:-20%;filter:blur(80px);opacity:.35;pointer-events:none;
-      background: conic-gradient(from 90deg at 50% 50%, var(--glow1), var(--glow2), var(--glow3), var(--glow1));
-      animation: spin 22s linear infinite;
-    }
-    .aurora::after{animation-direction:reverse;opacity:.28}
-    @keyframes spin{to{transform:rotate(1turn)}}
-    .card{background:var(--card);border:1px solid var(--stroke)}
-    .btn-primary{background:linear-gradient(90deg,var(--brand),var(--brand-2));}
-    .btn-primary:hover{filter:brightness(1.08)}
-    .grad-text{background:linear-gradient(90deg,#A7F3D0,#6EE7B7,#FFD43B,#60A5FA);-webkit-background-clip:text;background-clip:text;color:transparent}
-    .glass{background:rgba(18,24,42,.55);backdrop-filter:blur(12px);border:1px solid var(--stroke)}
-    .hover-lift{transition:transform .2s ease, box-shadow .2s ease}
-    .hover-lift:hover{transform:translateY(-3px);box-shadow:0 18px 40px rgba(0,0,0,.45)}
+    .container-ct{max-width:1120px}
+    .btn{display:inline-flex;align-items:center;justify-content:center;padding:.875rem 1.25rem;border-radius:14px;font-weight:600}
+    .btn-primary{background:linear-gradient(90deg,var(--brand),var(--brand-2));color:#fff}
+    .btn-primary:hover{filter:brightness(1.06)}
+    .btn-ghost{border:1px solid var(--stroke);background:#fff;color:var(--ink)}
+    .btn-ghost:hover{background:#F1F5F9}
+    .badge{display:inline-flex;align-items:center;gap:.5rem;padding:.35rem .65rem;border-radius:999px;border:1px solid var(--stroke);color:var(--muted);background:#fff}
+    .card{background:var(--card);border:1px solid var(--stroke);box-shadow:0 6px 20px rgba(15,23,42,.04)}
+    .input{border:1px solid var(--stroke);background:#fff}
+    .input:focus{outline:0;box-shadow:0 0 0 3px rgba(14,165,122,.18);border-color:#86efac}
+    .price-cut{text-decoration:line-through;opacity:.6}
   </style>
 </head>
-<body id="top" class="relative overflow-x-hidden">
+<body id="top" class="antialiased">
 
-  <!-- background blobs -->
-  <div class="aurora fixed inset-0 -z-10"></div>
-
-  <!-- HEADER -->
-  <header class="sticky top-0 z-40 border-b border-[var(--stroke)]/80 bg-[rgba(11,16,32,.7)] backdrop-blur">
-    <div class="mx-auto container-ct px-6 py-3">
+  <!-- Header -->
+  <header class="sticky top-0 z-40 border-b border-[var(--stroke)] bg-white/80 backdrop-blur">
+    <div class="mx-auto container-ct px-5 py-3">
       <div class="flex items-center justify-between">
-        <a href="#top" class="text-xl font-extrabold tracking-wide grad-text">SmartMarmita</a>
+        <a href="#top" class="text-xl font-extrabold tracking-tight">SMARTMARMITA</a>
         <nav class="hidden md:flex items-center gap-8 text-sm">
-          <a href="#produto" class="text-[var(--muted)] hover:text-white">Produto</a>
-          <a href="#como" class="text-[var(--muted)] hover:text-white">Como funciona</a>
-          <a href="#depoimentos" class="text-[var(--muted)] hover:text-white">Provas</a>
-          <a href="#form" class="text-[var(--muted)] hover:text-white">Baixar grátis</a>
+          <a href="#beneficios" class="text-[var(--muted)] hover:text-[var(--ink)]">Benefícios</a>
+          <a href="#como" class="text-[var(--muted)] hover:text-[var(--ink)]">Como funciona</a>
+          <a href="#form" class="text-[var(--muted)] hover:text-[var(--ink)]">Baixar grátis</a>
+          <a href="#oferta" class="text-[var(--muted)] hover:text-[var(--ink)]">Versão completa</a>
         </nav>
-        <div class="flex items-center gap-2">
-          <a href="#form" class="hidden md:inline-block rounded-xl btn-primary px-4 py-2 font-semibold text-white shadow">Quero meu e-book</a>
-          <button id="hamburger" aria-label="Abrir menu" aria-expanded="false" class="md:hidden inline-flex h-10 w-10 items-center justify-center rounded-md text-white hover:bg-white/10">
-            <svg id="iconOpen" class="h-6 w-6 block" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
-            <svg id="iconClose" class="h-6 w-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-          </button>
-        </div>
+        <a href="#form" class="hidden md:inline-flex btn btn-primary">Quero meu e-book</a>
+        <button id="hamburger" class="md:hidden h-10 w-10 grid place-items-center rounded-lg border border-[var(--stroke)]" aria-label="Abrir menu">
+          <svg id="iconOpen" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7h16M4 12h16M4 17h16"/></svg>
+          <svg id="iconClose" class="hidden h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
       </div>
     </div>
-    <nav id="mobileMenu" class="md:hidden hidden border-t border-[var(--stroke)] bg-[rgba(11,16,32,.9)]">
-      <div class="mx-auto container-ct px-6 py-3 space-y-1">
-        <a href="#produto" class="block rounded-lg px-3 py-2 text-[var(--muted)] hover:text-white">Produto</a>
-        <a href="#como" class="block rounded-lg px-3 py-2 text-[var(--muted)] hover:text-white">Como funciona</a>
-        <a href="#depoimentos" class="block rounded-lg px-3 py-2 text-[var(--muted)] hover:text-white">Provas</a>
-        <a href="#form" class="block rounded-lg btn-primary px-3 py-2 font-semibold text-white text-center">Quero meu e-book</a>
+    <nav id="mobileMenu" class="md:hidden hidden border-t border-[var(--stroke)] bg-white">
+      <div class="mx-auto container-ct px-5 py-3 grid gap-1 text-sm">
+        <a href="#beneficios" class="rounded-lg px-3 py-2 text-[var(--muted)] hover:bg-slate-50">Benefícios</a>
+        <a href="#como" class="rounded-lg px-3 py-2 text-[var(--muted)] hover:bg-slate-50">Como funciona</a>
+        <a href="#form" class="rounded-lg px-3 py-2 text-[var(--muted)] hover:bg-slate-50">Baixar grátis</a>
+        <a href="#oferta" class="rounded-lg px-3 py-2 text-[var(--muted)] hover:bg-slate-50">Versão completa</a>
+        <a href="#form" class="mt-1 btn btn-primary">Quero meu e-book</a>
       </div>
     </nav>
   </header>
 
+  <!-- TOAST -->
+  <div id="toast" class="fixed inset-x-0 top-4 z-50 mx-auto hidden w-[92%] max-w-md rounded-xl px-4 py-3 text-center text-sm font-semibold"></div>
+
   <!-- HERO -->
-  <section id="produto" class="relative">
-    <div class="mx-auto container-ct px-6 py-14 md:py-24 grid gap-10 md:grid-cols-2 items-center">
-      <!-- texto -->
+  <section class="relative">
+    <div class="mx-auto container-ct px-5 pt-10 pb-12 md:pt-16 md:pb-16 grid gap-10 md:grid-cols-[1.1fr_.9fr] items-center">
       <div>
-        <div class="inline-flex items-center gap-2 rounded-full border border-[var(--stroke)]/80 px-3 py-1 text-xs text-[var(--muted)]">
-          Planejamento • Receita • Economia
-        </div>
-        <h1 class="mt-5 text-4xl md:text-6xl font-extrabold leading-tight">
-          Marmitas fitness <span class="grad-text">econômicas</span> feitas em poucas horas para a semana inteira.
+        <div class="badge">Planejamento • Receita • Economia</div>
+        <h1 class="mt-4 text-4xl md:text-6xl font-extrabold leading-tight tracking-tight">
+          Marmitas fitness econômicas para a semana inteira — sem complicação.
         </h1>
-        <p class="mt-4 max-w-xl text-lg text-[var(--muted)]">
-          O e-book do SmartMarmita mostra como cozinhar, porcionar e armazenar sem desperdício. Baixe o mini e-book gratuito e comece hoje.
+        <p class="mt-4 text-lg text-[var(--muted)] max-w-xl">
+          Baixe o mini e-book gratuito do <strong>SmartMarmita</strong> e aprenda a cozinhar por blocos, porcionar e armazenar. Mais saúde, menos desperdício e mais dinheiro no bolso.
         </p>
-        <div class="mt-8 flex flex-wrap items-center gap-3">
-          <a href="#form" class="rounded-full btn-primary px-7 py-4 font-semibold text-white shadow">Baixar grátis</a>
-          <a href="#como" class="rounded-full border border-[var(--stroke)] px-6 py-4 font-semibold text-white hover:bg-white/10 transition">Como funciona</a>
+        <div class="mt-7 flex flex-wrap items-center gap-3">
+          <a href="#form" class="btn btn-primary">Baixar mini e-book grátis</a>
+          <a href="#oferta" class="btn btn-ghost">Ver versão completa</a>
         </div>
-        <div class="mt-8 flex items-center gap-6 text-sm text-[var(--muted)]">
-          <span>⭐️⭐️⭐️⭐️⭐️ 4.9/5</span>
+        <div class="mt-6 flex flex-wrap items-center gap-6 text-sm text-[var(--muted)]">
+          <span>⭐️⭐️⭐️⭐️⭐️ 4,9/5</span>
           <span>+5.000 downloads</span>
           <span>Economia média R$ 300/mês</span>
         </div>
       </div>
-      <!-- mock do produto -->
-      <div class="relative">
-        <div class="absolute -inset-6 rounded-3xl blur-2xl opacity-40" style="background:radial-gradient(600px circle at 30% 30%, rgba(0,225,142,.35), transparent 50%), radial-gradient(600px circle at 70% 70%, rgba(43,212,255,.35), transparent 50%)"></div>
-        <div class="relative card rounded-3xl p-4 md:p-6 shadow-xl hover-lift">
-          <img src="assets/img/mock-capa-ebook.png" alt="Capa do e-book SmartMarmita" class="w-full rounded-2xl object-cover">
-          <div class="mt-4 flex items-center justify-between">
-            <div>
-              <div class="text-sm text-[var(--muted)]">Mini e-book gratuito</div>
-              <div class="font-semibold">5 receitas • checklist • cardápio</div>
-            </div>
-            <a href="#form" class="rounded-xl btn-primary px-4 py-2 font-semibold text-white">Baixar</a>
-          </div>
+
+      <!-- “cartão” do produto (tipográfico) -->
+      <div class="card rounded-2xl p-6 md:p-8">
+        <div class="text-sm text-[var(--muted)]">Mini e-book gratuito</div>
+        <h3 class="mt-2 text-2xl font-bold">5 receitas • checklist • cardápio semanal</h3>
+        <p class="mt-2 text-[var(--muted)]">Receba agora no seu e-mail e comece hoje.</p>
+        <a href="#form" class="mt-6 btn btn-primary w-full">Quero receber</a>
+        <div class="mt-4 text-xs text-[var(--muted)]">Sem spam. Você pode sair quando quiser.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Benefícios -->
+  <section id="beneficios" class="py-8 md:py-12">
+    <div class="mx-auto container-ct px-5">
+      <h2 class="text-2xl md:text-3xl font-extrabold">Por que o SmartMarmita funciona</h2>
+      <div class="mt-6 grid gap-4 md:grid-cols-3">
+        <div class="card rounded-xl p-5">
+          <h3 class="font-bold">Economia real</h3>
+          <p class="mt-1 text-[var(--muted)]">Lista enxuta, aproveitamento total dos ingredientes e zero desperdício.</p>
+        </div>
+        <div class="card rounded-xl p-5">
+          <h3 class="font-bold">Tempo sob controle</h3>
+          <p class="mt-1 text-[var(--muted)]">Cozinhe por blocos e deixe 5 dias prontos em poucas horas.</p>
+        </div>
+        <div class="card rounded-xl p-5">
+          <h3 class="font-bold">Resultados visíveis</h3>
+          <p class="mt-1 text-[var(--muted)]">Macros equilibrados, porções certas e constância na rotina.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- logos / social proof -->
-  <section class="py-10">
-    <div class="mx-auto container-ct px-6">
-      <div class="text-center text-[var(--muted)] text-sm">Visto em</div>
-      <div class="mt-4 grid grid-cols-2 sm:grid-cols-4 gap-6 opacity-80">
-        <div class="card rounded-xl p-4 text-center">Vida Saudável</div>
-        <div class="card rounded-xl p-4 text-center">Economize+</div>
-        <div class="card rounded-xl p-4 text-center">NutriHoje</div>
-        <div class="card rounded-xl p-4 text-center">FitNews</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- diferenciais full-bleed -->
-  <section class="py-14">
-    <div class="mx-auto container-ct px-6 grid gap-6 md:grid-cols-3">
-      <div class="card rounded-3xl p-6 md:p-8">
-        <h3 class="text-xl font-bold">Economia real</h3>
-        <p class="mt-2 text-[var(--muted)]">Lista inteligente, compra sazonal, aproveitamento total dos ingredientes.</p>
-        <img src="assets/img/diff-1.jpg" class="mt-6 rounded-2xl object-cover" alt="">
-      </div>
-      <div class="card rounded-3xl p-6 md:p-8">
-        <h3 class="text-xl font-bold">Rotina simplificada</h3>
-        <p class="mt-2 text-[var(--muted)]">Pré-preparo em blocos, porcionamento e armazenamento sem segredo.</p>
-        <img src="assets/img/diff-2.jpg" class="mt-6 rounded-2xl object-cover" alt="">
-      </div>
-      <div class="card rounded-3xl p-6 md:p-8">
-        <h3 class="text-xl font-bold">Resultados</h3>
-        <p class="mt-2 text-[var(--muted)]">Macros equilibrados, controle de porções e constância na semana.</p>
-        <img src="assets/img/diff-3.jpg" class="mt-6 rounded-2xl object-cover" alt="">
-      </div>
-    </div>
-  </section>
-
-  <!-- COMO FUNCIONA -->
-  <section id="como" class="py-16">
-    <div class="mx-auto container-ct px-6">
-      <h2 class="text-3xl md:text-4xl font-extrabold text-center">Como funciona</h2>
-      <div class="mt-10 grid gap-6 md:grid-cols-3">
-        <div class="glass rounded-2xl p-6">
-          <div class="text-sm text-[var(--muted)]">Passo 1</div>
+  <!-- Como funciona -->
+  <section id="como" class="py-8 md:py-12">
+    <div class="mx-auto container-ct px-5">
+      <h2 class="text-2xl md:text-3xl font-extrabold">Como funciona</h2>
+      <div class="mt-6 grid gap-4 md:grid-cols-3">
+        <div class="card rounded-xl p-5">
+          <div class="text-xs text-[var(--muted)]">Passo 1</div>
           <h3 class="mt-1 font-bold">Compre certo</h3>
-          <p class="mt-2 text-[var(--muted)]">Lista objetiva para 5 dias. Nada de sobras caras.</p>
+          <p class="mt-1 text-[var(--muted)]">Lista objetiva para 5 dias. Nada de sobras caras.</p>
         </div>
-        <div class="glass rounded-2xl p-6">
-          <div class="text-sm text-[var(--muted)]">Passo 2</div>
+        <div class="card rounded-xl p-5">
+          <div class="text-xs text-[var(--muted)]">Passo 2</div>
           <h3 class="mt-1 font-bold">Cozinhe por blocos</h3>
-          <p class="mt-2 text-[var(--muted)]">Proteínas, carboidratos e legumes em paralelo para ganhar tempo.</p>
+          <p class="mt-1 text-[var(--muted)]">Proteínas, carboidratos e legumes em paralelo, sem estresse.</p>
         </div>
-        <div class="glass rounded-2xl p-6">
-          <div class="text-sm text-[var(--muted)]">Passo 3</div>
+        <div class="card rounded-xl p-5">
+          <div class="text-xs text-[var(--muted)]">Passo 3</div>
           <h3 class="mt-1 font-bold">Porcione & armazene</h3>
-          <p class="mt-2 text-[var(--muted)]">Porções equilibradas e conservação correta para a semana.</p>
+          <p class="mt-1 text-[var(--muted)]">Porções equilibradas, conservação correta e praticidade na semana.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- DEPOIMENTOS -->
-  <section id="depoimentos" class="py-14">
-    <div class="mx-auto container-ct px-6">
-      <h3 class="text-center text-2xl font-bold">Histórias reais</h3>
-      <div class="mt-8 grid gap-6 md:grid-cols-3">
-        <div class="card rounded-2xl p-6">
-          <p class="text-sm text-[var(--muted)]">“Passei a cozinhar no domingo e nunca mais pedi delivery na semana. Economizei sem sofrer.”</p>
-          <div class="mt-3 text-sm font-semibold">— Paula S.</div>
+  <!-- Oferta / CTA de preço -->
+  <section id="oferta" class="py-10">
+    <div class="mx-auto container-ct px-5">
+      <div class="card rounded-2xl p-6 md:p-8 text-center">
+        <div class="badge mx-auto">Versão completa</div>
+        <h3 class="mt-3 text-3xl font-extrabold">Leve sua organização para o próximo nível</h3>
+        <p class="mt-2 text-[var(--muted)]">30+ receitas, cardápios prontos, listas de compras e estratégias de economia.</p>
+        <div class="mt-6 flex items-center justify-center gap-3 text-lg">
+          <span class="price-cut">R$ 67,90</span>
+          <span class="text-3xl font-extrabold text-[var(--brand)]">R$ 37,90</span>
         </div>
-        <div class="card rounded-2xl p-6">
-          <p class="text-sm text-[var(--muted)]">“Planejamento simples e direto. O mini e-book já trouxe resultado.”</p>
-          <div class="mt-3 text-sm font-semibold">— Diego M.</div>
+        <div class="mt-6 flex flex-wrap items-center justify-center gap-3">
+          <a id="buyNow" href="#" class="btn btn-primary">Comprar agora por R$ 37,90</a>
+          <a href="#form" class="btn btn-ghost">Quero testar grátis</a>
         </div>
-        <div class="card rounded-2xl p-6">
-          <p class="text-sm text-[var(--muted)]">“As porções equilibradas ajudaram muito no emagrecimento.”</p>
-          <div class="mt-3 text-sm font-semibold">— Larissa V.</div>
-        </div>
+        <p class="mt-3 text-sm text-[var(--muted)]">Acesso imediato • Suporte por e-mail • Garantia de 7 dias</p>
       </div>
     </div>
   </section>
 
-  <!-- CTA PAGOU/garantia -->
-  <section class="py-10">
-    <div class="mx-auto container-ct px-6">
-      <div class="card rounded-3xl p-8 md:p-10 text-center">
-        <div class="inline-flex items-center gap-2 rounded-full border border-[var(--stroke)]/80 px-3 py-1 text-xs text-[var(--muted)]">Versão completa</div>
-        <h3 class="mt-3 text-3xl font-extrabold">Leve a organização para o próximo nível</h3>
-        <p class="mt-2 text-[var(--muted)]">30+ receitas, cardápios, listas de compra e estratégias de economia.</p>
-        <a href="#form" class="mt-6 inline-flex items-center justify-center rounded-full btn-primary px-8 py-4 font-semibold text-white shadow">Quero começar</a>
-        <p class="mt-3 text-sm text-[var(--muted)]">Compra segura com <span class="text-[var(--accent)] font-semibold">7 dias</span> de garantia.</p>
+  <!-- FAQ compacto -->
+  <section class="py-8 md:py-12">
+    <div class="mx-auto container-ct px-5">
+      <h2 class="text-2xl md:text-3xl font-extrabold">Perguntas frequentes</h2>
+      <div class="mt-6 grid gap-4 md:grid-cols-2">
+        <details class="card rounded-xl p-5">
+          <summary class="font-semibold cursor-pointer">O mini e-book é realmente gratuito?</summary>
+          <p class="mt-2 text-[var(--muted)]">Sim. Basta preencher o formulário e você recebe o PDF no seu e-mail.</p>
+        </details>
+        <details class="card rounded-xl p-5">
+          <summary class="font-semibold cursor-pointer">A versão completa vale a pena?</summary>
+          <p class="mt-2 text-[var(--muted)]">Inclui 30+ receitas, cardápios e listas prontas. Ideal para manter constância e economizar mais.</p>
+        </details>
+        <details class="card rounded-xl p-5">
+          <summary class="font-semibold cursor-pointer">Funciona para iniciantes?</summary>
+          <p class="mt-2 text-[var(--muted)]">Sim. O método é simples, com passo a passo e ingredientes acessíveis.</p>
+        </details>
+        <details class="card rounded-xl p-5">
+          <summary class="font-semibold cursor-pointer">Posso cancelar os e-mails?</summary>
+          <p class="mt-2 text-[var(--muted)]">Claro. Você pode sair da lista quando quiser com 1 clique.</p>
+        </details>
       </div>
     </div>
   </section>
 
-  <!-- FORMULÁRIO -->
-  <section id="form" class="py-14">
-    <div class="mx-auto container-ct px-6">
-      <div class="glass rounded-3xl p-6 md:p-10">
-        <h2 class="text-3xl md:text-4xl font-extrabold">Baixar mini e-book gratuito</h2>
+  <!-- Formulário -->
+  <section id="form" class="py-10 md:py-14">
+    <div class="mx-auto container-ct px-5">
+      <div class="card rounded-2xl p-6 md:p-8">
+        <h2 class="text-2xl md:text-3xl font-extrabold">Baixar mini e-book gratuito</h2>
         <p class="mt-2 text-[var(--muted)]">Preencha e receba o PDF imediatamente.</p>
 
-        <form id="leadForm" class="mt-8 grid gap-5 md:grid-cols-2">
-          <input required name="name" type="text" autocomplete="name"
-            class="md:col-span-1 rounded-2xl border border-[var(--stroke)] bg-[rgba(10,15,30,.6)] px-4 py-4 text-[var(--ink)] placeholder:text-[var(--muted)]"
-            placeholder="Seu nome completo" />
-          <input required name="email" type="email" autocomplete="email"
-            class="md:col-span-1 rounded-2xl border border-[var(--stroke)] bg-[rgba(10,15,30,.6)] px-4 py-4 text-[var(--ink)] placeholder:text-[var(--muted)]"
-            placeholder="Seu melhor e-mail" />
-          <input name="whatsapp" type="tel" autocomplete="tel"
-            class="md:col-span-1 rounded-2xl border border-[var(--stroke)] bg-[rgba(10,15,30,.6)] px-4 py-4 text-[var(--ink)] placeholder:text-[var(--muted)]"
-            placeholder="WhatsApp (opcional)" />
-          <label class="md:col-span-1 flex items-start gap-3 rounded-2xl border border-[var(--stroke)] p-4">
+        <form id="leadForm" class="mt-6 grid gap-4 md:grid-cols-2">
+          <div class="grid gap-2">
+            <label class="text-sm font-medium">Nome</label>
+            <input required name="name" type="text" autocomplete="name" class="input rounded-xl px-4 py-3" placeholder="Seu nome completo" />
+          </div>
+          <div class="grid gap-2">
+            <label class="text-sm font-medium">E-mail</label>
+            <input required name="email" type="email" autocomplete="email" class="input rounded-xl px-4 py-3" placeholder="voce@email.com" />
+          </div>
+          <div class="grid gap-2 md:col-span-2">
+            <label class="text-sm font-medium">WhatsApp (opcional)</label>
+            <input name="whatsapp" type="tel" autocomplete="tel" class="input rounded-xl px-4 py-3" placeholder="(11) 90000-0000" />
+          </div>
+          <label class="md:col-span-2 flex items-start gap-3 rounded-xl border border-[var(--stroke)] p-4">
             <input required id="consent" name="consent" type="checkbox" class="mt-1 h-5 w-5 rounded border-[var(--stroke)] text-[var(--brand)] focus:ring-[var(--brand)]">
-            <span class="text-sm text-[var(--muted)]">Concordo em receber o mini e-book e comunicações (LGPD). Posso sair quando quiser.</span>
+            <span class="text-sm text-[var(--muted)]">Concordo em receber o mini e-book e comunicações relacionadas (LGPD). Posso sair quando quiser.</span>
           </label>
 
           <!-- honeypot -->
           <div class="hidden"><input type="text" name="website" tabindex="-1" autocomplete="off" /></div>
 
           <div class="md:col-span-2 grid gap-3">
-            <button id="submitBtn" type="submit" class="w-full rounded-2xl btn-primary px-6 py-4 text-base font-semibold text-white shadow">Quero baixar grátis</button>
+            <button id="submitBtn" type="submit" class="btn btn-primary w-full">Quero baixar grátis</button>
             <p id="status" class="hidden text-center text-sm"></p>
           </div>
         </form>
 
-        <p class="mt-5 text-center text-xs text-[var(--muted)]">Ao enviar, você concorda com nossa política de privacidade.</p>
+        <p class="mt-4 text-center text-xs text-[var(--muted)]">Ao enviar, você concorda com nossa política de privacidade.</p>
       </div>
     </div>
   </section>
@@ -246,59 +234,58 @@
     © <span id="year"></span> SmartMarmita. Todos os direitos reservados.
   </footer>
 
-  <!-- TOAST -->
-  <div id="toast" class="fixed inset-x-0 top-4 z-50 mx-auto hidden w-[92%] max-w-md rounded-xl px-4 py-3 text-center text-sm font-semibold"></div>
-
   <script>
-    // Ajuste aqui:
-    const WEBHOOK_URL = "https://n8n.gjrservicos.com.br/webhook-test/lead-marmitasfitness";
-    const DOWNLOAD_URL = "https://drive.google.com/uc?export=download&id=1iVLuu0PatOO8jpNTmc3LJzPMbg9fjIZc";
+    // ======= CONFIG =======
+    const WEBHOOK_URL = "https://n8n.seu-dominio.com/webhook/lead-marmitasfitness"; // troque
+    const DOWNLOAD_URL = "https://drive.google.com/uc?export=download&id=SUA_ID_AQUI"; // troque
+    const CHECKOUT_URL = "https://sua-plataforma.com/checkout/smartmarmita"; // troque
 
-    // helpers
+    // ======= UI helpers =======
     const toastEl = () => document.getElementById('toast');
     function showToast(msg, ok = true) {
       const el = toastEl(); if (!el) return;
       el.textContent = msg;
-      el.className = `fixed inset-x-0 top-4 z-50 mx-auto w-[92%] max-w-md rounded-xl px-4 py-3 text-center text-sm font-semibold ${ok ? 'bg-[var(--brand-2)] text-white' : 'bg-rose-600 text-white'}`;
+      el.className = `fixed inset-x-0 top-4 z-50 mx-auto w-[92%] max-w-md rounded-xl px-4 py-3 text-center text-sm font-semibold ${ok ? 'bg-[var(--brand)] text-white' : 'bg-rose-600 text-white'}`;
       el.classList.remove('hidden');
-      clearTimeout(el._t); el._t = setTimeout(() => el.classList.add('hidden'), 3800);
+      clearTimeout(el._t); el._t = setTimeout(() => el.classList.add('hidden'), 3600);
     }
     const isEmail = (v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(v||'').trim());
     const getUTMs = () => {
-      const p=new URLSearchParams(location.search);
+      const p = new URLSearchParams(location.search);
       return {utm_source:p.get('utm_source')||'',utm_medium:p.get('utm_medium')||'',utm_campaign:p.get('utm_campaign')||'',utm_content:p.get('utm_content')||'',utm_term:p.get('utm_term')||''};
     };
+
+    // ======= Header / Mobile =======
     const headerOffset = () => { const h=document.querySelector('header'); return h? h.getBoundingClientRect().height:0; };
     const smoothScroll = (hash) => { const t=document.querySelector(hash); if(!t) return; const top=t.getBoundingClientRect().top+pageYOffset-(headerOffset()+8); scrollTo({top,behavior:'smooth'}); };
 
     document.addEventListener('DOMContentLoaded', () => {
       document.getElementById('year').textContent = new Date().getFullYear();
 
-      // mobile menu
       const btn = document.getElementById('hamburger');
       const menu = document.getElementById('mobileMenu');
       const iconOpen = document.getElementById('iconOpen');
       const iconClose = document.getElementById('iconClose');
       const toggleMenu = () => {
-        const open = menu.classList.contains('hidden');
         menu.classList.toggle('hidden');
-        btn.setAttribute('aria-expanded', String(open));
         iconOpen.classList.toggle('hidden'); iconClose.classList.toggle('hidden');
       };
       if (btn && menu) btn.addEventListener('click', toggleMenu);
-
-      // anchors
       document.querySelectorAll('a[href^="#"]').forEach(a => {
         a.addEventListener('click', (e) => {
           const hash = a.getAttribute('href');
           if (!hash || hash === '#') return;
           e.preventDefault();
-          if (menu && !menu.classList.contains('hidden')) toggleMenu();
+          if (!menu.classList.contains('hidden')) toggleMenu();
           smoothScroll(hash);
         });
       });
 
-      // mask whatsapp
+      // botão comprar
+      const buy = document.getElementById('buyNow');
+      if (buy) buy.href = CHECKOUT_URL;
+
+      // máscara simples para WhatsApp
       const wEl = document.querySelector('input[name="whatsapp"]');
       if (wEl) wEl.addEventListener('input', () => {
         let v = wEl.value.replace(/\D/g,'').slice(0,11);
@@ -307,7 +294,7 @@
         else wEl.value = v;
       });
 
-      // form
+      // formulário
       const form = document.getElementById('leadForm');
       const btnSubmit = document.getElementById('submitBtn');
       const statusP = document.getElementById('status');
@@ -319,29 +306,37 @@
         const data = Object.fromEntries(new FormData(form).entries());
         if ((data.website || '').trim()) { showToast('Erro no envio. Tente novamente.', false); return; }
 
-        // validate
+        // validação simples
         let invalid=false;
-        if (!data.name || String(data.name).trim().length<2) invalid=true;
-        if (!isEmail(data.email)) invalid=true;
-        if (!data.consent) { showToast('É necessário aceitar o consentimento (LGPD).', false); invalid=true; }
+        if (!data.name || String(data.name).trim().length < 2) invalid = true;
+        if (!isEmail(data.email)) invalid = true;
+        if (!data.consent) { showToast('É necessário aceitar o consentimento (LGPD).', false); invalid = true; }
         if (invalid){ if(statusP) statusP.classList.add('hidden'); return; }
 
-        const payload = { name:data.name||'', email:data.email||'', whatsapp:data.whatsapp||'', consent:true, ...getUTMs(), page:location.href, ts:new Date().toISOString() };
+        const payload = {
+          name: data.name || '',
+          email: data.email || '',
+          whatsapp: data.whatsapp || '',
+          consent: true,
+          ...getUTMs(),
+          page: location.href,
+          ts: new Date().toISOString()
+        };
 
-        try{
-          if(btnSubmit){ btnSubmit.disabled=true; btnSubmit.textContent='Enviando...'; }
-          if(statusP) statusP.classList.add('hidden');
-          const res=await fetch(WEBHOOK_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
-          const txt=await res.text();
-          if(!res.ok) throw new Error('Falha no envio: '+res.status+' - '+txt);
+        try {
+          if (btnSubmit){ btnSubmit.disabled = true; btnSubmit.textContent = 'Enviando...'; }
+          if (statusP) statusP.classList.add('hidden');
+          const res = await fetch(WEBHOOK_URL, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(payload) });
+          const txt = await res.text();
+          if (!res.ok) throw new Error('Falha no envio: '+res.status+' - '+txt);
           showToast('Prontinho! Enviamos o mini e-book para seu e-mail.', true);
-          if(DOWNLOAD_URL && DOWNLOAD_URL!=='#'){ setTimeout(()=>{ location.href=DOWNLOAD_URL; },700); }
+          if (DOWNLOAD_URL && DOWNLOAD_URL !== '#'){ setTimeout(()=>{ location.href = DOWNLOAD_URL; }, 650); }
           form.reset();
-        }catch(err){
+        } catch (err) {
           console.error(err);
           showToast('Ocorreu um erro ao enviar. Tente novamente em instantes.', false);
-        }finally{
-          if(btnSubmit){ btnSubmit.disabled=false; btnSubmit.textContent='Quero baixar grátis'; }
+        } finally {
+          if (btnSubmit){ btnSubmit.disabled = false; btnSubmit.textContent = 'Quero baixar grátis'; }
         }
       });
     });
