@@ -3,101 +3,378 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>SmartMarmita – Baixe o Mini E-book Gratuito</title>
-  <meta name="description" content="Baixe gratuitamente o mini e-book com 5 receitas de marmitas fitness econômicas. Emagreça gastando pouco e organize sua semana!" />
+  <title>SmartMarmita – Mini E-book Gratuito</title>
+  <meta name="description" content="Baixe gratuitamente o mini e-book com receitas de marmitas fitness econômicas. Emagreça gastando pouco e organize sua semana!" />
   <meta property="og:title" content="SmartMarmita – Mini E-book Gratuito" />
-  <meta property="og:description" content="5 receitas prontas + checklist de compras. Baixe grátis!" />
+  <meta property="og:description" content="5 receitas prontas + checklist + cardápio. Baixe grátis!" />
   <meta property="og:type" content="website" />
   <meta property="og:locale" content="pt_BR" />
+  <link rel="icon" href="smartmarmitafavicon.svg" />
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    html { scroll-behavior: smooth; }
-
+    html{scroll-behavior:smooth}
     :root{
-      --brand-dark:#006241; /* verde principal */
-      --brand:#00844D;      /* verde vivo */
-      --accent:#FFD43B;     /* amarelo */
-      --ink:#F9FAFB;        /* texto principal (quase branco) */
-      --muted:#94A3B8;      /* texto secundário */
-      --surface:#1E293B;    /* cards */
-      --bg:#0F172A;         /* fundo escuro */
-      --stroke:#334155;     /* borda suave */
+      --brand:#00844D;          /* verde vivo */
+      --brand-600:#0A6D48;
+      --brand-700:#065F46;
+      --accent:#FFD43B;         /* amarelo */
+      --ink:#F8FAFC;            /* texto principal */
+      --muted:#9FB0C3;          /* texto secundário */
+      --bg:#0B1020;             /* fundo principal (dark) */
+      --card:#141A2A;           /* cards */
+      --stroke:#222941;         /* bordas */
+      --glow1:#00E18E;
+      --glow2:#2BD4FF;
+      --glow3:#FFD43B;
     }
-
-    body { background: var(--bg); color: var(--ink); }
-
-    .glass {
-      background: rgba(30,41,59,.7);
-      backdrop-filter: blur(10px);
-      border: 1px solid var(--stroke);
+    body{background:var(--bg);color:var(--ink)}
+    /* Aurora/Glow background */
+    .aurora:before,.aurora:after{
+      content:"";position:absolute;inset:-20%;filter:blur(70px);opacity:.4;pointer-events:none;
+      background: conic-gradient(from 90deg at 50% 50%, var(--glow1), var(--glow2), var(--glow3), var(--glow1));
+      animation: spin 18s linear infinite;
     }
-    .shadow-soft { box-shadow: 0 10px 30px rgba(0,0,0,.4); }
-    .lift { transition: transform .25s ease, box-shadow .25s ease; }
-    .lift:hover { transform: translateY(-3px); box-shadow: 0 14px 40px rgba(0,0,0,.5); }
+    .aurora:after{animation-direction: reverse;mix-blend-mode:screen;opacity:.35}
+    @keyframes spin{to{transform:rotate(1turn)}}
 
-    .focus-neon:focus{
-      outline: none;
-      box-shadow: 0 0 0 4px rgba(0,132,77,.25);
-      border-color: var(--brand) !important;
-    }
-    .badge { display:inline-block; border:1px solid var(--stroke); background:var(--surface); padding:6px 10px; border-radius:999px; font-size:12px; color:var(--muted);}
+    .glass{background:rgba(20,26,42,.55);backdrop-filter:blur(12px);border:1px solid var(--stroke)}
+    .card{background:var(--card);border:1px solid var(--stroke)}
+    .shadow-soft{box-shadow:0 20px 50px rgba(0,0,0,.45)}
+    .ring-focus:focus{outline:0;box-shadow:0 0 0 3px rgba(0,132,77,.35)}
+    .hover-lift{transition:transform .2s ease, box-shadow .2s ease}
+    .hover-lift:hover{transform:translateY(-3px);box-shadow:0 18px 40px rgba(0,0,0,.45)}
+
+    /* Gradient text + border */
+    .grad-text{background:linear-gradient(90deg,#A7F3D0,#6EE7B7,#FFD43B,#60A5FA);-webkit-background-clip:text;background-clip:text;color:transparent}
+    .grad-btn{background:linear-gradient(90deg,var(--brand),#05A67E)}
+    .grad-brd{border-image:linear-gradient(90deg,#3B82F6,#10B981,#F59E0B) 1}
   </style>
 </head>
-<body id="top" class="min-h-screen overflow-x-hidden">
+<body id="top" class="relative min-h-screen overflow-x-hidden">
+
+  <!-- BACKDROP AURORA -->
+  <div class="aurora fixed inset-0 -z-10"></div>
 
   <!-- HEADER -->
-  <header class="sticky top-0 z-40 bg-[var(--surface)]/90 backdrop-blur border-b border-[var(--stroke)]">
+  <header class="sticky top-0 z-40 border-b border-[var(--stroke)]/80 bg-[rgba(11,16,32,.7)] backdrop-blur">
     <div class="mx-auto max-w-7xl px-6 py-3">
       <div class="flex items-center justify-between">
-        <a href="#top" class="font-extrabold text-xl tracking-wide text-white">
-          SmartMarmita
-        </a>
+        <a href="#top" class="text-xl font-extrabold tracking-wide grad-text">SmartMarmita</a>
         <nav class="hidden md:flex items-center gap-8 text-sm">
           <a href="#beneficios" class="text-[var(--muted)] hover:text-white transition">Benefícios</a>
           <a href="#recebe" class="text-[var(--muted)] hover:text-white transition">O que você recebe</a>
           <a href="#form" class="text-[var(--muted)] hover:text-white transition">Baixar grátis</a>
+          <a href="#garantia" class="text-[var(--muted)] hover:text-white transition">Garantia</a>
         </nav>
-        <div class="flex items-center gap-3">
-          <a href="#form" class="hidden md:inline-block rounded-xl bg-[var(--brand)] px-4 py-2 font-semibold text-white hover:brightness-110 transition shadow-soft">Quero meu e-book</a>
-          <button id="hamburger" aria-label="Abrir menu" aria-expanded="false" class="md:hidden inline-flex h-10 w-10 items-center justify-center rounded-md hover:bg-white/10 text-white">
+        <div class="flex items-center gap-2">
+          <a href="#form" class="hidden md:inline-block rounded-xl grad-btn px-4 py-2 font-semibold text-white hover:brightness-110 shadow-soft">Quero meu e-book</a>
+          <button id="hamburger" aria-label="Abrir menu" aria-expanded="false" class="md:hidden inline-flex h-10 w-10 items-center justify-center rounded-md text-white hover:bg-white/10">
             <svg id="iconOpen" class="h-6 w-6 block" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
             <svg id="iconClose" class="h-6 w-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
           </button>
         </div>
       </div>
     </div>
-    <nav id="mobileMenu" class="md:hidden hidden border-t border-[var(--stroke)] bg-[var(--surface)]">
+    <nav id="mobileMenu" class="md:hidden hidden border-t border-[var(--stroke)] bg-[rgba(11,16,32,.9)]">
       <div class="mx-auto max-w-7xl px-6 py-3 space-y-1">
         <a href="#beneficios" class="block rounded-lg px-3 py-2 text-[var(--muted)] hover:text-white">Benefícios</a>
         <a href="#recebe" class="block rounded-lg px-3 py-2 text-[var(--muted)] hover:text-white">O que você recebe</a>
         <a href="#form" class="block rounded-lg px-3 py-2 text-[var(--muted)] hover:text-white">Baixar grátis</a>
-        <a href="#form" class="block rounded-lg bg-[var(--brand)] px-3 py-2 font-semibold text-white text-center shadow-soft">Quero meu e-book</a>
+        <a href="#garantia" class="block rounded-lg px-3 py-2 text-[var(--muted)] hover:text-white">Garantia</a>
+        <a href="#form" class="block rounded-lg grad-btn px-3 py-2 font-semibold text-white text-center shadow-soft">Quero meu e-book</a>
       </div>
     </nav>
   </header>
 
-  <!-- HERO (escuro) -->
-  <section id="hero" class="relative">
-    <div class="absolute inset-0">
-      <img src="assets/img/vista-superior-de-tigelas-de-salada-vegetariana-com-cuscuz-e-copia-espaco.jpg"
-           alt="Capa do Mini E-book Smart Marmita" class="w-full h-full object-cover opacity-10">
-      <div class="absolute inset-0 bg-gradient-to-b from-transparent to-[var(--bg)]"></div>
-    </div>
-    <div class="relative z-10 mx-auto max-w-6xl px-6 py-20 md:py-28 text-center">
-      <div class="flex items-center justify-center gap-2 mb-3">
-        <span class="badge">Receitas econômicas</span>
-        <span class="badge">Checklist e cardápio</span>
-        <span class="badge">Download imediato</span>
+  <!-- TOAST -->
+  <div id="toast" class="fixed inset-x-0 top-4 z-50 mx-auto hidden w-[92%] max-w-md rounded-xl px-4 py-3 text-center text-sm font-semibold shadow-soft"></div>
+
+  <!-- HERO -->
+  <section class="relative">
+    <div class="mx-auto max-w-7xl px-6 py-20 md:py-28 text-center">
+      <div class="inline-flex items-center gap-2 rounded-full border grad-brd px-3 py-1 text-xs text-[var(--muted)]">
+        <span>Receitas econômicas</span><span>•</span><span>Checklist & Cardápio</span><span>•</span><span>Download imediato</span>
       </div>
-      <h1 class="text-4xl md:text-6xl font-extrabold mb-4 text-white">Organize sua semana com o SmartMarmita</h1>
-      <p class="mx-auto max-w-2xl text-[var(--muted)] text-lg md:text-xl">
-        Receba grátis o mini e-book com receitas práticas, saudáveis e econômicas para transformar sua rotina alimentar.
+
+      <h1 class="mt-6 text-4xl md:text-6xl font-extrabold leading-tight">
+        Transforme sua semana com <span class="grad-text">marmitas saudáveis e baratas</span>
+      </h1>
+      <p class="mx-auto mt-4 max-w-2xl text-lg text-[var(--muted)]">
+        O mini e-book gratuito do SmartMarmita traz receitas práticas, planejamento e truques para economizar sem abrir mão do sabor.
       </p>
+
       <div class="mt-8 flex items-center justify-center gap-3">
-        <a href="#form" class="rounded-full bg-[var(--brand)] px-8 py-4 font-semibold text-white hover:brightness-110 transition shadow-soft">Quero meu e-book</a>
+        <a href="#form" class="rounded-full grad-btn px-8 py-4 font-semibold text-white hover:brightness-110 shadow-soft">Quero meu e-book</a>
         <a href="#beneficios" class="rounded-full border border-[var(--stroke)] px-6 py-4 font-semibold text-white hover:bg-white/10 transition">Ver benefícios</a>
+      </div>
+
+      <!-- Contadores -->
+      <div class="mx-auto mt-12 grid max-w-5xl grid-cols-2 gap-6 md:grid-cols-4">
+        <div class="card hover-lift rounded-2xl p-6 text-center">
+          <div class="text-3xl font-extrabold grad-text">+5k</div>
+          <p class="mt-1 text-sm text-[var(--muted)]">Downloads</p>
+        </div>
+        <div class="card hover-lift rounded-2xl p-6 text-center">
+          <div class="text-3xl font-extrabold grad-text">4.9/5</div>
+          <p class="mt-1 text-sm text-[var(--muted)]">Avaliação média</p>
+        </div>
+        <div class="card hover-lift rounded-2xl p-6 text-center">
+          <div class="text-3xl font-extrabold grad-text">R$ 300</div>
+          <p class="mt-1 text-sm text-[var(--muted)]">Economia/mês</p>
+        </div>
+        <div class="card hover-lift rounded-2xl p-6 text-center">
+          <div class="text-3xl font-extrabold grad-text">7 dias</div>
+          <p class="mt-1 text-sm text-[var(--muted)]">Plano pronto</p>
+        </div>
       </div>
     </div>
   </section>
+
+  <!-- BENEFÍCIOS -->
+  <section id="beneficios" class="py-16">
+    <div class="mx-auto max-w-6xl px-6">
+      <h2 class="text-center text-3xl sm:text-4xl font-extrabold">Por que o <span class="grad-text">SmartMarmita</span> funciona</h2>
+
+      <div class="mt-10 grid gap-6 md:grid-cols-3">
+        <div class="card hover-lift rounded-2xl p-6">
+          <h3 class="text-lg font-semibold">Economia real</h3>
+          <p class="mt-2 text-[var(--muted)]">Compre certo, cozinhe de uma vez e veja seu gasto com delivery despencar.</p>
+        </div>
+        <div class="card hover-lift rounded-2xl p-6">
+          <h3 class="text-lg font-semibold">Praticidade</h3>
+          <p class="mt-2 text-[var(--muted)]">Rotina clara: pré-preparo, porcionamento e conservação sem mistério.</p>
+        </div>
+        <div class="card hover-lift rounded-2xl p-6">
+          <h3 class="text-lg font-semibold">Resultados</h3>
+          <p class="mt-2 text-[var(--muted)]">Controle de porções + equilíbrio de macros que ajudam no emagrecimento.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- O QUE VOCÊ RECEBE -->
+  <section id="recebe" class="py-10">
+    <div class="mx-auto max-w-6xl px-6">
+      <div class="card rounded-3xl p-6 md:p-10">
+        <h2 class="text-3xl sm:text-4xl font-extrabold">O que você recebe</h2>
+        <div class="mt-6 grid gap-6 md:grid-cols-2">
+          <ul class="space-y-2 text-[var(--muted)]">
+            <li>• 5 receitas completas (ingredientes + preparo)</li>
+            <li>• Checklist de compras para 5 dias</li>
+            <li>• Dicas de armazenamento e congelamento</li>
+          </ul>
+          <ul class="space-y-2 text-[var(--muted)]">
+            <li>• Cardápio semanal para acelerar a rotina</li>
+            <li>• Sem custo, sem pegadinhas</li>
+            <li>• Convite para o e-book completo (opcional)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROVAS SOCIAIS -->
+  <section class="py-14">
+    <div class="mx-auto max-w-6xl px-6">
+      <h3 class="text-center text-2xl font-bold">Quem já baixou, aprovou</h3>
+      <div class="mt-8 grid gap-6 md:grid-cols-3">
+        <div class="glass hover-lift rounded-2xl p-6">
+          <p class="text-sm text-[var(--muted)]">“Em duas semanas economizei mais de R$ 200 e parei de pedir comida. As receitas são simples e gostosas.”</p>
+          <div class="mt-3 text-sm font-semibold">— Juliana R.</div>
+        </div>
+        <div class="glass hover-lift rounded-2xl p-6">
+          <p class="text-sm text-[var(--muted)]">“O cardápio me salvou. Já deixo tudo pronto no domingo e como bem a semana toda.”</p>
+          <div class="mt-3 text-sm font-semibold">— Marcelo A.</div>
+        </div>
+        <div class="glass hover-lift rounded-2xl p-6">
+          <p class="text-sm text-[var(--muted)]">“Guia direto ao ponto. O mini e-book gratuito já vale ouro.”</p>
+          <div class="mt-3 text-sm font-semibold">— Tainá P.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FORMULÁRIO -->
+  <section id="form" class="py-12">
+    <div class="mx-auto max-w-3xl px-6">
+      <div class="glass rounded-3xl p-6 md:p-10 shadow-soft">
+        <h2 class="text-3xl sm:text-4xl font-extrabold">Baixar grátis agora</h2>
+        <p class="mt-2 text-[var(--muted)]">Preencha seus dados para receber o PDF imediatamente.</p>
+
+        <form id="leadForm" class="mt-8 space-y-5">
+          <div class="relative">
+            <input required name="name" type="text" autocomplete="name"
+                   class="w-full rounded-2xl border border-[var(--stroke)] bg-[rgba(10,15,30,.6)] px-4 py-4 text-[var(--ink)] placeholder:text-[var(--muted)] ring-focus"
+                   placeholder="Seu nome completo" />
+          </div>
+
+          <div class="relative">
+            <input required name="email" type="email" autocomplete="email"
+                   class="w-full rounded-2xl border border-[var(--stroke)] bg-[rgba(10,15,30,.6)] px-4 py-4 text-[var(--ink)] placeholder:text-[var(--muted)] ring-focus"
+                   placeholder="Seu melhor e-mail" />
+          </div>
+
+          <div class="relative">
+            <input name="whatsapp" type="tel" autocomplete="tel"
+                   class="w-full rounded-2xl border border-[var(--stroke)] bg-[rgba(10,15,30,.6)] px-4 py-4 text-[var(--ink)] placeholder:text-[var(--muted)] ring-focus"
+                   placeholder="WhatsApp (opcional)" />
+          </div>
+
+          <!-- honeypot -->
+          <div class="hidden"><input type="text" name="website" tabindex="-1" autocomplete="off" /></div>
+
+          <label class="flex items-start gap-3 rounded-2xl border border-[var(--stroke)] p-4">
+            <input required id="consent" name="consent" type="checkbox" class="mt-1 h-5 w-5 rounded border-[var(--stroke)] text-[var(--brand)] focus:ring-[var(--brand)]">
+            <span class="text-sm text-[var(--muted)]">Concordo em receber o mini e-book e comunicações relacionadas (LGPD). Você pode sair quando quiser.</span>
+          </label>
+
+          <div class="space-y-3">
+            <button id="submitBtn" type="submit" class="w-full rounded-2xl grad-btn px-6 py-4 text-base font-semibold text-white shadow-soft hover:brightness-110">Quero baixar grátis</button>
+            <p id="status" class="hidden text-center text-sm"></p>
+          </div>
+        </form>
+
+        <p class="mt-5 text-center text-xs text-[var(--muted)]">Ao enviar, você concorda com nossa política de privacidade.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- GARANTIA -->
+  <section id="garantia" class="py-12">
+    <div class="mx-auto max-w-5xl px-6">
+      <div class="card rounded-3xl p-8 text-center">
+        <div class="inline-flex items-center gap-2 rounded-full border grad-brd px-3 py-1 text-xs text-[var(--muted)]">
+          Garantia incondicional
+        </div>
+        <h3 class="mt-4 text-2xl font-bold">Compra segura com <span class="grad-text">7 dias</span> de garantia</h3>
+        <p class="mt-2 text-[var(--muted)]">Se decidir avançar para a versão completa e não curtir, devolvemos 100% do valor dentro de 7 dias. Sem perguntas.</p>
+        <a href="#form" class="mt-6 inline-flex items-center justify-center rounded-full grad-btn px-7 py-3 font-semibold text-white shadow-soft hover:brightness-110">Quero começar agora</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA FINAL -->
+  <section class="pb-16">
+    <div class="mx-auto max-w-6xl px-6">
+      <div class="card rounded-3xl p-8 md:p-12 text-center">
+        <h3 class="text-3xl font-extrabold">Pronto para organizar sua semana?</h3>
+        <p class="mt-2 text-[var(--muted)]">Baixe agora o mini e-book gratuito e dê o primeiro passo rumo a hábitos mais saudáveis.</p>
+        <a href="#form" class="mt-6 inline-flex items-center justify-center rounded-full grad-btn px-8 py-4 font-semibold text-white shadow-soft hover:brightness-110">Baixar agora</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="border-t border-[var(--stroke)] py-6 text-center text-sm text-[var(--muted)]">
+    © <span id="year"></span> SmartMarmita. Todos os direitos reservados.
+  </footer>
+
+  <script>
+    // Ajuste aqui:
+    const WEBHOOK_URL = "https://n8n.gjrservicos.com.br/webhook-test/lead-marmitasfitness";
+    const DOWNLOAD_URL = "https://drive.google.com/uc?export=download&id=1iVLuu0PatOO8jpNTmc3LJzPMbg9fjIZc";
+
+    // utils
+    const toastEl = () => document.getElementById('toast');
+    function showToast(msg, ok = true) {
+      const el = toastEl(); if (!el) return;
+      el.textContent = msg;
+      el.className = `fixed inset-x-0 top-4 z-50 mx-auto w-[92%] max-w-md rounded-xl px-4 py-3 text-center text-sm font-semibold shadow-soft ${ok ? 'bg-[var(--brand-700)] text-white' : 'bg-rose-600 text-white'}`;
+      el.classList.remove('hidden');
+      clearTimeout(el._t); el._t = setTimeout(() => el.classList.add('hidden'), 4000);
+    }
+    const isEmail = (v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(v||'').trim());
+    const getUTMs = () => {
+      const p=new URLSearchParams(location.search);
+      return {utm_source:p.get('utm_source')||'',utm_medium:p.get('utm_medium')||'',utm_campaign:p.get('utm_campaign')||'',utm_content:p.get('utm_content')||'',utm_term:p.get('utm_term')||''};
+    };
+    const headerOffset = () => { const h = document.querySelector('header'); return h ? h.getBoundingClientRect().height : 0; };
+    const smoothScroll = (hash) => { const t=document.querySelector(hash); if(!t) return; const top=t.getBoundingClientRect().top+pageYOffset-(headerOffset()+8); scrollTo({top,behavior:'smooth'}); };
+
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('year').textContent = new Date().getFullYear();
+
+      // mobile menu
+      const btn = document.getElementById('hamburger');
+      const menu = document.getElementById('mobileMenu');
+      const iconOpen = document.getElementById('iconOpen');
+      const iconClose = document.getElementById('iconClose');
+      const toggleMenu = () => {
+        const open = menu.classList.contains('hidden');
+        menu.classList.toggle('hidden');
+        btn.setAttribute('aria-expanded', String(open));
+        iconOpen.classList.toggle('hidden'); iconClose.classList.toggle('hidden');
+      };
+      if (btn && menu) btn.addEventListener('click', toggleMenu);
+
+      // smooth anchors
+      document.querySelectorAll('a[href^="#"]').forEach(a => {
+        a.addEventListener('click', (e) => {
+          const hash = a.getAttribute('href');
+          if (!hash || hash === '#') return;
+          e.preventDefault();
+          if (menu && !menu.classList.contains('hidden')) toggleMenu();
+          smoothScroll(hash);
+        });
+      });
+
+      // input mask simple
+      const wEl = document.querySelector('input[name="whatsapp"]');
+      if (wEl) wEl.addEventListener('input', () => {
+        let v = wEl.value.replace(/\D/g,'').slice(0,11);
+        if (v.length > 6) wEl.value = `(${v.slice(0,2)}) ${v.slice(2,7)}-${v.slice(7)}`;
+        else if (v.length > 2) wEl.value = `(${v.slice(0,2)}) ${v.slice(2)}`;
+        else wEl.value = v;
+      });
+
+      // form
+      const form = document.getElementById('leadForm');
+      const btnSubmit = document.getElementById('submitBtn');
+      const statusP = document.getElementById('status');
+      if (!form) return;
+      form.setAttribute('novalidate','novalidate');
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const data = Object.fromEntries(new FormData(form).entries());
+        const nameI = form.querySelector('input[name="name"]');
+        const emailI = form.querySelector('input[name="email"]');
+
+        // simple validation
+        let invalid = false;
+        if ((data.website || '').trim()) { showToast('Erro no envio. Tente novamente.', false); return; }
+        if (!data.name || String(data.name).trim().length < 2){ invalid = true; nameI.classList.add('ring-focus'); }
+        if (!isEmail(data.email)){ invalid = true; emailI.classList.add('ring-focus'); }
+        if (!data.consent){ showToast('É necessário aceitar o consentimento (LGPD).', false); invalid = true; }
+        if (invalid){ if(statusP) statusP.classList.add('hidden'); return; }
+
+        // payload
+        const payload = {
+          name: data.name||'',
+          email: data.email||'',
+          whatsapp: data.whatsapp||'',
+          consent: true,
+          ...getUTMs(),
+          page: location.href,
+          ts: new Date().toISOString()
+        };
+
+        try{
+          if (btnSubmit){ btnSubmit.disabled = true; btnSubmit.textContent = 'Enviando...'; }
+          if (statusP){ statusP.classList.add('hidden'); }
+          const res = await fetch(WEBHOOK_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+          const txt = await res.text();
+          if (!res.ok) throw new Error('Falha no envio: '+res.status+' - '+txt);
+          showToast('Prontinho! Enviamos o mini e-book para seu e-mail.', true);
+          if (DOWNLOAD_URL && DOWNLOAD_URL !== '#'){ setTimeout(()=>{ location.href = DOWNLOAD_URL; }, 700); }
+          form.reset();
+        }catch(err){
+          console.error(err);
+          showToast('Ocorreu um erro ao enviar. Tente novamente em instantes.', false);
+        }finally{
+          if (btnSubmit){ btnSubmit.disabled = false; btnSubmit.textContent = 'Quero baixar grátis'; }
+        }
+      });
+    });
+  </script>
 </body>
 </html>
