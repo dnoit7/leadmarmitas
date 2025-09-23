@@ -136,7 +136,7 @@
           <li>• Dicas de armazenamento e congelamento</li>
         </ul>
         <ul class="space-y-2">
-          <li>• Acesso imediato por e-mail/WhatsApp</li>
+          <li>• Acesso imediato por e-mail</li>
           <li>• Sem custo, sem pegadinhas</li>
           <li>• Convite para o e-book completo (opcional)</li>
         </ul>
@@ -362,22 +362,29 @@
         const controller = new AbortController();
         const T = setTimeout(() => controller.abort(), 10000);
 
-        try {
-          const res = await fetch("https://n8n.gjrservicos.com.br/webhook-test/lead-marmitasfitness", {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload),
-            signal: controller.signal
-          });
-          clearTimeout(T);
-          if (!res.ok) throw new Error('Falha no envio: ' + res.status);
+try {
+  const res = await fetch("https://n8n.gjrservicos.com.br/webhook-test/lead-marmitasfitness", {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload),
+    signal: controller.signal
+  });
+  clearTimeout(T);
 
-          toast('Prontinho! Enviamos o mini e-book para seu e-mail/WhatsApp.');
-          if (DOWNLOAD_URL && DOWNLOAD_URL !== '#') {
-            setTimeout(() => { window.location.href = DOWNLOAD_URL; }, 700);
-          }
-          form.reset();
-        } catch (err) {
+  const result = await res.json();
+
+  if (!res.ok || result.success === false) {
+    toast(result.message || 'Este e-mail já está cadastrado.', false);
+    return;
+  }
+
+  toast('Prontinho! Enviamos o mini e-book para seu e-mail.');
+  if (DOWNLOAD_URL && DOWNLOAD_URL !== '#') {
+    setTimeout(() => { window.location.href = DOWNLOAD_URL; }, 700);
+  }
+  form.reset();
+}
+        catch (err) {
           console.error(err);
           toast('Ocorreu um erro ao enviar. Tente novamente em instantes.', false);
         } finally {
