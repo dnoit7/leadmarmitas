@@ -3,40 +3,50 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>SmartMarmita — Marmitas fitness econômicas sem complicação</title>
-  <meta name="description" content="Baixe o mini e-book gratuito do SmartMarmita e aprenda a montar marmitas fitness econômicas para a semana inteira." />
+  <title>SmartMarmita — Marmitas fitness econômicas (Dark Premium)</title>
+  <meta name="description" content="SmartMarmita: mini e-book gratuito + versão completa para organizar 5 dias de marmitas saudáveis gastando menos." />
   <link rel="icon" href="smartmarmitafavicon.svg" />
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     html{scroll-behavior:smooth}
+    /* ===== Dark Premium Palette ===== */
     :root{
-      --ink:#0F172A;       /* texto principal */
-      --muted:#475569;     /* texto secundário */
-      --bg:#F8FAFC;        /* fundo */
-      --card:#FFFFFF;      /* cards */
-      --stroke:#E2E8F0;    /* bordas */
-      --brand:#0EA57A;     /* verde principal */
-      --brand-2:#0B8E69;   /* verde escuro */
-      --accent:#FFB703;    /* destaque */
+      --ink:#E6EDF3;       /* texto principal */
+      --muted:#9FB1C1;     /* texto secundário */
+      --bg:#0B1220;        /* fundo dark */
+      --panel:#0F1A2B;     /* painéis/sections */
+      --card:#111C2F;      /* cards */
+      --stroke:#203049;    /* bordas */
+      --brand:#35D0A5;     /* verde neon elegante */
+      --brand-2:#18A57E;   /* verde escuro */
+      --accent:#F8C44E;    /* destaque */
+      --rose:#FF7A7A;      /* alerta/urgência */
     }
-    body{background:var(--bg);color:var(--ink)}
+    body{background:radial-gradient(1200px 800px at 80% -10%, #14243B 0%, var(--bg) 45%), var(--bg); color:var(--ink)}
     .container-ct{max-width:1120px}
-    .btn{display:inline-flex;align-items:center;justify-content:center;padding:.875rem 1.25rem;border-radius:14px;font-weight:600}
-    .btn-primary{background:linear-gradient(90deg,var(--brand),var(--brand-2));color:#fff}
-    .btn-primary:hover{filter:brightness(1.06)}
-    .btn-ghost{border:1px solid var(--stroke);background:#fff;color:var(--ink)}
-    .btn-ghost:hover{background:#F1F5F9}
-    .badge{display:inline-flex;align-items:center;gap:.5rem;padding:.35rem .65rem;border-radius:999px;border:1px solid var(--stroke);color:var(--muted);background:#fff}
-    .card{background:var(--card);border:1px solid var(--stroke);box-shadow:0 6px 20px rgba(15,23,42,.04)}
-    .input{border:1px solid var(--stroke);background:#fff}
-    .input:focus{outline:0;box-shadow:0 0 0 3px rgba(14,165,122,.18);border-color:#86efac}
-    .price-cut{text-decoration:line-through;opacity:.6}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.04), transparent), var(--card); border:1px solid var(--stroke); box-shadow:0 10px 30px rgba(0,0,0,.25)}
+    .panel{background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent), var(--panel); border-top:1px solid var(--stroke); border-bottom:1px solid var(--stroke)}
+    .btn{display:inline-flex;align-items:center;justify-content:center;padding:.9rem 1.25rem;border-radius:14px;font-weight:700}
+    .btn-primary{background:linear-gradient(90deg,var(--brand),var(--brand-2));color:#051017;text-shadow:0 1px 0 rgba(255,255,255,.15)}
+    .btn-primary:hover{filter:brightness(1.08)}
+    .btn-ghost{border:1px solid var(--stroke);background:transparent;color:var(--ink)}
+    .btn-ghost:hover{background:#0F223B}
+    .badge{display:inline-flex;align-items:center;gap:.5rem;padding:.35rem .65rem;border-radius:999px;border:1px solid var(--stroke);color:var(--muted);background:#101B2E}
+    .input{border:1px solid var(--stroke);background:#0C1830;color:var(--ink)}
+    .input::placeholder{color:#6B8095}
+    .input:focus{outline:0;box-shadow:0 0 0 3px rgba(53,208,165,.25);border-color:#39e4b4}
+    .price-cut{text-decoration:line-through;opacity:.65}
+    .ring-soft{box-shadow:0 0 0 3px rgba(248,196,78,.18)}
+    .glow{box-shadow:0 14px 40px rgba(53,208,165,.25)}
+    .glow-cta{box-shadow:0 16px 60px rgba(248,196,78,.22), inset 0 -2px 0 rgba(0,0,0,.25)}
+    .section-gap{padding-top:3.5rem;padding-bottom:3.5rem}
+    .hr{height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.1),transparent)}
   </style>
 </head>
 <body id="top" class="antialiased">
 
   <!-- HEADER -->
-  <header class="sticky top-0 z-40 border-b border-[var(--stroke)] bg-white/80 backdrop-blur">
+  <header class="sticky top-0 z-40 border-b border-[var(--stroke)] bg-[#0B1220CC] backdrop-blur">
     <div class="mx-auto container-ct px-5 py-3">
       <div class="flex items-center justify-between">
         <a href="#top" class="text-xl font-extrabold tracking-tight">SMARTMARMITA</a>
@@ -46,20 +56,20 @@
           <a href="#form" class="text-[var(--muted)] hover:text-[var(--ink)]">Baixar grátis</a>
           <a href="#oferta" class="text-[var(--muted)] hover:text-[var(--ink)]">Versão completa</a>
         </nav>
-        <a href="#form" class="hidden md:inline-flex btn btn-primary">Quero meu e-book</a>
+        <a href="#form" class="hidden md:inline-flex btn btn-primary glow">Quero meu e-book</a>
         <button id="hamburger" class="md:hidden h-10 w-10 grid place-items-center rounded-lg border border-[var(--stroke)]" aria-label="Abrir menu">
           <svg id="iconOpen" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7h16M4 12h16M4 17h16"/></svg>
           <svg id="iconClose" class="hidden h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
         </button>
       </div>
     </div>
-    <nav id="mobileMenu" class="md:hidden hidden border-t border-[var(--stroke)] bg-white">
+    <nav id="mobileMenu" class="md:hidden hidden border-t border-[var(--stroke)] bg-[#0F1A2B]">
       <div class="mx-auto container-ct px-5 py-3 grid gap-1 text-sm">
-        <a href="#beneficios" class="rounded-lg px-3 py-2 text-[var(--muted)] hover:bg-slate-50">Benefícios</a>
-        <a href="#como" class="rounded-lg px-3 py-2 text-[var(--muted)] hover:bg-slate-50">Como funciona</a>
-        <a href="#form" class="rounded-lg px-3 py-2 text-[var(--muted)] hover:bg-slate-50">Baixar grátis</a>
-        <a href="#oferta" class="rounded-lg px-3 py-2 text-[var(--muted)] hover:bg-slate-50">Versão completa</a>
-        <a href="#form" class="mt-1 btn btn-primary">Quero meu e-book</a>
+        <a href="#beneficios" class="rounded-lg px-3 py-2 text-[var(--muted)] hover:bg-[#0E1A2E]">Benefícios</a>
+        <a href="#como" class="rounded-lg px-3 py-2 text-[var(--muted)] hover:bg-[#0E1A2E]">Como funciona</a>
+        <a href="#form" class="rounded-lg px-3 py-2 text-[var(--muted)] hover:bg-[#0E1A2E]">Baixar grátis</a>
+        <a href="#oferta" class="rounded-lg px-3 py-2 text-[var(--muted)] hover:bg-[#0E1A2E]">Versão completa</a>
+        <a href="#form" class="mt-1 btn btn-primary glow">Quero meu e-book</a>
       </div>
     </nav>
   </header>
@@ -68,18 +78,18 @@
   <div id="toast" class="fixed inset-x-0 top-4 z-50 mx-auto hidden w-[92%] max-w-md rounded-xl px-4 py-3 text-center text-sm font-semibold"></div>
 
   <!-- HERO -->
-  <section class="relative">
-    <div class="mx-auto container-ct px-5 pt-10 pb-12 md:pt-16 md:pb-16 grid gap-10 md:grid-cols-[1.1fr_.9fr] items-center">
+  <section class="section-gap">
+    <div class="mx-auto container-ct px-5 grid gap-10 md:grid-cols-[1.1fr_.9fr] items-center">
       <div>
         <div class="badge">Planejamento • Receita • Economia</div>
         <h1 class="mt-4 text-4xl md:text-6xl font-extrabold leading-tight tracking-tight">
-          Marmitas fitness econômicas para a semana inteira — sem complicação.
+          Marmitas fitness econômicas para a semana inteira — <span style="color:var(--brand)">sem complicação</span>.
         </h1>
         <p class="mt-4 text-lg text-[var(--muted)] max-w-xl">
           Baixe o mini e-book gratuito do <strong>SmartMarmita</strong> e aprenda a cozinhar por blocos, porcionar e armazenar. Mais saúde, menos desperdício e mais dinheiro no bolso.
         </p>
         <div class="mt-7 flex flex-wrap items-center gap-3">
-          <a href="#form" class="btn btn-primary">Baixar mini e-book grátis</a>
+          <a href="#form" class="btn btn-primary glow">Baixar mini e-book grátis</a>
           <a href="#oferta" class="btn btn-ghost">Ver versão completa</a>
         </div>
         <div class="mt-6 flex flex-wrap items-center gap-6 text-sm text-[var(--muted)]">
@@ -89,19 +99,20 @@
         </div>
       </div>
 
-      <!-- cartão do produto (tipográfico) -->
       <div class="card rounded-2xl p-6 md:p-8">
         <div class="text-sm text-[var(--muted)]">Mini e-book gratuito</div>
         <h3 class="mt-2 text-2xl font-bold">5 receitas • checklist • cardápio semanal</h3>
         <p class="mt-2 text-[var(--muted)]">Receba agora no seu e-mail e comece hoje.</p>
-        <a href="#form" class="mt-6 btn btn-primary w-full">Quero receber</a>
+        <a href="#form" class="mt-6 btn btn-primary w-full glow">Quero receber</a>
         <div class="mt-4 text-xs text-[var(--muted)]">Sem spam. Você pode sair quando quiser.</div>
       </div>
     </div>
   </section>
 
+  <div class="hr mx-auto container-ct"></div>
+
   <!-- BENEFÍCIOS -->
-  <section id="beneficios" class="py-8 md:py-12">
+  <section id="beneficios" class="section-gap">
     <div class="mx-auto container-ct px-5">
       <h2 class="text-2xl md:text-3xl font-extrabold">Por que o SmartMarmita funciona</h2>
       <div class="mt-6 grid gap-4 md:grid-cols-3">
@@ -122,10 +133,10 @@
   </section>
 
   <!-- COMO FUNCIONA -->
-  <section id="como" class="py-8 md:py-12">
+  <section id="como" class="section-gap panel">
     <div class="mx-auto container-ct px-5">
       <h2 class="text-2xl md:text-3xl font-extrabold">Como funciona</h2>
-    <div class="mt-6 grid gap-4 md:grid-cols-3">
+      <div class="mt-6 grid gap-4 md:grid-cols-3">
         <div class="card rounded-xl p-5">
           <div class="text-xs text-[var(--muted)]">Passo 1</div>
           <h3 class="mt-1 font-bold">Compre certo</h3>
@@ -145,32 +156,32 @@
     </div>
   </section>
 
-  <!-- OFERTA PRO (CTA premium com timer) -->
-  <section id="oferta" class="py-12">
+  <!-- OFERTA PRO -->
+  <section id="oferta" class="section-gap">
     <div class="mx-auto max-w-5xl px-5">
-      <div class="rounded-3xl border border-slate-200 bg-white shadow-xl">
+      <div class="rounded-3xl border border-[var(--stroke)] bg-[#0D1728] shadow-xl">
         <div class="grid gap-8 p-8 md:grid-cols-[1.2fr_.8fr] md:p-12">
           <div>
-            <span class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1 text-sm text-slate-600">
+            <span class="inline-flex items-center gap-2 rounded-full border border-[var(--stroke)] bg-[#0F1A2B] px-3 py-1 text-sm text-[var(--muted)]">
               🚀 Versão Completa • E-book + Recursos
             </span>
-            <h2 class="mt-3 text-3xl font-extrabold leading-tight text-slate-900 md:text-4xl">
-              Organize 5 dias de marmitas <span class="text-emerald-600">gastando menos</span> — sem travar no planejamento
+            <h2 class="mt-3 text-3xl font-extrabold leading-tight md:text-4xl">
+              Organize 5 dias de marmitas <span style="color:var(--brand)">gastando menos</span> — sem travar no planejamento
             </h2>
-            <p class="mt-3 max-w-xl text-slate-600">
+            <p class="mt-3 max-w-xl text-[var(--muted)]">
               Receitas testadas, cardápios prontos, listas de compras, estratégias de economia e guia de armazenamento. Ideal para quem quer resultado rápido e sustentável.
             </p>
 
-            <ul class="mt-6 grid gap-3 text-slate-700 sm:grid-cols-2">
-              <li class="flex items-start gap-3"><span class="mt-1 inline-block h-5 w-5 rounded-full bg-emerald-100 text-emerald-700 text-xs grid place-items-center">✓</span> 30+ receitas econômicas e balanceadas</li>
-              <li class="flex items-start gap-3"><span class="mt-1 inline-block h-5 w-5 rounded-full bg-emerald-100 text-emerald-700 text-xs grid place-items-center">✓</span> Cardápios semanais prontos</li>
-              <li class="flex items-start gap-3"><span class="mt-1 inline-block h-5 w-5 rounded-full bg-emerald-100 text-emerald-700 text-xs grid place-items-center">✓</span> Listas de compras otimizadas</li>
-              <li class="flex items-start gap-3"><span class="mt-1 inline-block h-5 w-5 rounded-full bg-emerald-100 text-emerald-700 text-xs grid place-items-center">✓</span> Guia de porcionamento & armazenamento</li>
+            <ul class="mt-6 grid gap-3 text-[var(--ink)] sm:grid-cols-2">
+              <li class="flex items-start gap-3"><span class="mt-1 inline-block h-5 w-5 rounded-full" style="background:#0d2c25;color:var(--brand);display:grid;place-items:center;font-size:.75rem">✓</span> 30+ receitas econômicas e balanceadas</li>
+              <li class="flex items-start gap-3"><span class="mt-1 inline-block h-5 w-5 rounded-full" style="background:#0d2c25;color:var(--brand);display:grid;place-items:center;font-size:.75rem">✓</span> Cardápios semanais prontos</li>
+              <li class="flex items-start gap-3"><span class="mt-1 inline-block h-5 w-5 rounded-full" style="background:#0d2c25;color:var(--brand);display:grid;place-items:center;font-size:.75rem">✓</span> Listas de compras otimizadas</li>
+              <li class="flex items-start gap-3"><span class="mt-1 inline-block h-5 w-5 rounded-full" style="background:#0d2c25;color:var(--brand);display:grid;place-items:center;font-size:.75rem">✓</span> Guia de porcionamento & armazenamento</li>
             </ul>
 
-            <div class="mt-6 rounded-2xl border border-amber-200 bg-amber-50 p-4">
-              <div class="text-sm font-semibold text-amber-700">BÔNUS INCLUÍDOS</div>
-              <ul class="mt-2 grid gap-2 text-sm text-amber-900 sm:grid-cols-2">
+            <div class="mt-6 rounded-2xl border border-amber-300/30 bg-amber-500/10 p-4 ring-1 ring-inset ring-amber-300/20">
+              <div class="text-sm font-semibold" style="color:var(--accent)">BÔNUS INCLUÍDOS</div>
+              <ul class="mt-2 grid gap-2 text-sm text-[#F2E7C7] sm:grid-cols-2">
                 <li>• Tabela de substituições econômicas</li>
                 <li>• Template de lista de compras (editável)</li>
                 <li>• Checklist de pré-preparo (cozinhe em 2h)</li>
@@ -180,36 +191,36 @@
           </div>
 
           <!-- Card de preço/ação -->
-          <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-lg">
+          <div class="rounded-2xl border border-[var(--stroke)] bg-[#0F1A2B] p-6 glow">
             <div class="flex items-center justify-between">
-              <span class="text-sm text-slate-500">Preço promocional</span>
-              <span class="rounded-full bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-700">Oferta limitada</span>
+              <span class="text-sm text-[var(--muted)]">Preço promocional</span>
+              <span class="rounded-full bg-[#0d2c25] px-3 py-1 text-xs font-semibold" style="color:var(--brand)">Oferta limitada</span>
             </div>
 
             <div class="mt-2 flex items-end gap-3">
-              <span class="text-lg text-slate-400 line-through">R$ 67,90</span>
-              <span class="text-4xl font-extrabold text-emerald-600">R$ 37,90</span>
+              <span class="text-lg text-[var(--muted)] price-cut">R$ 67,90</span>
+              <span class="text-4xl font-extrabold" style="color:var(--brand)">R$ 37,90</span>
             </div>
-            <p class="mt-1 text-xs text-slate-500">ou 3x no cartão (via plataforma de pagamento)</p>
+            <p class="mt-1 text-xs text-[var(--muted)]">ou 3x no cartão (via plataforma de pagamento)</p>
 
             <a id="buyNow"
-               class="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-emerald-600 via-emerald-500 to-amber-400 px-6 py-4 text-lg font-bold text-white shadow-lg ring-emerald-100 transition hover:scale-[1.02] focus:outline-none focus:ring-4"
+               class="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[var(--brand)] via-[var(--brand)] to-[var(--accent)] px-6 py-4 text-lg font-extrabold text-[#081417] glow-cta ring-soft transition hover:scale-[1.02] focus:outline-none focus:ring-4"
                href="#" aria-label="Comprar versão completa por 37,90">
               <span>Comprar agora por R$ 37,90</span> <span aria-hidden>→</span>
             </a>
-            <p class="mt-2 text-center text-[13px] font-semibold text-rose-600">⚡ Termina em <span id="timer" class="tabular-nums">00:00:00</span></p>
+            <p class="mt-2 text-center text-[13px] font-semibold" style="color:var(--rose)">⚡ Termina em <span id="timer" class="tabular-nums">00:00:00</span></p>
 
-            <a href="#form" class="mt-3 inline-flex w-full items-center justify-center rounded-xl border border-slate-200 bg-white px-6 py-3 font-semibold text-slate-800 hover:bg-slate-50">
+            <a href="#form" class="mt-3 inline-flex w-full items-center justify-center rounded-xl border border-[var(--stroke)] bg-transparent px-6 py-3 font-semibold text-[var(--ink)] hover:bg-[#0E1A2E]">
               Prefiro testar grátis primeiro
             </a>
 
             <div class="mt-5 grid gap-3">
-              <div class="flex items-center justify-center gap-2 text-sm text-slate-600">
-                <svg class="h-5 w-5 text-emerald-600" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l7 4v6c0 5-3.5 9.74-7 10-3.5-.26-7-5-7-10V6l7-4z"/></svg>
+              <div class="flex items-center justify-center gap-2 text-sm text-[var(--muted)]">
+                <svg class="h-5 w-5" style="color:var(--brand)" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l7 4v6c0 5-3.5 9.74-7 10-3.5-.26-7-5-7-10V6l7-4z"/></svg>
                 Garantia incondicional de 7 dias
               </div>
-              <div class="flex items-center justify-center gap-4 text-xs text-slate-500">
-                <span class="inline-flex items-center gap-1"><span class="h-2.5 w-2.5 rounded-full bg-emerald-500"></span> Checkout seguro</span>
+              <div class="flex items-center justify-center gap-4 text-xs text-[var(--muted)]">
+                <span class="inline-flex items-center gap-1"><span class="h-2.5 w-2.5 rounded-full" style="background:var(--brand)"></span> Checkout seguro</span>
                 <span>Cartão • Pix • Boleto</span>
                 <span>Entrega imediata</span>
               </div>
@@ -217,17 +228,17 @@
           </div>
         </div>
 
-        <div class="grid gap-4 border-t border-slate-200 p-6 text-sm text-slate-600 sm:grid-cols-3">
-          <div class="rounded-xl border border-slate-200 bg-white p-4 text-center">⭐️⭐️⭐️⭐️⭐️ Usuários satisfeitos</div>
-          <div class="rounded-xl border border-slate-200 bg-white p-4 text-center">🔒 Pagamento criptografado</div>
-          <div class="rounded-xl border border-slate-200 bg-white p-4 text-center">💬 Suporte por e-mail</div>
+        <div class="grid gap-4 border-t border-[var(--stroke)] p-6 text-sm text-[var(--muted)] sm:grid-cols-3">
+          <div class="rounded-xl border border-[var(--stroke)] bg-[#0F1A2B] p-4 text-center">⭐️⭐️⭐️⭐️⭐️ Usuários satisfeitos</div>
+          <div class="rounded-xl border border-[var(--stroke)] bg-[#0F1A2B] p-4 text-center">🔒 Pagamento criptografado</div>
+          <div class="rounded-xl border border-[var(--stroke)] bg-[#0F1A2B] p-4 text-center">💬 Suporte por e-mail</div>
         </div>
       </div>
     </div>
   </section>
 
   <!-- FAQ -->
-  <section class="py-8 md:py-12">
+  <section class="section-gap">
     <div class="mx-auto container-ct px-5">
       <h2 class="text-2xl md:text-3xl font-extrabold">Perguntas frequentes</h2>
       <div class="mt-6 grid gap-4 md:grid-cols-2">
@@ -252,7 +263,7 @@
   </section>
 
   <!-- FORM -->
-  <section id="form" class="py-10 md:py-14">
+  <section id="form" class="section-gap panel">
     <div class="mx-auto container-ct px-5">
       <div class="card rounded-2xl p-6 md:p-8">
         <h2 class="text-2xl md:text-3xl font-extrabold">Baixar mini e-book gratuito</h2>
@@ -260,15 +271,15 @@
 
         <form id="leadForm" class="mt-6 grid gap-4 md:grid-cols-2">
           <div class="grid gap-2">
-            <label class="text-sm font-medium">Nome</label>
+            <label class="text-sm font-medium text-[var(--ink)]/90">Nome</label>
             <input required name="name" type="text" autocomplete="name" class="input rounded-xl px-4 py-3" placeholder="Seu nome completo" />
           </div>
           <div class="grid gap-2">
-            <label class="text-sm font-medium">E-mail</label>
+            <label class="text-sm font-medium text-[var(--ink)]/90">E-mail</label>
             <input required name="email" type="email" autocomplete="email" class="input rounded-xl px-4 py-3" placeholder="voce@email.com" />
           </div>
           <div class="grid gap-2 md:col-span-2">
-            <label class="text-sm font-medium">WhatsApp (opcional)</label>
+            <label class="text-sm font-medium text-[var(--ink)]/90">WhatsApp (opcional)</label>
             <input name="whatsapp" type="tel" autocomplete="tel" class="input rounded-xl px-4 py-3" placeholder="(11) 90000-0000" />
           </div>
           <label class="md:col-span-2 flex items-start gap-3 rounded-xl border border-[var(--stroke)] p-4">
@@ -280,7 +291,7 @@
           <div class="hidden"><input type="text" name="website" tabindex="-1" autocomplete="off" /></div>
 
           <div class="md:col-span-2 grid gap-3">
-            <button id="submitBtn" type="submit" class="btn btn-primary w-full">Quero baixar grátis</button>
+            <button id="submitBtn" type="submit" class="btn btn-primary w-full glow">Quero baixar grátis</button>
             <p id="status" class="hidden text-center text-sm"></p>
           </div>
         </form>
@@ -296,15 +307,15 @@
 
   <!-- STICKY CTA BAR -->
   <div id="stickyBar" class="fixed inset-x-0 bottom-3 z-40 hidden px-4">
-    <div class="mx-auto max-w-3xl rounded-2xl border border-slate-200 bg-white/95 p-3 shadow-2xl backdrop-blur">
+    <div class="mx-auto max-w-3xl rounded-2xl border border-[var(--stroke)] bg-[#0F1A2B]/95 p-3 shadow-2xl backdrop-blur">
       <div class="flex flex-col items-center gap-3 sm:flex-row sm:justify-between">
         <div class="text-center sm:text-left">
-          <div class="text-sm text-slate-500 line-through">R$ 67,90</div>
-          <div class="text-xl font-extrabold text-emerald-600">R$ 37,90</div>
-          <div class="text-xs text-slate-500">Oferta termina em <span id="timerBar" class="font-semibold tabular-nums">00:00:00</span></div>
+          <div class="text-sm text-[var(--muted)] line-through">R$ 67,90</div>
+          <div class="text-xl font-extrabold" style="color:var(--brand)">R$ 37,90</div>
+          <div class="text-xs text-[var(--muted)]">Oferta termina em <span id="timerBar" class="font-semibold tabular-nums">00:00:00</span></div>
         </div>
         <a id="buyNowBar"
-           class="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-emerald-600 via-emerald-500 to-amber-400 px-5 py-3 font-bold text-white shadow-lg ring-emerald-100 transition hover:scale-[1.02] focus:outline-none focus:ring-4 sm:w-auto"
+           class="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[var(--brand)] via-[var(--brand)] to-[var(--accent)] px-5 py-3 font-bold text-[#071217] glow-cta transition hover:scale-[1.02] focus:outline-none focus:ring-4 sm:w-auto"
            href="#" aria-label="Comprar versão completa agora">
           Comprar agora
         </a>
@@ -313,7 +324,7 @@
   </div>
 
   <!-- TOAST -->
-  <div id="toast" class="fixed inset-x-0 top-4 z-50 mx-auto hidden w-[92%] max-w-md rounded-xl px-4 py-3 text-center text-sm font-semibold"></div>
+  <div id="toast2" class="fixed inset-x-0 top-4 z-50 mx-auto hidden w-[92%] max-w-md rounded-xl px-4 py-3 text-center text-sm font-semibold"></div>
 
   <!-- SCRIPTS -->
   <script>
@@ -322,12 +333,12 @@
     const DOWNLOAD_URL = "https://drive.google.com/uc?export=download&id=SUA_ID_AQUI"; // troque
     const CHECKOUT_URL = "https://sua-plataforma.com/checkout/smartmarmita";        // troque
 
-    // ======= Helpers UI =======
+    // ===== Helper: Toast =====
     const toastEl = () => document.getElementById('toast');
     function showToast(msg, ok = true) {
       const el = toastEl(); if (!el) return;
       el.textContent = msg;
-      el.className = `fixed inset-x-0 top-4 z-50 mx-auto w-[92%] max-w-md rounded-xl px-4 py-3 text-center text-sm font-semibold ${ok ? 'bg-[var(--brand)] text-white' : 'bg-rose-600 text-white'}`;
+      el.className = `fixed inset-x-0 top-4 z-50 mx-auto w-[92%] max-w-md rounded-xl px-4 py-3 text-center text-sm font-semibold ${ok ? 'bg-[var(--brand)] text-[#071217]' : 'bg-[var(--rose)] text-white'}`;
       el.classList.remove('hidden');
       clearTimeout(el._t); el._t = setTimeout(() => el.classList.add('hidden'), 3600);
     }
@@ -337,12 +348,11 @@
       return {utm_source:p.get('utm_source')||'',utm_medium:p.get('utm_medium')||'',utm_campaign:p.get('utm_campaign')||'',utm_content:p.get('utm_content')||'',utm_term:p.get('utm_term')||''};
     };
 
-    // ======= Header / Mobile & anchors =======
+    // ===== Header: mobile e âncoras =====
     const headerOffset = () => { const h=document.querySelector('header'); return h? h.getBoundingClientRect().height:0; };
     const smoothScroll = (hash) => { const t=document.querySelector(hash); if(!t) return; const top=t.getBoundingClientRect().top+pageYOffset-(headerOffset()+8); scrollTo({top,behavior:'smooth'}); };
 
     document.addEventListener('DOMContentLoaded', () => {
-      // data
       document.getElementById('year').textContent = new Date().getFullYear();
 
       // mobile menu
@@ -353,7 +363,7 @@
       const toggleMenu = () => { menu.classList.toggle('hidden'); iconOpen.classList.toggle('hidden'); iconClose.classList.toggle('hidden'); };
       if (btn && menu) btn.addEventListener('click', toggleMenu);
 
-      // anchors
+      // âncoras
       document.querySelectorAll('a[href^="#"]').forEach(a => {
         a.addEventListener('click', (e) => {
           const hash = a.getAttribute('href'); if (!hash || hash === '#') return;
