@@ -3,128 +3,197 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Gerador de Times</title>
-
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<title>Gerador de Times ⚽</title>
 
 <style>
-    body { background: #f3f3f3; padding: 15px; }
-    .card { border-radius: 16px; }
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background: #f2f2f7;
+    }
 
-    .player-item { display: flex; gap: 10px; }
-    .player-item input { font-size: 16px; }
+    .container {
+        max-width: 500px;
+        margin: auto;
+        padding: 20px;
+    }
 
-    /* Ajuste fino mobile */
-    @media (max-width: 600px) {
-        .player-item {
-            flex-direction: column;
-        }
-        .player-item .input-group {
-            flex-direction: column;
-        }
-        .player-item select {
-            width: 100%;
-        }
+    h1 {
+        text-align: center;
+        font-size: 26px;
+        margin-bottom: 20px;
+    }
+
+    .card {
+        background: #ffffff;
+        padding: 18px;
+        margin-bottom: 20px;
+        border-radius: 12px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    textarea {
+        width: 100%;
+        height: 130px;
+        border-radius: 10px;
+        border: 1px solid #ccc;
+        padding: 10px;
+        font-size: 16px;
+    }
+
+    .btn {
+        width: 100%;
+        padding: 14px;
+        margin-top: 12px;
+        font-size: 18px;
+        border: none;
+        border-radius: 10px;
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .btn-blue { background: #007bff; }
+    .btn-yellow { background: #ffb200; color: black; }
+    .btn-green { background: #28a745; }
+
+    ul { padding-left: 0; }
+    li { list-style: none; padding: 10px 0; font-size: 18px; }
+    select { padding: 8px; border-radius: 8px; font-size: 16px; }
+
+    .player-line {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 6px 0;
+    }
+
+    @media (max-width: 480px) {
+        h1 { font-size: 22px; }
+        li, select { font-size: 16px; }
     }
 </style>
+
 </head>
 <body>
 
 <div class="container">
-    <h2 class="text-center mb-4 fw-bold">Gerador de Times ⚽</h2>
 
-    <!-- IMPORTAÇÃO -->
-    <div class="card p-3 mb-3">
-        <h5>Importar lista de jogadores</h5>
-        <textarea id="rawList" class="form-control" rows="6" placeholder="Cole a lista aqui..."></textarea>
+    <h1>Gerador de Times ⚽</h1>
 
-        <button class="btn btn-primary w-100 mt-2" onclick="importList()">Importar lista</button>
-        <button class="btn btn-warning w-100 mt-2" onclick="clearList()">Limpar lista</button>
+    <!-- IMPORTAÇÃO DE LISTA -->
+    <div class="card">
+        <h3>Importar lista de jogadores</h3>
+
+        <textarea id="listaImportada" placeholder="Cole aqui a lista do WhatsApp"></textarea>
+
+        <button class="btn btn-blue" onclick="importarLista()">Importar lista</button>
+        <button class="btn btn-yellow" onclick="limparLista()">Limpar lista</button>
     </div>
 
-    <!-- JOGADORES -->
-    <div class="card p-3 mb-3">
-        <h5>Jogadores</h5>
-        <div id="playersContainer"></div>
+    <!-- LISTA DE JOGADORES -->
+    <div class="card">
+        <h3>Jogadores</h3>
+        <ul id="listaJogadores"></ul>
     </div>
 
-    <!-- TIMES -->
-    <div class="card p-3 mb-3">
-        <h5>Times</h5>
+    <button class="btn btn-green" onclick="gerarTimes()">Gerar Times</button>
+    <button class="btn btn-blue" onclick="copiarTimes()">Copiar Times para WhatsApp</button>
 
-        <button class="btn btn-success w-100 mb-2" onclick="generateTeams()">Gerar Times</button>
-        <button class="btn btn-info w-100" onclick="copyTeamsWhatsApp()">Copiar para WhatsApp</button>
-
-        <div id="teamsResult" class="mt-3"></div>
+    <div class="card">
+        <h3>Times Gerados</h3>
+        <pre id="resultado"></pre>
     </div>
+
 </div>
 
 <script>
-function importList() {
-    let rawText = document.getElementById("rawList").value;
+let jogadores = [];
 
-    let lines = rawText.split("\n");
+// Remove emojis + números + símbolos + espaços extras
+function limparTexto(texto) {
+    return texto
+        .replace(/[0-9]+/g, "")             // remove números
+        .replace(/[-–=•.]/g, " ")           // remove traços/símbolos
+        .replace(/[\u{1F300}-\u{1FAFF}]/gu, "") // remove emojis
+        .replace(/\s+/g, " ")               // remove múltiplos espaços
+        .trim();
+}
 
-    // 🔥 Regex corrigido para iPhone (remove apenas números e emojis)
-    let cleanedNames = lines.map(line => line
-        .replace(/^\s*\d+[\)\.\-]*\s*/g, "") // remove "1 -", "2)", "3."
-        .replace(/[\p{Emoji_Presentation}\p{Extended_Pictographic}]/gu, "") // remove emojis
-        .trim()
-    ).filter(name => name.length > 0);
+function importarLista() {
+    let texto = document.getElementById("listaImportada").value.trim();
+    if (!texto) return alert("Cole a lista primeiro!");
 
-    const container = document.getElementById("playersContainer");
-    container.innerHTML = "";
+    let linhas = texto.split("\n");
 
-    cleanedNames.forEach(name => {
-        const div = document.createElement("div");
-        div.className = "player-item mb-2";
+    jogadores = linhas
+        .map(linha => limparTexto(linha))
+        .filter(nome => nome.length > 1);
 
-        div.innerHTML = `
-            <div class="input-group">
-                <input type="text" class="form-control player-name" value="${name}">
-                <select class="form-select player-level">
-                    <option value="1">⭐</option>
-                    <option value="2">⭐⭐</option>
-                    <option value="3">⭐⭐⭐</option>
-                    <option value="4">⭐⭐⭐⭐</option>
-                    <option value="5">⭐⭐⭐⭐⭐</option>
-                </select>
-            </div>
+    atualizarLista();
+}
+
+function atualizarLista() {
+    let lista = document.getElementById("listaJogadores");
+    lista.innerHTML = "";
+
+    jogadores.forEach((nome, index) => {
+        let li = document.createElement("li");
+        li.className = "player-line";
+
+        li.innerHTML = `
+            <span>${nome}</span>
+            <select onchange="definirNivel(${index}, this.value)">
+                <option value="1">Nível 1</option>
+                <option value="2">Nível 2</option>
+                <option value="3">Nível 3</option>
+            </select>
         `;
 
-        container.appendChild(div);
+        lista.appendChild(li);
     });
 }
 
-function clearList() {
-    document.getElementById("rawList").value = "";
-    document.getElementById("playersContainer").innerHTML = "";
-    document.getElementById("teamsResult").innerHTML = "";
+function definirNivel(index, nivel) {
+    jogadores[index] = { nome: jogadores[index].nome || jogadores[index], nivel: parseInt(nivel) };
 }
 
-function generateTeams() {
-    const names = [...document.querySelectorAll('.player-name')]
-        .map(i => i.value.trim())
-        .filter(i => i.length > 0);
-
-    let shuffled = names.sort(() => Math.random() - 0.5);
-
-    const half = Math.ceil(shuffled.length / 2);
-    const teamA = shuffled.slice(0, half);
-    const teamB = shuffled.slice(half);
-
-    document.getElementById("teamsResult").innerHTML = `
-        <div class='p-2 bg-light rounded'><h5>Time A</h5>${teamA.join("<br>")}</div>
-        <hr>
-        <div class='p-2 bg-light rounded'><h5>Time B</h5>${teamB.join("<br>")}</div>
-    `;
+function limparLista() {
+    jogadores = [];
+    document.getElementById("listaJogadores").innerHTML = "";
+    document.getElementById("listaImportada").value = "";
+    document.getElementById("resultado").textContent = "";
 }
 
-function copyTeamsWhatsApp() {
-    const text = document.getElementById("teamsResult").innerText;
-    navigator.clipboard.writeText(text).then(() => {
-        alert("Times copiados! Agora é só colar no WhatsApp.");
-    });
+function gerarTimes() {
+    if (jogadores.length < 2) return alert("Adicione pelo menos 2 jogadores!");
+
+    let copia = jogadores.map(j => ({
+        nome: j.nome || j,
+        nivel: j.nivel || 2 // padrão
+    }));
+
+    copia.sort((a, b) => a.nivel - b.nivel);
+
+    let time1 = [], time2 = [];
+    copia.forEach((jogador, i) => (i % 2 === 0 ? time1 : time2));
+
+    let result = 
+        "⚽ *Time 1:*\n" + time1.map(j => j.nome).join("\n") +
+        "\n\n⚽ *Time 2:*\n" + time2.map(j => j.nome).join("\n");
+
+    document.getElementById("resultado").textContent = result;
+}
+
+function copiarTimes() {
+    let texto = document.getElementById("resultado").textContent;
+
+    if (!texto.trim()) return alert("Gere os times antes!");
+
+    navigator.clipboard.writeText(texto);
+
+    alert("Times copiados! Agora é só colar no WhatsApp.");
 }
 </script>
 
