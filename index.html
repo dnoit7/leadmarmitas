@@ -1,437 +1,329 @@
-<!DOCTYPE html>
-<html lang="pt-br">
+<!doctype html>
+<html lang="pt-BR">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>SmartMarmita — Marmitas fitness econômicas (Dark Premium)</title>
-  <meta name="description" content="SmartMarmita: mini e-book gratuito + versão completa para organizar 5 dias de marmitas saudáveis gastando menos." />
-  <link rel="icon" href="smartmarmitafavicon.svg" />
-  <script src="https://cdn.tailwindcss.com"></script>
+  <title>Sorteador de Times - Pelada</title>
   <style>
-    html{scroll-behavior:smooth}
-    /* ===== Dark Premium Palette ===== */
-    :root{
-      --ink:#E6EDF3;       /* texto principal */
-      --muted:#9FB1C1;     /* texto secundário */
-      --bg:#0B1220;        /* fundo dark */
-      --panel:#0F1A2B;     /* painéis/sections */
-      --card:#111C2F;      /* cards */
-      --stroke:#203049;    /* bordas */
-      --brand:#35D0A5;     /* verde neon elegante */
-      --brand-2:#18A57E;   /* verde escuro */
-      --accent:#F8C44E;    /* destaque */
-      --rose:#FF7A7A;      /* alerta/urgência */
-    }
-    body{background:radial-gradient(1200px 800px at 80% -10%, #14243B 0%, var(--bg) 45%), var(--bg); color:var(--ink)}
-    .container-ct{max-width:1120px}
-    .card{background:linear-gradient(180deg, rgba(255,255,255,0.04), transparent), var(--card); border:1px solid var(--stroke); box-shadow:0 10px 30px rgba(0,0,0,.25)}
-    .panel{background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent), var(--panel); border-top:1px solid var(--stroke); border-bottom:1px solid var(--stroke)}
-    .btn{display:inline-flex;align-items:center;justify-content:center;padding:.9rem 1.25rem;border-radius:14px;font-weight:700}
-    .btn-primary{background:linear-gradient(90deg,var(--brand),var(--brand-2));color:#051017;text-shadow:0 1px 0 rgba(255,255,255,.15)}
-    .btn-primary:hover{filter:brightness(1.08)}
-    .btn-ghost{border:1px solid var(--stroke);background:transparent;color:var(--ink)}
-    .btn-ghost:hover{background:#0F223B}
-    .badge{display:inline-flex;align-items:center;gap:.5rem;padding:.35rem .65rem;border-radius:999px;border:1px solid var(--stroke);color:var(--muted);background:#101B2E}
-    .input{border:1px solid var(--stroke);background:#0C1830;color:var(--ink)}
-    .input::placeholder{color:#6B8095}
-    .input:focus{outline:0;box-shadow:0 0 0 3px rgba(53,208,165,.25);border-color:#39e4b4}
-    .price-cut{text-decoration:line-through;opacity:.65}
-    .ring-soft{box-shadow:0 0 0 3px rgba(248,196,78,.18)}
-    .glow{box-shadow:0 14px 40px rgba(53,208,165,.25)}
-    .glow-cta{box-shadow:0 16px 60px rgba(248,196,78,.22), inset 0 -2px 0 rgba(0,0,0,.25)}
-    .section-gap{padding-top:3.5rem;padding-bottom:3.5rem}
-    .hr{height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.1),transparent)}
+    :root{--bg:#0f1724;--card:#0b1220;--accent:#06b6d4;--muted:#94a3b8;--success:#10b981}
+    *{box-sizing:border-box}
+    body{font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; margin:0; background:linear-gradient(180deg,#071029 0%, #071827 100%); color:#e6eef6; padding:24px}
+    .container{max-width:1000px;margin:0 auto}
+    header{display:flex;align-items:center;gap:16px;margin-bottom:18px}
+    header h1{font-size:20px;margin:0}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); padding:16px;border-radius:12px;box-shadow:0 6px 18px rgba(2,6,23,0.6);}
+    .grid{display:grid;grid-template-columns:1fr 420px;gap:16px}
+    label{font-size:13px;color:var(--muted)}
+    input[type=text], select, input[type=number]{width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit}
+    .row{display:flex;gap:8px}
+    button{background:var(--accent);border:0;color:#042; padding:8px 12px;border-radius:8px;cursor:pointer;font-weight:600}
+    button.ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--muted)}
+    ul{list-style:none;padding:0;margin:0}
+    .player{display:flex;align-items:center;justify-content:space-between;padding:8px;border-radius:8px;margin-top:8px;background:rgba(255,255,255,0.02)}
+    .player .left{display:flex;align-items:center;gap:12px}
+    .badge{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,0.03);font-weight:700}
+    .controls{display:flex;gap:8px}
+    .teams{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:12px}
+    .team-card{background:rgba(255,255,255,0.02);padding:12px;border-radius:10px}
+    .muted{color:var(--muted);font-size:13px}
+    footer{margin-top:14px;color:var(--muted);font-size:13px}
+    @media(max-width:900px){.grid{grid-template-columns:1fr}}
   </style>
 </head>
-<body id="top" class="antialiased">
+<body>
+  <div class="container">
+    <header>
+      <h1>Sorteador de Times — Pelada</h1>
+      <div class="muted">Versão web grátis • Salva no navegador</div>
+    </header>
 
-  <!-- HEADER -->
-  <header class="sticky top-0 z-40 border-b border-[var(--stroke)] bg-[#0B1220CC] backdrop-blur">
-    <div class="mx-auto container-ct px-5 py-3">
-      <div class="flex items-center justify-between">
-        <a href="#top" class="text-xl font-extrabold tracking-tight">SMARTMARMITA</a>
-        <nav class="hidden md:flex items-center gap-8 text-sm">
-          <a href="#beneficios" class="text-[var(--muted)] hover:text-[var(--ink)]">Benefícios</a>
-          <a href="#como" class="text-[var(--muted)] hover:text-[var(--ink)]">Como funciona</a>
-          <a href="#form" class="text-[var(--muted)] hover:text-[var(--ink)]">Baixar grátis</a>
-          <a href="#oferta" class="text-[var(--muted)] hover:text-[var(--ink)]">Versão completa</a>
-        </nav>
-        <a href="#form" class="hidden md:inline-flex btn btn-primary glow">Quero meu e-book</a>
-        <button id="hamburger" class="md:hidden h-10 w-10 grid place-items-center rounded-lg border border-[var(--stroke)]" aria-label="Abrir menu">
-          <svg id="iconOpen" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7h16M4 12h16M4 17h16"/></svg>
-          <svg id="iconClose" class="hidden h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-        </button>
-      </div>
-    </div>
-    <nav id="mobileMenu" class="md:hidden hidden border-t border-[var(--stroke)] bg-[#0F1A2B]">
-      <div class="mx-auto container-ct px-5 py-3 grid gap-1 text-sm">
-        <a href="#beneficios" class="rounded-lg px-3 py-2 text-[var(--muted)] hover:bg-[#0E1A2E]">Benefícios</a>
-        <a href="#como" class="rounded-lg px-3 py-2 text-[var(--muted)] hover:bg-[#0E1A2E]">Como funciona</a>
-        <a href="#form" class="rounded-lg px-3 py-2 text-[var(--muted)] hover:bg-[#0E1A2E]">Baixar grátis</a>
-        <a href="#oferta" class="rounded-lg px-3 py-2 text-[var(--muted)] hover:bg-[#0E1A2E]">Versão completa</a>
-        <a href="#form" class="mt-1 btn btn-primary glow">Quero meu e-book</a>
-      </div>
-    </nav>
-  </header>
+    <div class="grid">
+      <section class="card">
+        <h3>Cadastro de jogadores</h3>
+        <p class="muted">Adicione nome e nível (1 = fraco, 5 = excelente). Você pode marcar quem vai jogar hoje.</p>
 
-  <!-- TOAST -->
-  <div id="toast" class="fixed inset-x-0 top-4 z-50 mx-auto hidden w-[92%] max-w-md rounded-xl px-4 py-3 text-center text-sm font-semibold"></div>
-
-  <!-- HERO -->
-  <section class="section-gap">
-    <div class="mx-auto container-ct px-5 grid gap-10 md:grid-cols-[1.1fr_.9fr] items-center">
-      <div>
-        <div class="badge">Planejamento • Receita • Economia</div>
-        <h1 class="mt-4 text-4xl md:text-6xl font-extrabold leading-tight tracking-tight">
-          Marmitas fitness econômicas para a semana inteira — <span style="color:var(--brand)">sem complicação</span>.
-        </h1>
-        <p class="mt-4 text-lg text-[var(--muted)] max-w-xl">
-          Baixe o mini e-book gratuito do <strong>SmartMarmita</strong> e aprenda a cozinhar por blocos, porcionar e armazenar. Mais saúde, menos desperdício e mais dinheiro no bolso.
-        </p>
-        <div class="mt-7 flex flex-wrap items-center gap-3">
-          <a href="#form" class="btn btn-primary glow">Baixar mini e-book grátis</a>
-          <a href="#oferta" class="btn btn-ghost">Ver versão completa</a>
+        <div style="display:flex;gap:8px;margin-top:10px">
+          <input id="playerName" type="text" placeholder="Nome do jogador" />
+          <select id="playerLevel" aria-label="nível">
+            <option value="3">Nível 3 (padrão)</option>
+            <option value="5">5 — Excelente</option>
+            <option value="4">4 — Muito bom</option>
+            <option value="3">3 — Médio</option>
+            <option value="2">2 — Abaixo</option>
+            <option value="1">1 — Iniciante</option>
+          </select>
+          <button id="addPlayerBtn">Adicionar</button>
         </div>
-        <div class="mt-6 flex flex-wrap items-center gap-6 text-sm text-[var(--muted)]">
-          <span>⭐️⭐️⭐️⭐️⭐️ 4,9/5</span>
-          <span>+5.000 downloads</span>
-          <span>Economia média R$ 300/mês</span>
-        </div>
-      </div>
 
-      <div class="card rounded-2xl p-6 md:p-8">
-        <div class="text-sm text-[var(--muted)]">Mini e-book gratuito</div>
-        <h3 class="mt-2 text-2xl font-bold">5 receitas • checklist • cardápio semanal</h3>
-        <p class="mt-2 text-[var(--muted)]">Receba agora no seu e-mail e comece hoje.</p>
-        <a href="#form" class="mt-6 btn btn-primary w-full glow">Quero receber</a>
-        <div class="mt-4 text-xs text-[var(--muted)]">Sem spam. Você pode sair quando quiser.</div>
-      </div>
-    </div>
-  </section>
-
-  <div class="hr mx-auto container-ct"></div>
-
-  <!-- BENEFÍCIOS -->
-  <section id="beneficios" class="section-gap">
-    <div class="mx-auto container-ct px-5">
-      <h2 class="text-2xl md:text-3xl font-extrabold">Por que o SmartMarmita funciona</h2>
-      <div class="mt-6 grid gap-4 md:grid-cols-3">
-        <div class="card rounded-xl p-5">
-          <h3 class="font-bold">Economia real</h3>
-          <p class="mt-1 text-[var(--muted)]">Lista enxuta, aproveitamento total dos ingredientes e zero desperdício.</p>
+        <div style="margin-top:12px;display:flex;gap:8px;align-items:center">
+          <label style="margin:0;display:flex;gap:8px;align-items:center"><input id="selectAllToggle" type="checkbox" checked /> Selecionar todos para próxima partida</label>
         </div>
-        <div class="card rounded-xl p-5">
-          <h3 class="font-bold">Tempo sob controle</h3>
-          <p class="mt-1 text-[var(--muted)]">Cozinhe por blocos e deixe 5 dias prontos em poucas horas.</p>
-        </div>
-        <div class="card rounded-xl p-5">
-          <h3 class="font-bold">Resultados visíveis</h3>
-          <p class="mt-1 text-[var(--muted)]">Macros equilibrados, porções certas e constância na rotina.</p>
-        </div>
-      </div>
-    </div>
-  </section>
 
-  <!-- COMO FUNCIONA -->
-  <section id="como" class="section-gap panel">
-    <div class="mx-auto container-ct px-5">
-      <h2 class="text-2xl md:text-3xl font-extrabold">Como funciona</h2>
-      <div class="mt-6 grid gap-4 md:grid-cols-3">
-        <div class="card rounded-xl p-5">
-          <div class="text-xs text-[var(--muted)]">Passo 1</div>
-          <h3 class="mt-1 font-bold">Compre certo</h3>
-          <p class="mt-1 text-[var(--muted)]">Lista objetiva para 5 dias. Nada de sobras caras.</p>
+        <div style="margin-top:12px">
+          <label class="muted">Jogadores cadastrados</label>
+          <ul id="playersList"></ul>
         </div>
-        <div class="card rounded-xl p-5">
-          <div class="text-xs text-[var(--muted)]">Passo 2</div>
-          <h3 class="mt-1 font-bold">Cozinhe por blocos</h3>
-          <p class="mt-1 text-[var(--muted)]">Proteínas, carboidratos e legumes em paralelo, sem estresse.</p>
+
+        <div style="display:flex;gap:8px;margin-top:12px">
+          <button id="clearBtn" class="ghost">Limpar lista</button>
+          <button id="exportBtn" class="ghost">Exportar</button>
+          <button id="importBtn" class="ghost">Importar</button>
+          <input id="importFile" type="file" accept="application/json" style="display:none" />
         </div>
-        <div class="card rounded-xl p-5">
-          <div class="text-xs text-[var(--muted)]">Passo 3</div>
-          <h3 class="mt-1 font-bold">Porcione & armazene</h3>
-          <p class="mt-1 text-[var(--muted)]">Porções equilibradas, conservação correta e praticidade na semana.</p>
+
+        <hr style="border:none;border-top:1px solid rgba(255,255,255,0.03);margin:12px 0" />
+
+        <h3>Sorteio</h3>
+        <div style="display:flex;gap:8px;align-items:center">
+          <label style="min-width:120px">Times</label>
+          <input id="teamsCount" type="number" value="2" min="2" max="8" style="width:90px" />
+          <label style="display:flex;align-items:center;gap:8px;margin-left:8px"><input id="shuffleSameLevel" type="checkbox" checked /> Embaralhar dentro do mesmo nível</label>
         </div>
-      </div>
-    </div>
-  </section>
+        <div style="margin-top:10px;display:flex;gap:8px">
+          <button id="drawBtn">Sortear times</button>
+          <button id="resetBtn" class="ghost">Reiniciar sorteio</button>
+        </div>
 
-  <!-- OFERTA PRO -->
-  <section id="oferta" class="section-gap">
-    <div class="mx-auto max-w-5xl px-5">
-      <div class="rounded-3xl border border-[var(--stroke)] bg-[#0D1728] shadow-xl">
-        <div class="grid gap-8 p-8 md:grid-cols-[1.2fr_.8fr] md:p-12">
-          <div>
-            <span class="inline-flex items-center gap-2 rounded-full border border-[var(--stroke)] bg-[#0F1A2B] px-3 py-1 text-sm text-[var(--muted)]">
-              🚀 Versão Completa • E-book + Recursos
-            </span>
-            <h2 class="mt-3 text-3xl font-extrabold leading-tight md:text-4xl">
-              Organize 5 dias de marmitas <span style="color:var(--brand)">gastando menos</span> — sem travar no planejamento
-            </h2>
-            <p class="mt-3 max-w-xl text-[var(--muted)]">
-              Receitas testadas, cardápios prontos, listas de compras, estratégias de economia e guia de armazenamento. Ideal para quem quer resultado rápido e sustentável.
-            </p>
+        <div id="summary" style="margin-top:12px" class="muted">Nenhum sorteio realizado ainda.</div>
 
-            <ul class="mt-6 grid gap-3 text-[var(--ink)] sm:grid-cols-2">
-              <li class="flex items-start gap-3"><span class="mt-1 inline-block h-5 w-5 rounded-full" style="background:#0d2c25;color:var(--brand);display:grid;place-items:center;font-size:.75rem">✓</span> 30+ receitas econômicas e balanceadas</li>
-              <li class="flex items-start gap-3"><span class="mt-1 inline-block h-5 w-5 rounded-full" style="background:#0d2c25;color:var(--brand);display:grid;place-items:center;font-size:.75rem">✓</span> Cardápios semanais prontos</li>
-              <li class="flex items-start gap-3"><span class="mt-1 inline-block h-5 w-5 rounded-full" style="background:#0d2c25;color:var(--brand);display:grid;place-items:center;font-size:.75rem">✓</span> Listas de compras otimizadas</li>
-              <li class="flex items-start gap-3"><span class="mt-1 inline-block h-5 w-5 rounded-full" style="background:#0d2c25;color:var(--brand);display:grid;place-items:center;font-size:.75rem">✓</span> Guia de porcionamento & armazenamento</li>
-            </ul>
+      </section>
 
-            <div class="mt-6 rounded-2xl border border-amber-300/30 bg-amber-500/10 p-4 ring-1 ring-inset ring-amber-300/20">
-              <div class="text-sm font-semibold" style="color:var(--accent)">BÔNUS INCLUÍDOS</div>
-              <ul class="mt-2 grid gap-2 text-sm text-[#F2E7C7] sm:grid-cols-2">
-                <li>• Tabela de substituições econômicas</li>
-                <li>• Template de lista de compras (editável)</li>
-                <li>• Checklist de pré-preparo (cozinhe em 2h)</li>
-                <li>• Guia rápido de temperos e combinações</li>
-              </ul>
-            </div>
+      <aside class="card">
+        <h3>Resultado</h3>
+        <div id="resultArea">
+          <div class="muted">Os times vão aparecer aqui após o sorteio.</div>
+        </div>
+
+        <div style="margin-top:12px">
+          <label class="muted">Salvar/Carregar partidas</label>
+          <div style="display:flex;gap:8px;margin-top:6px">
+            <input id="matchName" type="text" placeholder="Nome desta partida (opcional)" />
+            <button id="saveMatch" class="ghost">Salvar</button>
+            <button id="loadMatchList" class="ghost">Listar partidas</button>
           </div>
-
-          <!-- Card de preço/ação -->
-          <div class="rounded-2xl border border-[var(--stroke)] bg-[#0F1A2B] p-6 glow">
-            <div class="flex items-center justify-between">
-              <span class="text-sm text-[var(--muted)]">Preço promocional</span>
-              <span class="rounded-full bg-[#0d2c25] px-3 py-1 text-xs font-semibold" style="color:var(--brand)">Oferta limitada</span>
-            </div>
-
-            <div class="mt-2 flex items-end gap-3">
-              <span class="text-lg text-[var(--muted)] price-cut">R$ 67,90</span>
-              <span class="text-4xl font-extrabold" style="color:var(--brand)">R$ 37,90</span>
-            </div>
-            <p class="mt-1 text-xs text-[var(--muted)]">ou 3x no cartão (via plataforma de pagamento)</p>
-
-            <a id="buyNow"
-               class="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[var(--brand)] via-[var(--brand)] to-[var(--accent)] px-6 py-4 text-lg font-extrabold text-[#081417] glow-cta ring-soft transition hover:scale-[1.02] focus:outline-none focus:ring-4"
-               href="#" aria-label="Comprar versão completa por 37,90">
-              <span>Comprar agora por R$ 37,90</span> <span aria-hidden>→</span>
-            </a>
-            <p class="mt-2 text-center text-[13px] font-semibold" style="color:var(--rose)">⚡ Termina em <span id="timer" class="tabular-nums">00:00:00</span></p>
-
-            <a href="#form" class="mt-3 inline-flex w-full items-center justify-center rounded-xl border border-[var(--stroke)] bg-transparent px-6 py-3 font-semibold text-[var(--ink)] hover:bg-[#0E1A2E]">
-              Prefiro testar grátis primeiro
-            </a>
-
-            <div class="mt-5 grid gap-3">
-              <div class="flex items-center justify-center gap-2 text-sm text-[var(--muted)]">
-                <svg class="h-5 w-5" style="color:var(--brand)" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l7 4v6c0 5-3.5 9.74-7 10-3.5-.26-7-5-7-10V6l7-4z"/></svg>
-                Garantia incondicional de 7 dias
-              </div>
-              <div class="flex items-center justify-center gap-4 text-xs text-[var(--muted)]">
-                <span class="inline-flex items-center gap-1"><span class="h-2.5 w-2.5 rounded-full" style="background:var(--brand)"></span> Checkout seguro</span>
-                <span>Cartão • Pix • Boleto</span>
-                <span>Entrega imediata</span>
-              </div>
-            </div>
-          </div>
+          <div id="savedMatches" style="margin-top:8px"></div>
         </div>
 
-        <div class="grid gap-4 border-t border-[var(--stroke)] p-6 text-sm text-[var(--muted)] sm:grid-cols-3">
-          <div class="rounded-xl border border-[var(--stroke)] bg-[#0F1A2B] p-4 text-center">⭐️⭐️⭐️⭐️⭐️ Usuários satisfeitos</div>
-          <div class="rounded-xl border border-[var(--stroke)] bg-[#0F1A2B] p-4 text-center">🔒 Pagamento criptografado</div>
-          <div class="rounded-xl border border-[var(--stroke)] bg-[#0F1A2B] p-4 text-center">💬 Suporte por e-mail</div>
-        </div>
-      </div>
+      </aside>
     </div>
-  </section>
 
-  <!-- FAQ -->
-  <section class="section-gap">
-    <div class="mx-auto container-ct px-5">
-      <h2 class="text-2xl md:text-3xl font-extrabold">Perguntas frequentes</h2>
-      <div class="mt-6 grid gap-4 md:grid-cols-2">
-        <details class="card rounded-xl p-5">
-          <summary class="font-semibold cursor-pointer">O mini e-book é realmente gratuito?</summary>
-          <p class="mt-2 text-[var(--muted)]">Sim. Basta preencher o formulário e você recebe o PDF no seu e-mail.</p>
-        </details>
-        <details class="card rounded-xl p-5">
-          <summary class="font-semibold cursor-pointer">A versão completa vale a pena?</summary>
-          <p class="mt-2 text-[var(--muted)]">Inclui 30+ receitas, cardápios e listas prontas. Ideal para manter constância e economizar mais.</p>
-        </details>
-        <details class="card rounded-xl p-5">
-          <summary class="font-semibold cursor-pointer">Funciona para iniciantes?</summary>
-          <p class="mt-2 text-[var(--muted)]">Sim. O método é simples, com passo a passo e ingredientes acessíveis.</p>
-        </details>
-        <details class="card rounded-xl p-5">
-          <summary class="font-semibold cursor-pointer">Posso cancelar os e-mails?</summary>
-          <p class="mt-2 text-[var(--muted)]">Claro. Você pode sair da lista quando quiser com 1 clique.</p>
-        </details>
-      </div>
-    </div>
-  </section>
-
-  <!-- FORM -->
-  <section id="form" class="section-gap panel">
-    <div class="mx-auto container-ct px-5">
-      <div class="card rounded-2xl p-6 md:p-8">
-        <h2 class="text-2xl md:text-3xl font-extrabold">Baixar mini e-book gratuito</h2>
-        <p class="mt-2 text-[var(--muted)]">Preencha e receba o PDF imediatamente.</p>
-
-        <form id="leadForm" class="mt-6 grid gap-4 md:grid-cols-2">
-          <div class="grid gap-2">
-            <label class="text-sm font-medium text-[var(--ink)]/90">Nome</label>
-            <input required name="name" type="text" autocomplete="name" class="input rounded-xl px-4 py-3" placeholder="Seu nome completo" />
-          </div>
-          <div class="grid gap-2">
-            <label class="text-sm font-medium text-[var(--ink)]/90">E-mail</label>
-            <input required name="email" type="email" autocomplete="email" class="input rounded-xl px-4 py-3" placeholder="voce@email.com" />
-          </div>
-          <div class="grid gap-2 md:col-span-2">
-            <label class="text-sm font-medium text-[var(--ink)]/90">WhatsApp (opcional)</label>
-            <input name="whatsapp" type="tel" autocomplete="tel" class="input rounded-xl px-4 py-3" placeholder="(11) 90000-0000" />
-          </div>
-          <label class="md:col-span-2 flex items-start gap-3 rounded-xl border border-[var(--stroke)] p-4">
-            <input required id="consent" name="consent" type="checkbox" class="mt-1 h-5 w-5 rounded border-[var(--stroke)] text-[var(--brand)] focus:ring-[var(--brand)]">
-            <span class="text-sm text-[var(--muted)]">Concordo em receber o mini e-book e comunicações relacionadas (LGPD). Posso sair quando quiser.</span>
-          </label>
-
-          <!-- honeypot -->
-          <div class="hidden"><input type="text" name="website" tabindex="-1" autocomplete="off" /></div>
-
-          <div class="md:col-span-2 grid gap-3">
-            <button id="submitBtn" type="submit" class="btn btn-primary w-full glow">Quero baixar grátis</button>
-            <p id="status" class="hidden text-center text-sm"></p>
-          </div>
-        </form>
-
-        <p class="mt-4 text-center text-xs text-[var(--muted)]">Ao enviar, você concorda com nossa política de privacidade.</p>
-      </div>
-    </div>
-  </section>
-
-  <footer class="border-t border-[var(--stroke)] py-6 text-center text-sm text-[var(--muted)]">
-    © <span id="year"></span> SmartMarmita. Todos os direitos reservados.
-  </footer>
-
-  <!-- STICKY CTA BAR -->
-  <div id="stickyBar" class="fixed inset-x-0 bottom-3 z-40 hidden px-4">
-    <div class="mx-auto max-w-3xl rounded-2xl border border-[var(--stroke)] bg-[#0F1A2B]/95 p-3 shadow-2xl backdrop-blur">
-      <div class="flex flex-col items-center gap-3 sm:flex-row sm:justify-between">
-        <div class="text-center sm:text-left">
-          <div class="text-sm text-[var(--muted)] line-through">R$ 67,90</div>
-          <div class="text-xl font-extrabold" style="color:var(--brand)">R$ 37,90</div>
-          <div class="text-xs text-[var(--muted)]">Oferta termina em <span id="timerBar" class="font-semibold tabular-nums">00:00:00</span></div>
-        </div>
-        <a id="buyNowBar"
-           class="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[var(--brand)] via-[var(--brand)] to-[var(--accent)] px-5 py-3 font-bold text-[#071217] glow-cta transition hover:scale-[1.02] focus:outline-none focus:ring-4 sm:w-auto"
-           href="#" aria-label="Comprar versão completa agora">
-          Comprar agora
-        </a>
-      </div>
-    </div>
+    <footer class="muted">Dica: salve a página localmente (index.html) e abra no navegador. Para publicar grátis, use GitHub Pages.</footer>
   </div>
 
-  <!-- TOAST -->
-  <div id="toast2" class="fixed inset-x-0 top-4 z-50 mx-auto hidden w-[92%] max-w-md rounded-xl px-4 py-3 text-center text-sm font-semibold"></div>
-
-  <!-- SCRIPTS -->
   <script>
-    // ======= CONFIG =======
-    const WEBHOOK_URL  = "https://n8n.seu-dominio.com/webhook/lead-marmitasfitness"; // troque
-    const DOWNLOAD_URL = "https://drive.google.com/uc?export=download&id=SUA_ID_AQUI"; // troque
-    const CHECKOUT_URL = "https://sua-plataforma.com/checkout/smartmarmita";        // troque
+    // --- Dados e armazenamento ---
+    const LS_KEY = 'sorteador_pelada_players_v1'
+    const LS_MATCHES = 'sorteador_pelada_matches_v1'
 
-    // ===== Helper: Toast =====
-    const toastEl = () => document.getElementById('toast');
-    function showToast(msg, ok = true) {
-      const el = toastEl(); if (!el) return;
-      el.textContent = msg;
-      el.className = `fixed inset-x-0 top-4 z-50 mx-auto w-[92%] max-w-md rounded-xl px-4 py-3 text-center text-sm font-semibold ${ok ? 'bg-[var(--brand)] text-[#071217]' : 'bg-[var(--rose)] text-white'}`;
-      el.classList.remove('hidden');
-      clearTimeout(el._t); el._t = setTimeout(() => el.classList.add('hidden'), 3600);
+    let players = []
+    const $ = id => document.getElementById(id)
+
+    // carregar do localStorage
+    function load() {
+      try{
+        const raw = localStorage.getItem(LS_KEY)
+        players = raw ? JSON.parse(raw) : []
+      }catch(e){ players = [] }
     }
-    const isEmail = (v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(v||'').trim());
-    const getUTMs = () => {
-      const p = new URLSearchParams(location.search);
-      return {utm_source:p.get('utm_source')||'',utm_medium:p.get('utm_medium')||'',utm_campaign:p.get('utm_campaign')||'',utm_content:p.get('utm_content')||'',utm_term:p.get('utm_term')||''};
-    };
+    function save(){ localStorage.setItem(LS_KEY, JSON.stringify(players)) }
 
-    // ===== Header: mobile e âncoras =====
-    const headerOffset = () => { const h=document.querySelector('header'); return h? h.getBoundingClientRect().height:0; };
-    const smoothScroll = (hash) => { const t=document.querySelector(hash); if(!t) return; const top=t.getBoundingClientRect().top+pageYOffset-(headerOffset()+8); scrollTo({top,behavior:'smooth'}); };
+    // util
+    function uid(){ return Date.now().toString(36) + Math.random().toString(36).slice(2,7) }
 
-    document.addEventListener('DOMContentLoaded', () => {
-      document.getElementById('year').textContent = new Date().getFullYear();
+    // render lista de players
+    function renderPlayers(){
+      const ul = $('playersList'); ul.innerHTML = ''
+      players.forEach(p => {
+        const li = document.createElement('li'); li.className='player'
+        li.innerHTML = `
+          <div class="left">
+            <input type=checkbox data-id="${p.id}" ${p.selected? 'checked':''} />
+            <div style="min-width:8px"></div>
+            <div>
+              <div style="font-weight:700">${escapeHtml(p.name)}</div>
+              <div class="muted">Nível ${p.level}</div>
+            </div>
+          </div>
+          <div class="controls">
+            <div class="badge">${p.level}</div>
+            <button data-edit="${p.id}" class="ghost">Editar</button>
+            <button data-delete="${p.id}" class="ghost">Apagar</button>
+          </div>
+        `
+        ul.appendChild(li)
+      })
+    }
 
-      // mobile menu
-      const btn = document.getElementById('hamburger');
-      const menu = document.getElementById('mobileMenu');
-      const iconOpen = document.getElementById('iconOpen');
-      const iconClose = document.getElementById('iconClose');
-      const toggleMenu = () => { menu.classList.toggle('hidden'); iconOpen.classList.toggle('hidden'); iconClose.classList.toggle('hidden'); };
-      if (btn && menu) btn.addEventListener('click', toggleMenu);
+    function escapeHtml(s){ return String(s).replace(/[&<>"']/g, c=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":"&#39;" })[c]) }
 
-      // âncoras
-      document.querySelectorAll('a[href^="#"]').forEach(a => {
-        a.addEventListener('click', (e) => {
-          const hash = a.getAttribute('href'); if (!hash || hash === '#') return;
-          e.preventDefault(); if (menu && !menu.classList.contains('hidden')) toggleMenu(); smoothScroll(hash);
-        });
-      });
+    // eventos
+    function addPlayer(name, level){
+      if(!name || !name.trim()) return alert('Digite um nome')
+      players.push({id:uid(), name:name.trim(), level:parseInt(level)||3, selected:true})
+      save(); renderPlayers(); updateSummary()
+    }
 
-      // aplica checkout
-      const buy = document.getElementById('buyNow'); const buyBar = document.getElementById('buyNowBar');
-      if (buy) buy.href = CHECKOUT_URL; if (buyBar) buyBar.href = CHECKOUT_URL;
+    function removePlayer(id){ players = players.filter(p=>p.id!==id); save(); renderPlayers(); updateSummary() }
+    function editPlayer(id){
+      const p = players.find(x=>x.id===id); if(!p) return
+      const newName = prompt('Editar nome', p.name); if(!newName) return
+      const newLevel = prompt('Editar nível (1 a 5)', p.level); if(!newLevel) return
+      p.name = newName.trim(); p.level = Math.max(1, Math.min(5, parseInt(newLevel)||p.level))
+      save(); renderPlayers(); updateSummary()
+    }
 
-      // máscara simples WhatsApp
-      const wEl = document.querySelector('input[name="whatsapp"]');
-      if (wEl) wEl.addEventListener('input', () => {
-        let v = wEl.value.replace(/\D/g,'').slice(0,11);
-        if (v.length > 6) wEl.value = `(${v.slice(0,2)}) ${v.slice(2,7)}-${v.slice(7)}`;
-        else if (v.length > 2) wEl.value = `(${v.slice(0,2)}) ${v.slice(2)}`;
-        else wEl.value = v;
-      });
-
-      // ======= TIMER até 23:59:59 de hoje =======
-      function endOfDay(){ const d=new Date(); return new Date(d.getFullYear(), d.getMonth(), d.getDate(), 23,59,59).getTime(); }
-      function formatHMS(ms){ if(ms<=0) return "00:00:00"; const s=Math.floor(ms/1000); const h=Math.floor(s/3600); const m=Math.floor((s%3600)/60); const sec=s%60; const pad=n=>String(n).padStart(2,'0'); return `${pad(h)}:${pad(m)}:${pad(sec)}`; }
-      const tEl=document.getElementById('timer'); const tBar=document.getElementById('timerBar');
-      function tick(){ const diff=endOfDay()-Date.now(); const f=formatHMS(diff); if(tEl) tEl.textContent=f; if(tBar) tBar.textContent=f; }
-      tick(); setInterval(tick,1000);
-
-      // ======= Sticky bar aparece ao rolar 40% =======
-      const sticky=document.getElementById('stickyBar'); let shown=false;
-      function onScroll(){ const sc=window.scrollY; const docH=document.documentElement.scrollHeight - innerHeight; if (!sticky) return; if (docH>0 && sc/docH>0.4 && !shown){ sticky.classList.remove('hidden'); shown=true; } }
-      document.addEventListener('scroll', onScroll, {passive:true}); onScroll();
-
-      // ======= FORM =======
-      const form=document.getElementById('leadForm');
-      const btnSubmit=document.getElementById('submitBtn');
-      const statusP=document.getElementById('status');
-      if (form){
-        form.setAttribute('novalidate','novalidate');
-        form.addEventListener('submit', async (e) => {
-          e.preventDefault();
-          const data=Object.fromEntries(new FormData(form).entries());
-          if ((data.website||'').trim()){ showToast('Erro no envio. Tente novamente.', false); return; }
-
-          let invalid=false;
-          if (!data.name || String(data.name).trim().length<2) invalid=true;
-          if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(data.email||'').trim())) invalid=true;
-          if (!data.consent){ showToast('É necessário aceitar o consentimento (LGPD).', false); invalid=true; }
-          if (invalid){ if(statusP) statusP.classList.add('hidden'); return; }
-
-          const payload = { name:data.name||'', email:data.email||'', whatsapp:data.whatsapp||'', consent:true, ...getUTMs(), page:location.href, ts:new Date().toISOString() };
-
-          try{
-            if(btnSubmit){ btnSubmit.disabled=true; btnSubmit.textContent='Enviando...'; }
-            if(statusP) statusP.classList.add('hidden');
-            const res=await fetch(WEBHOOK_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
-            const txt=await res.text();
-            if(!res.ok) throw new Error('Falha no envio: '+res.status+' - '+txt);
-            showToast('Prontinho! Enviamos o mini e-book para seu e-mail.', true);
-            if (DOWNLOAD_URL && DOWNLOAD_URL !== '#'){ setTimeout(()=>{ location.href=DOWNLOAD_URL; },650); }
-            form.reset();
-          }catch(err){
-            console.error(err); showToast('Ocorreu um erro ao enviar. Tente novamente em instantes.', false);
-          }finally{
-            if(btnSubmit){ btnSubmit.disabled=false; btnSubmit.textContent='Quero baixar grátis'; }
-          }
-        });
+    // seleção checkbox
+    document.addEventListener('change', e=>{
+      if(e.target?.matches('#playersList input[type=checkbox]')){
+        const id = e.target.dataset.id; const p = players.find(x=>x.id===id)
+        if(p) p.selected = e.target.checked; save(); updateSummary()
       }
-    });
+    })
+
+    document.addEventListener('click', e=>{
+      if(e.target?.dataset?.delete) removePlayer(e.target.dataset.delete)
+      if(e.target?.dataset?.edit) editPlayer(e.target.dataset.edit)
+    })
+
+    // botões
+    $('addPlayerBtn').addEventListener('click', ()=>{ addPlayer($('playerName').value, $('playerLevel').value); $('playerName').value=''; $('playerName').focus() })
+    $('clearBtn').addEventListener('click', ()=>{ if(confirm('Apagar todos os jogadores?')){ players=[]; save(); renderPlayers(); updateSummary() } })
+
+    // selecionar todos
+    $('selectAllToggle').addEventListener('change', e=>{
+      players.forEach(p=>p.selected = e.target.checked); save(); renderPlayers(); updateSummary()
+    })
+
+    // export/import
+    $('exportBtn').addEventListener('click', ()=>{
+      const data = JSON.stringify(players, null, 2)
+      const blob = new Blob([data], {type:'application/json'})
+      const url = URL.createObjectURL(blob)
+      const a = document.createElement('a'); a.href=url; a.download='players.json'; a.click(); URL.revokeObjectURL(url)
+    })
+    $('importBtn').addEventListener('click', ()=>$('importFile').click())
+    $('importFile').addEventListener('change', async e=>{
+      const f = e.target.files[0]; if(!f) return
+      try{
+        const text = await f.text(); const arr = JSON.parse(text)
+        if(!Array.isArray(arr)) throw new Error('Arquivo inválido')
+        // validar
+        for(const it of arr){ if(!it.name) throw new Error('Formato errado') }
+        players = arr.map(p=>({id: p.id||uid(), name:p.name, level:parseInt(p.level)||3, selected: p.selected!==false}))
+        save(); renderPlayers(); updateSummary(); alert('Importado com sucesso')
+      }catch(err){ alert('Erro ao importar: '+err.message) }
+    })
+
+    // sorteio - algoritmo de equilíbrio
+    function distributeBalanced(selectedPlayers, teamsCount, shuffleSameLevel){
+      // agrupar por nível
+      const grouped = {}
+      selectedPlayers.forEach(p=>{
+        grouped[p.level] = grouped[p.level] || []
+        grouped[p.level].push(p)
+      })
+      // ordenar níveis do mais alto para o mais baixo
+      const levels = Object.keys(grouped).map(Number).sort((a,b)=>b-a)
+      // opcional: embaralhar dentro do mesmo nível antes de distribuir
+      if(shuffleSameLevel){ levels.forEach(l=> grouped[l] = shuffleArray(grouped[l])) }
+      // construir lista por "pote" (serpentina ideal)
+      const ordered = []
+      levels.forEach(l=> ordered.push(...grouped[l]))
+
+      // serpentina: distribuir em pedaços
+      const teams = Array.from({length:teamsCount}, ()=>[])
+      let forward = true
+      for(let i=0;i<ordered.length;i++){
+        const idx = Math.floor(i/teamsCount)
+        const pos = forward ? (i % teamsCount) : (teamsCount-1 - (i % teamsCount))
+        teams[pos].push(ordered[i])
+        if((i+1) % teamsCount === 0) forward = !forward
+      }
+
+      return teams
+    }
+
+    function shuffleArray(a){
+      for(let i=a.length-1;i>0;i--){
+        const j = Math.floor(Math.random()*(i+1)); [a[i], a[j]] = [a[j], a[i]]
+      }
+      return a
+    }
+
+    $('drawBtn').addEventListener('click', ()=>{
+      const count = parseInt($('teamsCount').value)||2
+      const shuffleSame = $('shuffleSameLevel').checked
+      const selected = players.filter(p=>p.selected)
+      if(selected.length < count){ return alert('Número de jogadores selecionados menor que o número de times') }
+      const teams = distributeBalanced(selected, count, shuffleSame)
+      renderResult(teams)
+      // salvar ultima partida temporariamente
+      sessionStorage.setItem('last_draw', JSON.stringify({teams, timestamp:Date.now()}))
+    })
+
+    $('resetBtn').addEventListener('click', ()=>{ $('resultArea').innerHTML = '<div class="muted">Os times vão aparecer aqui após o sorteio.</div>'; $('summary').textContent='Nenhum sorteio realizado ainda.' })
+
+    function renderResult(teams){
+      const area = $('resultArea'); area.innerHTML = ''
+      const container = document.createElement('div'); container.className='teams'
+      teams.forEach((t, i)=>{
+        const card = document.createElement('div'); card.className='team-card'
+        const total = t.reduce((s,p)=>s + (p.level||0), 0)
+        card.innerHTML = `<div style="display:flex;justify-content:space-between;align-items:center"><strong>Time ${i+1}</strong><div class="muted">Força total: ${total}</div></div>`
+        const ul = document.createElement('ul')
+        t.forEach(p=>{ const li = document.createElement('li'); li.style.padding='6px 0'; li.textContent = p.name + ' — Nível ' + p.level; ul.appendChild(li) })
+        card.appendChild(ul)
+        container.appendChild(card)
+      })
+      area.appendChild(container)
+      $('summary').textContent = `Sorteio: ${teams.length} times • ${teams.reduce((a,t)=>a+t.length,0)} jogadores`;
+    }
+
+    // salvar/recuperar partidas (localStorage)
+    $('saveMatch').addEventListener('click', ()=>{
+      const name = $('matchName').value.trim() || ('Partida ' + new Date().toLocaleString())
+      const last = sessionStorage.getItem('last_draw')
+      if(!last) return alert('Faça um sorteio antes de salvar a partida')
+      const stored = JSON.parse(localStorage.getItem(LS_MATCHES) || '[]')
+      const payload = {id:uid(), name, created:Date.now(), draw: JSON.parse(last)}
+      stored.push(payload); localStorage.setItem(LS_MATCHES, JSON.stringify(stored))
+      alert('Partida salva')
+    })
+
+    $('loadMatchList').addEventListener('click', ()=>{
+      const stored = JSON.parse(localStorage.getItem(LS_MATCHES) || '[]')
+      const box = $('savedMatches'); box.innerHTML = ''
+      if(stored.length===0) return box.innerHTML='<div class="muted">Nenhuma partida salva</div>'
+      stored.slice().reverse().forEach(m=>{
+        const div = document.createElement('div'); div.style.display='flex'; div.style.justifyContent='space-between'; div.style.marginTop='6px'
+        const left = document.createElement('div'); left.innerHTML = `<div style="font-weight:700">${escapeHtml(m.name)}</div><div class="muted">${new Date(m.created).toLocaleString()}</div>`
+        const right = document.createElement('div')
+        const btnLoad = document.createElement('button'); btnLoad.className='ghost'; btnLoad.textContent='Carregar'; btnLoad.addEventListener('click', ()=>{ renderResult(m.draw.teams); })
+        const btnDel = document.createElement('button'); btnDel.className='ghost'; btnDel.textContent='Apagar'; btnDel.addEventListener('click', ()=>{
+          if(confirm('Apagar essa partida?')){
+            const all = JSON.parse(localStorage.getItem(LS_MATCHES)||'[]').filter(x=>x.id!==m.id)
+            localStorage.setItem(LS_MATCHES, JSON.stringify(all)); $('loadMatchList').click()
+          }
+        })
+        right.appendChild(btnLoad); right.appendChild(btnDel)
+        div.appendChild(left); div.appendChild(right); box.appendChild(div)
+      })
+    })
+
+    // sumário
+    function updateSummary(){
+      const total = players.length
+      const selected = players.filter(p=>p.selected).length
+      $('summary').textContent = `${total} jogadores cadastrados • ${selected} selecionados para a próxima partida`
+      renderPlayers()
+    }
+
+    // inicialização
+    load(); updateSummary();
+
+    // helper: permitir Enter no input
+    $('playerName').addEventListener('keydown', e=>{ if(e.key==='Enter'){ $('addPlayerBtn').click() } })
+
   </script>
 </body>
 </html>
