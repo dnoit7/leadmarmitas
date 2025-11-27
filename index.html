@@ -1,329 +1,39 @@
-<!doctype html>
-<html lang="pt-BR">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Sorteador de Times - Pelada</title>
-  <style>
-    :root{--bg:#0f1724;--card:#0b1220;--accent:#06b6d4;--muted:#94a3b8;--success:#10b981}
-    *{box-sizing:border-box}
-    body{font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; margin:0; background:linear-gradient(180deg,#071029 0%, #071827 100%); color:#e6eef6; padding:24px}
-    .container{max-width:1000px;margin:0 auto}
-    header{display:flex;align-items:center;gap:16px;margin-bottom:18px}
-    header h1{font-size:20px;margin:0}
-    .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); padding:16px;border-radius:12px;box-shadow:0 6px 18px rgba(2,6,23,0.6);}
-    .grid{display:grid;grid-template-columns:1fr 420px;gap:16px}
-    label{font-size:13px;color:var(--muted)}
-    input[type=text], select, input[type=number]{width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit}
-    .row{display:flex;gap:8px}
-    button{background:var(--accent);border:0;color:#042; padding:8px 12px;border-radius:8px;cursor:pointer;font-weight:600}
-    button.ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--muted)}
-    ul{list-style:none;padding:0;margin:0}
-    .player{display:flex;align-items:center;justify-content:space-between;padding:8px;border-radius:8px;margin-top:8px;background:rgba(255,255,255,0.02)}
-    .player .left{display:flex;align-items:center;gap:12px}
-    .badge{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,0.03);font-weight:700}
-    .controls{display:flex;gap:8px}
-    .teams{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:12px}
-    .team-card{background:rgba(255,255,255,0.02);padding:12px;border-radius:10px}
-    .muted{color:var(--muted);font-size:13px}
-    footer{margin-top:14px;color:var(--muted);font-size:13px}
-    @media(max-width:900px){.grid{grid-template-columns:1fr}}
-  </style>
-</head>
-<body>
-  <div class="container">
-    <header>
-      <h1>Sorteador de Times — Pelada</h1>
-      <div class="muted">Versão web grátis • Salva no navegador</div>
-    </header>
+function importList() {
+    const rawText = document.getElementById("rawList").value;
 
-    <div class="grid">
-      <section class="card">
-        <h3>Cadastro de jogadores</h3>
-        <p class="muted">Adicione nome e nível (1 = fraco, 5 = excelente). Você pode marcar quem vai jogar hoje.</p>
+    // Divide a lista em linhas
+    let lines = rawText.split("\n");
 
-        <div style="display:flex;gap:8px;margin-top:10px">
-          <input id="playerName" type="text" placeholder="Nome do jogador" />
-          <select id="playerLevel" aria-label="nível">
-            <option value="3">Nível 3 (padrão)</option>
-            <option value="5">5 — Excelente</option>
-            <option value="4">4 — Muito bom</option>
-            <option value="3">3 — Médio</option>
-            <option value="2">2 — Abaixo</option>
-            <option value="1">1 — Iniciante</option>
-          </select>
-          <button id="addPlayerBtn">Adicionar</button>
-        </div>
+    // Processa cada linha removendo números, hífens e espaços excessivos
+    let cleanedNames = lines
+        .map(line =>
+            line
+                .replace(/^\s*\d+\s*[-.)]*\s*/i, "") // remove "1 -", "2)", "3.", etc.
+                .trim()
+        )
+        .filter(name => name.length > 0); // remove linhas vazias
 
-        <div style="margin-top:12px;display:flex;gap:8px;align-items:center">
-          <label style="margin:0;display:flex;gap:8px;align-items:center"><input id="selectAllToggle" type="checkbox" checked /> Selecionar todos para próxima partida</label>
-        </div>
+    const container = document.getElementById("playersContainer");
+    container.innerHTML = ""; // Limpa campos antigos
 
-        <div style="margin-top:12px">
-          <label class="muted">Jogadores cadastrados</label>
-          <ul id="playersList"></ul>
-        </div>
+    cleanedNames.forEach((name, index) => {
+        const div = document.createElement("div");
+        div.className = "player";
 
-        <div style="display:flex;gap:8px;margin-top:12px">
-          <button id="clearBtn" class="ghost">Limpar lista</button>
-          <button id="exportBtn" class="ghost">Exportar</button>
-          <button id="importBtn" class="ghost">Importar</button>
-          <input id="importFile" type="file" accept="application/json" style="display:none" />
-        </div>
-
-        <hr style="border:none;border-top:1px solid rgba(255,255,255,0.03);margin:12px 0" />
-
-        <h3>Sorteio</h3>
-        <div style="display:flex;gap:8px;align-items:center">
-          <label style="min-width:120px">Times</label>
-          <input id="teamsCount" type="number" value="2" min="2" max="8" style="width:90px" />
-          <label style="display:flex;align-items:center;gap:8px;margin-left:8px"><input id="shuffleSameLevel" type="checkbox" checked /> Embaralhar dentro do mesmo nível</label>
-        </div>
-        <div style="margin-top:10px;display:flex;gap:8px">
-          <button id="drawBtn">Sortear times</button>
-          <button id="resetBtn" class="ghost">Reiniciar sorteio</button>
-        </div>
-
-        <div id="summary" style="margin-top:12px" class="muted">Nenhum sorteio realizado ainda.</div>
-
-      </section>
-
-      <aside class="card">
-        <h3>Resultado</h3>
-        <div id="resultArea">
-          <div class="muted">Os times vão aparecer aqui após o sorteio.</div>
-        </div>
-
-        <div style="margin-top:12px">
-          <label class="muted">Salvar/Carregar partidas</label>
-          <div style="display:flex;gap:8px;margin-top:6px">
-            <input id="matchName" type="text" placeholder="Nome desta partida (opcional)" />
-            <button id="saveMatch" class="ghost">Salvar</button>
-            <button id="loadMatchList" class="ghost">Listar partidas</button>
-          </div>
-          <div id="savedMatches" style="margin-top:8px"></div>
-        </div>
-
-      </aside>
-    </div>
-
-    <footer class="muted">Dica: salve a página localmente (index.html) e abra no navegador. Para publicar grátis, use GitHub Pages.</footer>
-  </div>
-
-  <script>
-    // --- Dados e armazenamento ---
-    const LS_KEY = 'sorteador_pelada_players_v1'
-    const LS_MATCHES = 'sorteador_pelada_matches_v1'
-
-    let players = []
-    const $ = id => document.getElementById(id)
-
-    // carregar do localStorage
-    function load() {
-      try{
-        const raw = localStorage.getItem(LS_KEY)
-        players = raw ? JSON.parse(raw) : []
-      }catch(e){ players = [] }
-    }
-    function save(){ localStorage.setItem(LS_KEY, JSON.stringify(players)) }
-
-    // util
-    function uid(){ return Date.now().toString(36) + Math.random().toString(36).slice(2,7) }
-
-    // render lista de players
-    function renderPlayers(){
-      const ul = $('playersList'); ul.innerHTML = ''
-      players.forEach(p => {
-        const li = document.createElement('li'); li.className='player'
-        li.innerHTML = `
-          <div class="left">
-            <input type=checkbox data-id="${p.id}" ${p.selected? 'checked':''} />
-            <div style="min-width:8px"></div>
-            <div>
-              <div style="font-weight:700">${escapeHtml(p.name)}</div>
-              <div class="muted">Nível ${p.level}</div>
-            </div>
-          </div>
-          <div class="controls">
-            <div class="badge">${p.level}</div>
-            <button data-edit="${p.id}" class="ghost">Editar</button>
-            <button data-delete="${p.id}" class="ghost">Apagar</button>
-          </div>
-        `
-        ul.appendChild(li)
-      })
-    }
-
-    function escapeHtml(s){ return String(s).replace(/[&<>"']/g, c=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":"&#39;" })[c]) }
-
-    // eventos
-    function addPlayer(name, level){
-      if(!name || !name.trim()) return alert('Digite um nome')
-      players.push({id:uid(), name:name.trim(), level:parseInt(level)||3, selected:true})
-      save(); renderPlayers(); updateSummary()
-    }
-
-    function removePlayer(id){ players = players.filter(p=>p.id!==id); save(); renderPlayers(); updateSummary() }
-    function editPlayer(id){
-      const p = players.find(x=>x.id===id); if(!p) return
-      const newName = prompt('Editar nome', p.name); if(!newName) return
-      const newLevel = prompt('Editar nível (1 a 5)', p.level); if(!newLevel) return
-      p.name = newName.trim(); p.level = Math.max(1, Math.min(5, parseInt(newLevel)||p.level))
-      save(); renderPlayers(); updateSummary()
-    }
-
-    // seleção checkbox
-    document.addEventListener('change', e=>{
-      if(e.target?.matches('#playersList input[type=checkbox]')){
-        const id = e.target.dataset.id; const p = players.find(x=>x.id===id)
-        if(p) p.selected = e.target.checked; save(); updateSummary()
-      }
-    })
-
-    document.addEventListener('click', e=>{
-      if(e.target?.dataset?.delete) removePlayer(e.target.dataset.delete)
-      if(e.target?.dataset?.edit) editPlayer(e.target.dataset.edit)
-    })
-
-    // botões
-    $('addPlayerBtn').addEventListener('click', ()=>{ addPlayer($('playerName').value, $('playerLevel').value); $('playerName').value=''; $('playerName').focus() })
-    $('clearBtn').addEventListener('click', ()=>{ if(confirm('Apagar todos os jogadores?')){ players=[]; save(); renderPlayers(); updateSummary() } })
-
-    // selecionar todos
-    $('selectAllToggle').addEventListener('change', e=>{
-      players.forEach(p=>p.selected = e.target.checked); save(); renderPlayers(); updateSummary()
-    })
-
-    // export/import
-    $('exportBtn').addEventListener('click', ()=>{
-      const data = JSON.stringify(players, null, 2)
-      const blob = new Blob([data], {type:'application/json'})
-      const url = URL.createObjectURL(blob)
-      const a = document.createElement('a'); a.href=url; a.download='players.json'; a.click(); URL.revokeObjectURL(url)
-    })
-    $('importBtn').addEventListener('click', ()=>$('importFile').click())
-    $('importFile').addEventListener('change', async e=>{
-      const f = e.target.files[0]; if(!f) return
-      try{
-        const text = await f.text(); const arr = JSON.parse(text)
-        if(!Array.isArray(arr)) throw new Error('Arquivo inválido')
-        // validar
-        for(const it of arr){ if(!it.name) throw new Error('Formato errado') }
-        players = arr.map(p=>({id: p.id||uid(), name:p.name, level:parseInt(p.level)||3, selected: p.selected!==false}))
-        save(); renderPlayers(); updateSummary(); alert('Importado com sucesso')
-      }catch(err){ alert('Erro ao importar: '+err.message) }
-    })
-
-    // sorteio - algoritmo de equilíbrio
-    function distributeBalanced(selectedPlayers, teamsCount, shuffleSameLevel){
-      // agrupar por nível
-      const grouped = {}
-      selectedPlayers.forEach(p=>{
-        grouped[p.level] = grouped[p.level] || []
-        grouped[p.level].push(p)
-      })
-      // ordenar níveis do mais alto para o mais baixo
-      const levels = Object.keys(grouped).map(Number).sort((a,b)=>b-a)
-      // opcional: embaralhar dentro do mesmo nível antes de distribuir
-      if(shuffleSameLevel){ levels.forEach(l=> grouped[l] = shuffleArray(grouped[l])) }
-      // construir lista por "pote" (serpentina ideal)
-      const ordered = []
-      levels.forEach(l=> ordered.push(...grouped[l]))
-
-      // serpentina: distribuir em pedaços
-      const teams = Array.from({length:teamsCount}, ()=>[])
-      let forward = true
-      for(let i=0;i<ordered.length;i++){
-        const idx = Math.floor(i/teamsCount)
-        const pos = forward ? (i % teamsCount) : (teamsCount-1 - (i % teamsCount))
-        teams[pos].push(ordered[i])
-        if((i+1) % teamsCount === 0) forward = !forward
-      }
-
-      return teams
-    }
-
-    function shuffleArray(a){
-      for(let i=a.length-1;i>0;i--){
-        const j = Math.floor(Math.random()*(i+1)); [a[i], a[j]] = [a[j], a[i]]
-      }
-      return a
-    }
-
-    $('drawBtn').addEventListener('click', ()=>{
-      const count = parseInt($('teamsCount').value)||2
-      const shuffleSame = $('shuffleSameLevel').checked
-      const selected = players.filter(p=>p.selected)
-      if(selected.length < count){ return alert('Número de jogadores selecionados menor que o número de times') }
-      const teams = distributeBalanced(selected, count, shuffleSame)
-      renderResult(teams)
-      // salvar ultima partida temporariamente
-      sessionStorage.setItem('last_draw', JSON.stringify({teams, timestamp:Date.now()}))
-    })
-
-    $('resetBtn').addEventListener('click', ()=>{ $('resultArea').innerHTML = '<div class="muted">Os times vão aparecer aqui após o sorteio.</div>'; $('summary').textContent='Nenhum sorteio realizado ainda.' })
-
-    function renderResult(teams){
-      const area = $('resultArea'); area.innerHTML = ''
-      const container = document.createElement('div'); container.className='teams'
-      teams.forEach((t, i)=>{
-        const card = document.createElement('div'); card.className='team-card'
-        const total = t.reduce((s,p)=>s + (p.level||0), 0)
-        card.innerHTML = `<div style="display:flex;justify-content:space-between;align-items:center"><strong>Time ${i+1}</strong><div class="muted">Força total: ${total}</div></div>`
-        const ul = document.createElement('ul')
-        t.forEach(p=>{ const li = document.createElement('li'); li.style.padding='6px 0'; li.textContent = p.name + ' — Nível ' + p.level; ul.appendChild(li) })
-        card.appendChild(ul)
-        container.appendChild(card)
-      })
-      area.appendChild(container)
-      $('summary').textContent = `Sorteio: ${teams.length} times • ${teams.reduce((a,t)=>a+t.length,0)} jogadores`;
-    }
-
-    // salvar/recuperar partidas (localStorage)
-    $('saveMatch').addEventListener('click', ()=>{
-      const name = $('matchName').value.trim() || ('Partida ' + new Date().toLocaleString())
-      const last = sessionStorage.getItem('last_draw')
-      if(!last) return alert('Faça um sorteio antes de salvar a partida')
-      const stored = JSON.parse(localStorage.getItem(LS_MATCHES) || '[]')
-      const payload = {id:uid(), name, created:Date.now(), draw: JSON.parse(last)}
-      stored.push(payload); localStorage.setItem(LS_MATCHES, JSON.stringify(stored))
-      alert('Partida salva')
-    })
-
-    $('loadMatchList').addEventListener('click', ()=>{
-      const stored = JSON.parse(localStorage.getItem(LS_MATCHES) || '[]')
-      const box = $('savedMatches'); box.innerHTML = ''
-      if(stored.length===0) return box.innerHTML='<div class="muted">Nenhuma partida salva</div>'
-      stored.slice().reverse().forEach(m=>{
-        const div = document.createElement('div'); div.style.display='flex'; div.style.justifyContent='space-between'; div.style.marginTop='6px'
-        const left = document.createElement('div'); left.innerHTML = `<div style="font-weight:700">${escapeHtml(m.name)}</div><div class="muted">${new Date(m.created).toLocaleString()}</div>`
-        const right = document.createElement('div')
-        const btnLoad = document.createElement('button'); btnLoad.className='ghost'; btnLoad.textContent='Carregar'; btnLoad.addEventListener('click', ()=>{ renderResult(m.draw.teams); })
-        const btnDel = document.createElement('button'); btnDel.className='ghost'; btnDel.textContent='Apagar'; btnDel.addEventListener('click', ()=>{
-          if(confirm('Apagar essa partida?')){
-            const all = JSON.parse(localStorage.getItem(LS_MATCHES)||'[]').filter(x=>x.id!==m.id)
-            localStorage.setItem(LS_MATCHES, JSON.stringify(all)); $('loadMatchList').click()
-          }
-        })
-        right.appendChild(btnLoad); right.appendChild(btnDel)
-        div.appendChild(left); div.appendChild(right); box.appendChild(div)
-      })
-    })
-
-    // sumário
-    function updateSummary(){
-      const total = players.length
-      const selected = players.filter(p=>p.selected).length
-      $('summary').textContent = `${total} jogadores cadastrados • ${selected} selecionados para a próxima partida`
-      renderPlayers()
-    }
-
-    // inicialização
-    load(); updateSummary();
-
-    // helper: permitir Enter no input
-    $('playerName').addEventListener('keydown', e=>{ if(e.key==='Enter'){ $('addPlayerBtn').click() } })
-
-  </script>
-</body>
-</html>
+        div.innerHTML = `
+            <input 
+                type="text" 
+                class="player-name" 
+                placeholder="Jogador ${index + 1}"
+                value="${name}"
+            >
+            <select class="player-level">
+                <option value="">Nível</option>
+                <option value="1">⭐</option>
+                <option value="2">⭐⭐</option>
+                <option value="3">⭐⭐⭐</option>
+            </select>
+        `;
+        container.appendChild(div);
+    });
+}
