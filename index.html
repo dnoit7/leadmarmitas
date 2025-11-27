@@ -1,416 +1,107 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Sorteador de Times — Pelada</title>
-
-  <!-- Bootstrap 5 CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-
-  <style>
-    :root{
-      --bg: #f7f9fb;
-      --card: #ffffff;
-      --muted: #6c757d;
-      --accent: #0d6efd;
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gerador de Times</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<style>
+    body { background: #f3f3f3; padding: 20px; }
+    .card { border-radius: 16px; }
+    .player-item input { font-size: 15px; }
+    @media (max-width: 600px) {
+        .player-item { flex-direction: column; }
+        .player-item .input-group { flex-direction: column; }
+        .player-item .input-group input { margin-bottom: 8px; }
     }
-    body{
-      background: var(--bg);
-      color: #0b1320;
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
-      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-      padding-top:24px;
-      padding-bottom:40px;
-    }
-    .card{ border:0; border-radius:12px; box-shadow:0 6px 18px rgba(12,20,30,0.06) }
-    .player-row input[type="text"]{ background:transparent }
-    .badge-level{ min-width:44px; text-align:center }
-    .small-muted{ color:var(--muted); font-size:0.9rem }
-    .teams-grid .card{ min-height:160px }
-    /* mobile tweaks */
-    @media (max-width:576px){
-      .btn-block-sm{ width:100%; margin-bottom:8px }
-    }
-  </style>
+</style>
 </head>
 <body>
-
 <div class="container">
+    <h2 class="text-center mb-4 fw-bold">Gerador de Times ⚽</h2>
 
-  <div class="row justify-content-center">
-    <div class="col-12 col-md-10 col-lg-8">
-
-      <header class="mb-3 text-center">
-        <h1 class="h4 mb-1">Sorteador de Times — Pelada</h1>
-        <div class="small-muted">Cole a lista do grupo, ajuste níveis e gere times balanceados — grátis.</div>
-      </header>
-
-      <!-- Import card -->
-      <div class="card mb-3 p-3">
-        <div class="mb-2 d-flex justify-content-between align-items-center">
-          <strong>1) Cole a lista do WhatsApp</strong>
-          <small class="text-muted">Ex.: <code>1 - Wiliam Twika</code></small>
-        </div>
-
-        <textarea id="rawList" class="form-control mb-2" rows="5" placeholder="Cole aqui a lista completa (ex.: 1 - Fulano)"></textarea>
-
-        <div class="d-flex flex-wrap gap-2">
-          <button class="btn btn-primary btn-sm" id="btnImport">Importar lista</button>
-          <button class="btn btn-outline-secondary btn-sm" id="btnClear">Limpar lista</button>
-
-          <div class="ms-auto d-flex gap-2">
-            <label class="small-muted align-self-center mb-0">Times</label>
-            <select id="teamsCount" class="form-select form-select-sm" style="width:90px;">
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-              <option value="6">6</option>
-            </select>
-          </div>
-        </div>
-      </div>
-
-      <!-- Players / classification -->
-      <div class="card mb-3 p-3">
-        <div class="d-flex justify-content-between align-items-center mb-2">
-          <strong>2) Classificação dos jogadores</strong>
-          <small class="small-muted">Marque quem vai jogar e atribua nível (1–5)</small>
-        </div>
-
-        <div id="playersList" class="mb-2"></div>
-
-        <div class="d-flex gap-2 flex-wrap">
-          <button class="btn btn-success" id="btnDraw">Gerar Times</button>
-          <button class="btn btn-outline-secondary" id="btnShuffle">Embaralhar níveis</button>
-          <button class="btn btn-outline-dark" id="btnCopy" title="Copia os times (somente nomes) para a área de transferência">Copiar Times p/ WhatsApp</button>
-        </div>
-        <div id="summary" class="mt-2 small-muted"></div>
-      </div>
-
-      <!-- Results -->
-      <div class="card p-3 teams-grid">
-        <div class="d-flex justify-content-between align-items-center mb-2">
-          <strong>3) Resultado</strong>
-          <small class="small-muted" id="resultInfo">Nenhum sorteio realizado</small>
-        </div>
-
-        <div id="teamsContainer" class="row g-3">
-          <!-- Teams injected here -->
-        </div>
-      </div>
-
-      <footer class="text-center mt-3 small-muted">
-        Salve o arquivo localmente ou publique no GitHub Pages. Funciona offline no navegador.
-      </footer>
-
+    <div class="card p-3 mb-3">
+        <h5>Importar lista de jogadores</h5>
+        <textarea id="rawList" class="form-control" rows="6" placeholder="Cole a lista aqui..."></textarea>
+        <button class="btn btn-primary w-100 mt-2" onclick="importList()">Importar lista</button>
+        <button class="btn btn-warning w-100 mt-2" onclick="clearList()">Limpar lista</button>
     </div>
-  </div>
 
+    <div class="card p-3 mb-3">
+        <h5>Jogadores</h5>
+        <div id="playersContainer"></div>
+    </div>
+
+    <div class="card p-3 mb-3">
+        <h5>Times</h5>
+        <button class="btn btn-success w-100 mb-2" onclick="generateTeams()">Gerar Times</button>
+        <button class="btn btn-info w-100" onclick="copyTeamsWhatsApp()">Copiar para WhatsApp</button>
+        <div id="teamsResult" class="mt-3"></div>
+    </div>
 </div>
 
-<!-- Bootstrap JS (bundle -> includes Popper) -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-
 <script>
-/* -----------------------------
-   Utilidades e armazenamento
-   ----------------------------- */
-const playersKey = 'sorteador_players_v1';
-let players = []; // {id, name, level (1-5), selected}
+function importList() {
+    const rawText = document.getElementById("rawList").value;
 
-const $ = id => document.getElementById(id);
+    let lines = rawText.split("\n");
 
-/* Carrega da storage se existir */
-function loadPlayers() {
-  try {
-    const raw = localStorage.getItem(playersKey);
-    players = raw ? JSON.parse(raw) : [];
-  } catch(e) { players = []; }
-}
+    let cleanedNames = lines.map(line => line
+        .replace(/^\s*\d+[\)\.\-]*\s*/g, "")
+        .replace(/[^\p{L}\s]/gu, "") 
+        .trim()
+    ).filter(name => name.length > 0);
 
-/* Salva no localStorage */
-function savePlayers() {
-  try { localStorage.setItem(playersKey, JSON.stringify(players)); } catch(e){}
-}
+    const container = document.getElementById("playersContainer");
+    container.innerHTML = "";
 
-/* UID simples */
-function uid(){ return Date.now().toString(36) + Math.random().toString(36).slice(2,6) }
-
-/* Remove emojis usando Unicode property escapes */
-function removeEmojis(text){
-  try {
-    return text.replace(/[\p{Emoji}\p{Extended_Pictographic}]/gu, '');
-  } catch(e) {
-    // fallback se o navegador não suportar \p{Emoji}
-    return text.replace(/[\u{1F300}-\u{1FAFF}\u{1F600}-\u{1F64F}\u{2700}-\u{27BF}]/gu, '');
-  }
-}
-
-/* Limpa números e sinais do início da linha (1 - , 2. , 3) ) */
-function cleanLine(line){
-  return removeEmojis(line.replace(/^\s*\d+\s*[-.)]*\s*/,'').trim());
-}
-
-/* -----------------------------
-   Render UI
-   ----------------------------- */
-function renderPlayersUI(){
-  const container = $('playersList');
-  container.innerHTML = '';
-  if(players.length === 0){
-    container.innerHTML = '<div class="small-muted">Nenhum jogador importado ainda.</div>';
-    updateSummary();
-    return;
-  }
-
-  players.forEach((p, idx) => {
-    const row = document.createElement('div');
-    row.className = 'd-flex align-items-center gap-2 mb-2 player-row';
-
-    // checkbox
-    const ch = document.createElement('input');
-    ch.type = 'checkbox';
-    ch.checked = p.selected !== false;
-    ch.className = 'form-check-input ms-1';
-    ch.style.width='1.05rem';
-    ch.style.height='1.05rem';
-    ch.addEventListener('change', ()=> { p.selected = ch.checked; savePlayers(); updateSummary(); });
-
-    // name input
-    const nameInput = document.createElement('input');
-    nameInput.type = 'text';
-    nameInput.value = p.name;
-    nameInput.className = 'form-control';
-    nameInput.style.flex = '1';
-    nameInput.addEventListener('change', ()=> { p.name = nameInput.value.trim(); savePlayers(); });
-
-    // level select
-    const levelSelect = document.createElement('select');
-    levelSelect.className = 'form-select form-select-sm badge-level';
-    levelSelect.style.width = '96px';
-    levelSelect.innerHTML = `
-      <option value="1">1 ⭐</option>
-      <option value="2">2 ⭐⭐</option>
-      <option value="3">3 ⭐⭐⭐</option>
-      <option value="4">4 ⭐⭐⭐⭐</option>
-      <option value="5">5 ⭐⭐⭐⭐⭐</option>
-    `;
-    levelSelect.value = p.level || 3;
-    levelSelect.addEventListener('change', ()=> { p.level = parseInt(levelSelect.value||3); savePlayers(); });
-
-    // delete button
-    const del = document.createElement('button');
-    del.className = 'btn btn-sm btn-outline-danger';
-    del.style.flex='0';
-    del.textContent = 'Apagar';
-    del.addEventListener('click', ()=> { if(confirm('Apagar jogador?')){ players = players.filter(x=>x.id!==p.id); savePlayers(); renderPlayersUI(); } });
-
-    row.appendChild(ch);
-    row.appendChild(nameInput);
-    row.appendChild(levelSelect);
-    row.appendChild(del);
-
-    container.appendChild(row);
-  });
-
-  updateSummary();
-}
-
-/* -----------------------------
-   Importar lista (do WhatsApp)
-   ----------------------------- */
-function importFromTextarea(){
-  const raw = $('rawList').value || '';
-  if(!raw.trim()){ alert('Cole a lista primeiro.'); return; }
-
-  const lines = raw.split(/\r?\n/).map(l=>l.trim()).filter(Boolean);
-  const names = [];
-
-  for(const line of lines){
-    const cleaned = cleanLine(line);
-    if(cleaned) names.push(cleaned);
-  }
-
-  // deduplicar mantendo ordem (case-insensitive)
-  const seen = new Set();
-  const unique = [];
-  for(const n of names){
-    const key = n.toLowerCase();
-    if(!seen.has(key)){ seen.add(key); unique.push(n); }
-  }
-
-  // adicionar à lista global
-  unique.forEach(n => players.push({ id: uid(), name: n, level: 3, selected: true }));
-  savePlayers();
-  renderPlayersUI();
-
-  // limpar textarea para segurança opcional
-  // $('rawList').value = '';
-}
-
-/* -----------------------------
-   limpar lista
-   ----------------------------- */
-function clearAll(){
-  if(!confirm('Limpar todos os jogadores e resultados?')) return;
-  players = [];
-  savePlayers();
-  renderPlayersUI();
-  renderTeams([]); // limpa times
-  $('rawList').value = '';
-}
-
-/* -----------------------------
-   Sorteio balanceado (serpentina)
-   ----------------------------- */
-function distributeBalanced(selectedPlayers, teamsCount, shuffleSameLevel=true){
-  // group by level
-  const grouped = {};
-  selectedPlayers.forEach(p => {
-    const lvl = p.level || 3;
-    if(!grouped[lvl]) grouped[lvl]=[];
-    grouped[lvl].push(p);
-  });
-
-  // sort levels desc
-  const levels = Object.keys(grouped).map(Number).sort((a,b)=>b-a);
-
-  // optionally shuffle within same level
-  if(shuffleSameLevel){
-    for(const l of levels){
-      grouped[l] = shuffleArray(grouped[l]);
-    }
-  }
-
-  // create ordered list by levels high->low
-  const ordered = [];
-  levels.forEach(l => ordered.push(...grouped[l]));
-
-  // serpentine distribution
-  const teams = Array.from({length: teamsCount}, ()=>[]);
-  let forward = true;
-  for(let i=0;i<ordered.length;i++){
-    const pos = forward ? (i % teamsCount) : (teamsCount - 1 - (i % teamsCount));
-    teams[pos].push(ordered[i]);
-    if((i+1) % teamsCount === 0) forward = !forward;
-  }
-  return teams;
-}
-
-function shuffleArray(a){
-  for(let i=a.length-1;i>0;i--){
-    const j = Math.floor(Math.random()*(i+1));
-    [a[i], a[j]] = [a[j], a[i]];
-  }
-  return a;
-}
-
-/* -----------------------------
-   Render teams
-   ----------------------------- */
-function renderTeams(teams){
-  const container = $('teamsContainer');
-  container.innerHTML = '';
-  if(!teams || teams.length === 0){
-    $('resultInfo').textContent = 'Nenhum sorteio realizado';
-    return;
-  }
-
-  teams.forEach((t, idx) => {
-    const col = document.createElement('div');
-    col.className = 'col-12 col-md-6';
-
-    const card = document.createElement('div');
-    card.className = 'card p-3';
-
-    const head = document.createElement('div');
-    head.className = 'd-flex justify-content-between align-items-center mb-2';
-    head.innerHTML = `<strong>Time ${idx+1}</strong><small class="small-muted">Força: ${t.reduce((s,p)=>s + (p.level||0),0)}</small>`;
-
-    const ul = document.createElement('ul');
-    t.forEach(p => {
-      const li = document.createElement('li');
-      li.textContent = `${p.name} (${p.level})`;
-      ul.appendChild(li);
+    cleanedNames.forEach(name => {
+        const div = document.createElement("div");
+        div.className = "player-item mb-2";
+        div.innerHTML = `
+            <div class="input-group">
+                <input type="text" class="form-control player-name" value="${name}">
+                <select class="form-select player-level">
+                    <option value="1">⭐</option>
+                    <option value="2">⭐⭐</option>
+                    <option value="3">⭐⭐⭐</option>
+                    <option value="4">⭐⭐⭐⭐</option>
+                    <option value="5">⭐⭐⭐⭐⭐</option>
+                </select>
+            </div>`;
+        container.appendChild(div);
     });
-
-    card.appendChild(head);
-    card.appendChild(ul);
-    col.appendChild(card);
-    container.appendChild(col);
-  });
-
-  $('resultInfo').textContent = `Sorteio: ${teams.length} times • ${teams.reduce((s,t)=>s+t.length,0)} jogadores`;
-  // keep lastTeams for copy action
-  window.lastTeams = teams;
 }
 
-/* -----------------------------
-   copiar para WhatsApp (somente nomes)
-   ----------------------------- */
-async function copyTeamsToClipboard(){
-  const teams = window.lastTeams;
-  if(!teams || !Array.isArray(teams) || teams.length===0){
-    alert('Gere os times primeiro!');
-    return;
-  }
-
-  let text = '⚽ Times da Pelada ⚽\n\n';
-  teams.forEach((t, i) => {
-    text += `*Time ${i+1}*\n`;
-    t.forEach(p => text += `• ${p.name}\n`);
-    text += '\n';
-  });
-
-  try {
-    await navigator.clipboard.writeText(text);
-    alert('Times copiados! Agora cole no WhatsApp.');
-  } catch(e){
-    alert('Não foi possível copiar automaticamente. Selecione manualmente o texto abaixo:\n\n' + text);
-  }
+function clearList() {
+    document.getElementById("rawList").value = "";
+    document.getElementById("playersContainer").innerHTML = "";
+    document.getElementById("teamsResult").innerHTML = "";
 }
 
-/* -----------------------------
-   Ações de botões
-   ----------------------------- */
-document.addEventListener('DOMContentLoaded', ()=>{
-  loadPlayers();
-  renderPlayersUI();
+function generateTeams() {
+    const names = [...document.querySelectorAll('.player-name')].map(i => i.value.trim());
+    let shuffled = names.sort(() => Math.random() - 0.5);
 
-  // handlers
-  $('btnImport').addEventListener('click', ()=> importFromTextarea());
-  $('btnClear').addEventListener('click', ()=> clearAll());
-  $('btnDraw').addEventListener('click', ()=> {
-    const teamsCount = parseInt($('teamsCount').value) || 2;
-    const selectedPlayers = players.filter(p=>p.selected);
-    if(selectedPlayers.length < teamsCount){
-      alert('Número de jogadores selecionados menor que o número de times.');
-      return;
-    }
-    const teams = distributeBalanced(selectedPlayers, teamsCount, true);
-    renderTeams(teams);
-    savePlayers();
-  });
+    const half = Math.ceil(shuffled.length / 2);
+    const teamA = shuffled.slice(0, half);
+    const teamB = shuffled.slice(half);
 
-  $('btnShuffle').addEventListener('click', ()=> {
-    shuffleArray(players);
-    savePlayers();
-    renderPlayersUI();
-  });
+    document.getElementById("teamsResult").innerHTML = `
+        <div class='p-2 bg-light rounded'><h5>Time A</h5>${teamA.join("<br>")}</div>
+        <hr>
+        <div class='p-2 bg-light rounded'><h5>Time B</h5>${teamB.join("<br>")}</div>
+    `;
+}
 
-  $('btnCopy').addEventListener('click', ()=> copyTeamsToClipboard());
+function copyTeamsWhatsApp() {
+    const resultDiv = document.getElementById("teamsResult");
+    const text = resultDiv.innerText;
 
-  // keyboard: Ctrl+Enter on textarea import
-  $('rawList').addEventListener('keydown', (e)=> { if(e.ctrlKey && e.key === 'Enter'){ importFromTextarea(); }});
-});
-
-/* -----------------------------
-   End of script
-   ----------------------------- */
+    navigator.clipboard.writeText(text).then(() => {
+        alert("Times copiados! Pode colar no WhatsApp.");
+    });
+}
 </script>
-
 </body>
 </html>
