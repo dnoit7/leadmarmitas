@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Sorteio de Times - Pelada</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+        padding: 20px;
+    }
+
+    h2 {
+        margin-top: 30px;
+    }
+
+    .container {
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        max-width: 700px;
+        margin: auto;
+    }
+
+    textarea {
+        width: 100%;
+        height: 120px;
+        padding: 10px;
+        margin-bottom: 10px;
+        resize: vertical;
+    }
+
+    .player {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 10px;
+    }
+
+    .player input {
+        flex: 1;
+        padding: 8px;
+    }
+
+    .player select {
+        width: 90px;
+        padding: 8px;
+    }
+
+    button {
+        padding: 10px;
+        background: #0084ff;
+        border: none;
+        color: white;
+        cursor: pointer;
+        border-radius: 5px;
+        font-size: 15px;
+    }
+
+    button:hover {
+        background: #006cd4;
+    }
+
+    .teams {
+        display: flex;
+        margin-top: 20px;
+        gap: 20px;
+    }
+
+    .team {
+        flex: 1;
+        background: #fff;
+        padding: 15px;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .team h3 {
+        margin-top: 0;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+    <h2>Lista dos Jogadores (cole aqui a lista do WhatsApp)</h2>
+    <textarea id="rawList" placeholder="Cole aqui a lista completa..."></textarea>
+    <button onclick="importList()">Importar Lista</button>
+
+    <h2>Classificação dos Jogadores</h2>
+    <div id="playersContainer"></div>
+
+    <button onclick="sortTeams()">Gerar Times</button>
+
+    <div class="teams">
+        <div class="team">
+            <h3>Time A</h3>
+            <ul id="teamA"></ul>
+        </div>
+        <div class="team">
+            <h3>Time B</h3>
+            <ul id="teamB"></ul>
+        </div>
+    </div>
+
+</div>
+
+
+<script>
+
+// Importar lista digitada
+function importList() {
+    const rawText = document.getElementById("rawList").value;
+
+    let lines = rawText.split("\n");
+
+    let cleanedNames = lines
+        .map(line =>
+            line
+                .replace(/^\s*\d+\s*[-.)]*\s*/i, "") 
+                .trim()
+        )
+        .filter(name => name.length > 0);
+
+    const container = document.getElementById("playersContainer");
+    container.innerHTML = "";
+
+    cleanedNames.forEach((name, index) => {
+        const div = document.createElement("div");
+        div.className = "player";
+
+        div.innerHTML = `
+            <input 
+                type="text" 
+                class="player-name" 
+                placeholder="Jogador ${index + 1}"
+                value="${name}"
+            >
+            <select class="player-level">
+                <option value="">Nível</option>
+                <option value="1">⭐</option>
+                <option value="2">⭐⭐</option>
+                <option value="3">⭐⭐⭐</option>
+            </select>
+        `;
+        container.appendChild(div);
+    });
+}
+
+// Gerar times equilibrados
+function sortTeams() {
+    const names = [...document.querySelectorAll(".player-name")].map(i => i.value);
+    const levels = [...document.querySelectorAll(".player-level")].map(s => parseInt(s.value || "1"));
+
+    let players = names.map((name, i) => ({ name, level: levels[i] }));
+
+    // Ordena por nível (maior para menor)
+    players.sort((a, b) => b.level - a.level);
+
+    let teamA = [];
+    let teamB = [];
+    let sumA = 0;
+    let sumB = 0;
+
+    // Algoritmo simples para balancear
+    players.forEach(p => {
+        if (sumA <= sumB) {
+            teamA.push(p);
+            sumA += p.level;
+        } else {
+            teamB.push(p);
+            sumB += p.level;
+        }
+    });
+
+    document.getElementById("teamA").innerHTML = teamA.map(p => `<li>${p.name} (${p.level})</li>`).join("");
+    document.getElementById("teamB").innerHTML = teamB.map(p => `<li>${p.name} (${p.level})</li>`).join("");
+}
+
+</script>
+
+</body>
+</html>
