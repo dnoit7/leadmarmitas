@@ -1,190 +1,317 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Gerador de Times</title>
-
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Sorteador de Times — Pelada</title>
 <style>
-    body {
-        font-family: Arial, sans-serif;
-        background: #f2f2f2;
-        margin: 0;
-        padding: 20px;
-    }
+  :root{
+    --bg:#f6f8fb;
+    --card:#ffffff;
+    --muted:#6b7280;
+    --accent:#0ea5e9;
+    --success:#10b981;
+    --danger:#ef4444;
+    --radius:12px;
+    --gap:10px;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    background:var(--bg);
+    color:#071124;
+    padding:18px;
+  }
 
-    h1 {
-        text-align: center;
-        margin-bottom: 20px;
-    }
+  .wrap{ max-width:920px; margin:0 auto; }
+  h1{ text-align:center; margin:6px 0 16px; font-size:22px; }
+  .card{ background:var(--card); border-radius:var(--radius); padding:14px; box-shadow:0 8px 24px rgba(3,10,18,0.06); margin-bottom:14px; }
 
-    .container {
-        max-width: 900px;
-        margin: auto;
-        background: white;
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    }
+  label.small{ font-size:13px; color:var(--muted) }
+  textarea.form{ width:100%; min-height:120px; padding:10px; border-radius:10px; border:1px solid rgba(2,6,23,0.06); resize:vertical; font-size:15px }
 
-    textarea {
-        width: 100%;
-        height: 120px;
-        padding: 10px;
-        border-radius: 6px;
-        border: 1px solid #ccc;
-        font-size: 16px;
-        resize: none;
-    }
+  .controls{ display:flex; gap:var(--gap); align-items:center; flex-wrap:wrap }
+  .controls .spacer{ flex:1 }
 
-    button {
-        width: 100%;
-        padding: 15px;
-        margin-top: 10px;
-        border: none;
-        background: #007bff;
-        color: white;
-        font-size: 18px;
-        border-radius: 8px;
-        cursor: pointer;
-    }
+  .btn {
+    display:inline-flex; align-items:center; justify-content:center;
+    padding:10px 14px; border-radius:10px; border:0; cursor:pointer; font-weight:600; font-size:15px;
+  }
+  .btn-primary{ background:var(--accent); color:#042 }
+  .btn-ghost{ background:transparent; border:1px solid rgba(2,6,23,0.06); color:var(--muted) }
+  .btn-success{ background:var(--success); color:#042 }
+  .btn-danger{ background:var(--danger); color:#fff }
 
-    button:hover {
-        background: #0063d6;
-    }
+  .players{ margin-top:10px; display:flex; flex-direction:column; gap:10px; }
+  .player-row{
+    display:flex; align-items:center; gap:10px;
+    padding:8px; border-radius:10px; background:rgba(2,6,23,0.02);
+  }
 
-    .teams {
-        margin-top: 25px;
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-    }
+  .player-check{ width:22px; height:22px; flex:0 0 22px; }
+  .player-name{
+    flex:1 1 360px;
+    padding:10px; border-radius:8px; border:1px solid rgba(2,6,23,0.06); font-size:16px;
+  }
+  .player-level{
+    flex:0 0 110px;
+    padding:10px; border-radius:8px;
+    border:1px solid rgba(2,6,23,0.06);
+    font-size:15px; background:#fff;
+  }
 
-    .team-box {
-        background: #fafafa;
-        padding: 15px;
-        border-radius: 8px;
-        border: 1px solid #ddd;
-    }
+  .player-delete{
+    padding:8px 10px; border-radius:8px;
+    border:1px solid rgba(2,6,23,0.06);
+    background:transparent; cursor:pointer;
+    font-size:18px; line-height:1;
+  }
 
-    .team-title {
-        font-size: 20px;
-        margin-bottom: 10px;
-        font-weight: bold;
-    }
+  .teams-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:12px; margin-top:12px }
+  .team-card{ background:#fff; padding:12px; border-radius:10px; box-shadow:0 6px 18px rgba(2,6,23,0.04) }
+  pre#result{ white-space:pre-wrap; background:rgba(14,165,233,0.04); padding:12px; border-radius:8px; font-size:15px; display:none; }
 
-    .player {
-        display: flex;
-        justify-content: space-between;
-        padding: 6px 0;
-        border-bottom: 1px solid #eee;
-    }
-
-    .player:last-child {
-        border: none;
-    }
-
-    .rating {
-        font-weight: bold;
-        padding: 3px 8px;
-        border-radius: 6px;
-        color: white;
-    }
-
-    .A { background: #28a745; }  /* Verde */
-    .B { background: #007bff; }  /* Azul */
-    .C { background: #ffc107; color: black; } /* Amarelo */
-    .D { background: #dc3545; }  /* Vermelho */
-
-    @media (max-width: 600px) {
-        .player {
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 3px;
-        }
-    }
+  .muted{ color:var(--muted); font-size:13px }
+  footer{ text-align:center; color:var(--muted); font-size:13px; margin-top:8px }
 </style>
 </head>
-
 <body>
+<div class="wrap">
+<h1>Sorteador de Times — Pelada</h1>
 
-<div class="container">
-    <h1>Gerador de Times</h1>
+<!-- IMPORTAÇÃO -->
+<div class="card">
+  <strong>1) Cole a lista do WhatsApp</strong>
+  <textarea id="rawInput" class="form" placeholder="Cole aqui a lista (ex: 1 - João)"></textarea>
 
-    <textarea id="playerInput" placeholder="Digite os jogadores no formato: 
-Nome - A
-Nome - B
-Nome - C
-Nome - D"></textarea>
+  <div class="controls" style="margin-top:10px">
+    <button class="btn btn-primary" id="btnImport">Importar lista</button>
+    <button class="btn btn-ghost" id="btnClearInput">Limpar entrada</button>
 
-    <button onclick="gerarTimes()">Gerar Times</button>
+    <div class="spacer"></div>
 
-    <div class="teams" id="teamsOutput"></div>
+    <label class="small muted" for="teamsCount">Times</label>
+    <select id="teamsCount" style="padding:8px;border-radius:8px;border:1px solid rgba(2,6,23,0.06)">
+      <option>2</option><option>3</option><option>4</option><option>5</option><option>6</option>
+    </select>
+  </div>
+</div>
+
+<!-- JOGADORES -->
+<div class="card">
+  <strong>2) Jogadores (marque quem vai e escolha o nível)</strong>
+  <div id="playersList" class="players" style="margin-top:10px">
+    <div class="muted">Nenhum jogador importado.</div>
+  </div>
+
+  <div class="controls" style="margin-top:12px">
+    <button class="btn btn-success" id="btnDraw">Gerar times</button>
+    <button class="btn btn-primary" id="btnCopy">Copiar p/ WhatsApp</button>
+    <button class="btn btn-ghost" id="btnClear">Limpar lista</button>
+    <button class="btn btn-danger" id="btnClearResult">Limpar resultado</button>
+  </div>
+
+  <div style="margin-top:10px" id="summary" class="muted">0 jogadores</div>
+</div>
+
+<!-- RESULTADO -->
+<div class="card">
+  <strong>3) Times Gerados</strong>
+  <div id="teamsContainer" class="teams-grid" style="margin-top:10px"></div>
+  <pre id="result"></pre>
+</div>
+
+<footer>Funciona offline — salve e guarde.</footer>
 </div>
 
 <script>
-function gerarTimes() {
-    const input = document.getElementById("playerInput").value.trim();
-    const lines = input.split("\n");
+const LS_KEY = "sorteador_players_v3";
+let players = [];
+const $ = id => document.getElementById(id);
 
-    let players = [];
-
-    for (let line of lines) {
-        let parts = line.split("-");
-        if (parts.length === 2) {
-            let name = parts[0].trim();
-            let rating = parts[1].trim().toUpperCase();
-
-            if (["A", "B", "C", "D"].includes(rating)) {
-                players.push({ name, rating });
-            }
-        }
-    }
-
-    if (players.length < 2) {
-        alert("Adicione pelo menos 2 jogadores!");
-        return;
-    }
-
-    players.sort(() => Math.random() - 0.5);
-
-    let team1 = [];
-    let team2 = [];
-
-    players.forEach((player, index) => {
-        if (index % 2 === 0) team1.push(player);
-        else team2.push(player);
-    });
-
-    mostrarTimes(team1, team2);
+// remove emojis
+function cleanLine(l){
+  return l.replace(/\r/g,'')
+    .replace(/^\d+\s*[-–.\)]\s*/,'')
+    .replace(/[\p{Extended_Pictographic}]/gu,'')
+    .trim();
 }
 
-function mostrarTimes(team1, team2) {
-    const output = document.getElementById("teamsOutput");
+function loadPlayers(){
+  try { players = JSON.parse(localStorage.getItem(LS_KEY)) || []; }
+  catch { players = []; }
+}
+function savePlayers(){
+  localStorage.setItem(LS_KEY, JSON.stringify(players));
+}
 
-    output.innerHTML = `
-        <div class="team-box">
-            <div class="team-title">⚽ Time 1</div>
-            ${team1.map(p => `
-                <div class="player">
-                    <span>${p.name}</span>
-                    <span class="rating ${p.rating}">${p.rating}</span>
-                </div>
-            `).join("")}
-        </div>
+function renderPlayers(){
+  const box = $("playersList");
+  box.innerHTML = "";
 
-        <div class="team-box">
-            <div class="team-title">⚽ Time 2</div>
-            ${team2.map(p => `
-                <div class="player">
-                    <span>${p.name}</span>
-                    <span class="rating ${p.rating}">${p.rating}</span>
-                </div>
-            `).join("")}
-        </div>
+  if(players.length === 0){
+    box.innerHTML = '<div class="muted">Nenhum jogador importado.</div>';
+    updateSummary();
+    return;
+  }
+
+  players.forEach(p => {
+    const row = document.createElement("div");
+    row.className = "player-row";
+
+    const chk = document.createElement("input");
+    chk.type = "checkbox";
+    chk.checked = p.selected !== false;
+    chk.className = "player-check";
+    chk.onchange = () => { p.selected = chk.checked; savePlayers(); updateSummary(); };
+
+    const name = document.createElement("input");
+    name.type = "text";
+    name.value = p.name;
+    name.className = "player-name";
+    name.onchange = () => { p.name = name.value.trim(); savePlayers(); };
+
+    const lvl = document.createElement("select");
+    lvl.className = "player-level";
+    lvl.innerHTML = `
+      <option value="4">A</option>
+      <option value="3">B</option>
+      <option value="2">C</option>
+      <option value="1">D</option>
     `;
-}
-</script>
+    lvl.value = p.level || 2;
+    lvl.onchange = () => { p.level = parseInt(lvl.value); savePlayers(); };
 
+    const del = document.createElement("button");
+    del.className = "player-delete";
+    del.innerHTML = "🗑️";
+    del.onclick = () => {
+      if(confirm("Apagar jogador?")){
+        players = players.filter(x => x.id !== p.id);
+        savePlayers();
+        renderPlayers();
+      }
+    };
+
+    row.append(chk, name, lvl, del);
+    box.appendChild(row);
+  });
+
+  updateSummary();
+}
+
+function updateSummary(){
+  $("summary").textContent =
+    `${players.length} jogadores • ${players.filter(p=>p.selected).length} selecionados`;
+}
+
+function importFromText(){
+  const lines = $("rawInput").value.split("\n");
+  lines.forEach(l=>{
+    const name = cleanLine(l);
+    if(!name) return;
+    players.push({ id: crypto.randomUUID(), name, level:2, selected:true });
+  });
+  savePlayers();
+  renderPlayers();
+}
+
+function clearAll(){
+  if(confirm("Limpar todos os jogadores e resultados?")){
+    players = [];
+    savePlayers();
+    renderPlayers();
+    $("teamsContainer").innerHTML = "";
+    $("result").style.display = "none";
+  }
+}
+
+function distribute(players, count){
+  const grouped = {};
+  players.forEach(p => {
+    grouped[p.level] = grouped[p.level] || [];
+    grouped[p.level].push(p);
+  });
+
+  const levels = Object.keys(grouped).map(n=>+n).sort((a,b)=>b-a);
+
+  levels.forEach(l=>{
+    grouped[l].sort(()=>Math.random()-0.5);
+  });
+
+  const ordered = [];
+  levels.forEach(l=>ordered.push(...grouped[l]));
+
+  const t = Array.from({length:count},()=>[]);
+  let rev = false;
+  for(let i=0;i<ordered.length;i++){
+    const pos = rev ? (count-1-(i%count)) : (i%count);
+    t[pos].push(ordered[i]);
+    if((i+1)%count===0) rev = !rev;
+  }
+  return t;
+}
+
+function generate(){
+  const count = parseInt($("teamsCount").value);
+  const selected = players.filter(p=>p.selected);
+  if(selected.length < count){
+    alert("Jogadores insuficientes!");
+    return;
+  }
+  const teams = distribute(selected, count);
+  renderTeams(teams);
+}
+
+function renderTeams(teams){
+  const box = $("teamsContainer");
+  box.innerHTML = "";
+
+  let txt = "";
+
+  teams.forEach((team, i)=>{
+    const card = document.createElement("div");
+    card.className = "team-card";
+
+    let html = `<strong>Time ${i+1}</strong><ul>`;
+    team.forEach(p=> html += `<li>${p.name} (${["D","C","B","A"][p.level-1]})</li>`);
+    html += "</ul>";
+
+    card.innerHTML = html;
+    box.appendChild(card);
+
+    txt += `⚽ *Time ${i+1}*\n`;
+    team.forEach(p=> txt += `• ${p.name} (${["D","C","B","A"][p.level-1]})\n`);
+    txt += "\n";
+  });
+
+  const res = $("result");
+  res.style.display = "block";
+  res.textContent = txt.trim();
+}
+
+async function copyToWhatsApp(){
+  const t = $("result").textContent;
+  if(!t){ alert("Gere os times primeiro."); return; }
+  await navigator.clipboard.writeText(t);
+  alert("Copiado!");
+}
+
+document.addEventListener("DOMContentLoaded", ()=>{
+  loadPlayers();
+  renderPlayers();
+
+  $("btnImport").onclick = importFromText;
+  $("btnClearInput").onclick = ()=> $("rawInput").value="";
+  $("btnClear").onclick = clearAll;
+  $("btnDraw").onclick = generate;
+  $("btnCopy").onclick = copyToWhatsApp;
+  $("btnClearResult").onclick = ()=>{
+    $("result").style.display="none";
+    $("teamsContainer").innerHTML="";
+  };
+});
+</script>
 </body>
 </html>
